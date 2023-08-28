@@ -1,0 +1,57 @@
+{
+  "name": "newnivers-web",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "cz": "./.yarn/unplugged/cz-customizable-npm-7.0.0-1704ad9243/node_modules/cz-customizable/standalone.js",
+    "dev": "next dev",
+    "postinstall": "husky install",
+    "lint": "next lint",
+    "sort": "sort-package-json",
+    "start": "next start"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "axios": "^1.5.0",
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-query": "^3.39.3",
+    "recoil": "^0.7.7",
+    "styled-components": "^6.0.7"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.5.0",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/types": "^17.4.4",
+    "@next/bundle-analyzer": "13.1.6",
+    "@svgr/webpack": "^7.0.0",
+    "@types/node": "20.5.7",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "cz-customizable": "^7.0.0",
+    "eslint": "8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-import": "^0.13.0",
+    "eslint-config-next": "13.1.6",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": ">=7",
+    "lint-staged": ">=10",
+    "next-intercept-stdout": "1.0.1",
+    "prettier": "2.6.2",
+    "sort-package-json": "^2.5.1",
+    "typescript": "5.2.2"
+  },
+  "dependenciesMeta": {
+    "cz-customizable@7.0.0": {
+      "unplugged": true
+    }
+  },
+  "packageManager": "yarn@3.6.3"
+}
