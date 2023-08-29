@@ -7,7 +7,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const withInterceptStdout = require("next-intercept-stdout");
 
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
+  compiler: {
+    styledComponents: true,
+  },
   swcMinify: true,
   webpack: (config) => {
     config.module.rules.push({

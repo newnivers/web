@@ -1,5 +1,17 @@
 "use client";
 
+import styled, { css } from "styled-components";
+
 export default function Home() {
-  return <div>Home Page</div>;
+  return <Container>Home Page</Container>;
 }
+
+const Container = styled.div`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      background-color: ${colors.main};
+    `;
+  }}
+`;

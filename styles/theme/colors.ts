@@ -1,0 +1,25 @@
+const colors = {
+  main: "#4F9EF7",
+  detail: "#486284",
+  error: "#FF0000",
+  secondary_02: "#E1E9F3",
+  secondary_03: "#DDE0E4",
+  secondary_yellow_01: "#F3DC54",
+  secondary_blue_01: "#587DAB",
+  white: "#FFFFFF",
+  gray_01: "#e5e5e5",
+  gray_02: "#cccccc",
+  gray_03: "#b2b2b2",
+  gray_04: "#999999",
+  gray_05: "#7f7f7f",
+  gray_06: "#666666",
+  gray_07: "#4c4c4c",
+  gray_08: "#333333",
+  black_01: "#4d4d4d",
+  black_02: "#3c3c3c",
+  black_03: "#1e1e1e",
+  black_04: "#111111",
+  black_05: "#000000",
+} as const;
+
+export default colors;
