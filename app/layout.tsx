@@ -1,7 +1,7 @@
 import "@/styles/global.css";
 
 import type { Metadata } from "next";
-import StyledComponentsRegistry from "@/lib/registry";
+import { StyledComponentsRegistry } from "@/lib";
 
 export const metadata: Metadata = {
   title: "Newniverse",
