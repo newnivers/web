@@ -8,7 +8,8 @@
     "postinstall": "husky install",
     "lint": "next lint",
     "sort": "sort-package-json",
-    "start": "next start"
+    "start": "next start",
+    "type": "tsc --noEmit"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
