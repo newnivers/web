@@ -1,7 +1,11 @@
 import "@/styles/global.css";
 
 import type { Metadata } from "next";
-import StyledComponentsRegistry from "@/lib/registry";
+import {
+  StyledComponentsRegistry,
+  RecoilRegistry,
+  ReactQueryRegistry,
+} from "@/lib";
 
 export const metadata: Metadata = {
   title: "Newniverse",
@@ -15,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <RecoilRegistry>
+            <ReactQueryRegistry>{children}</ReactQueryRegistry>
+          </RecoilRegistry>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
