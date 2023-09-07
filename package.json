@@ -28,6 +28,7 @@
     "@commitlint/cli": "^17.5.0",
     "@commitlint/config-conventional": "^17.4.4",
     "@commitlint/types": "^17.4.4",
+    "@lhci/cli": "^0.12.0",
     "@next/bundle-analyzer": "13.1.6",
     "@svgr/webpack": "^7.0.0",
     "@swc/core": "1.2.215",
