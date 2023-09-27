@@ -4,13 +4,25 @@ import styled, { css } from "styled-components";
 
 interface Props {
   authUri: string;
+  clientId: string;
+  redirectUri: string;
+  state: string;
   children?: ReactNode;
   style?: CSSProperties;
 }
 
-export function OAuthLoginButton({ authUri, children, style }: Props) {
+export function OAuthLoginButton({
+  authUri,
+  clientId,
+  redirectUri,
+  state,
+  children,
+  style,
+}: Props) {
   const onClickLogin = () => {
-    window.location.assign(authUri);
+    window.location.assign(
+      `${authUri}?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`
+    );
   };
 
   return (
