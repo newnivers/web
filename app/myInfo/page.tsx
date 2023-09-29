@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import styled, { css } from "styled-components";
+import { DotColumn } from "@/components/common/column";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import Text, { TextTags } from "@/components/common/text";
 
@@ -30,7 +31,9 @@ function MyInfoPage() {
           height={130}
           alt="thumbnail-default"
         />
-        <div>fds</div>
+        <DotColumn tag="닉네임">
+          <div>Test</div>
+        </DotColumn>
       </Spacer>
     </Container>
   );
