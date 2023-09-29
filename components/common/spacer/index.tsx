@@ -9,18 +9,31 @@ interface Props {
   align?: CSSProperties["alignItems"];
   justify?: CSSProperties["justifyContent"];
   children: ReactNode;
-  margin?: number | string;
+  restStyle?: CSSProperties;
 }
 
-const Spacer = styled.div<Props>`
-  ${({ type, justify, align, gap, margin }) => {
+function Spacer({ type, gap, align, justify, children, restStyle }: Props) {
+  return (
+    <SpacerSkleton
+      type={type}
+      gap={gap}
+      align={align}
+      justify={justify}
+      style={restStyle}
+    >
+      {children}
+    </SpacerSkleton>
+  );
+}
+
+export const SpacerSkleton = styled.div<Props>`
+  ${({ type, justify, align, gap }) => {
     return css`
       display: flex;
       flex-direction: ${type === "vertical" && "column"};
       justify-content: ${justify};
       align-items: ${align};
       gap: ${`${gap}px`};
-      margin: ${typeof margin === "string" ? margin : `${margin}px`};
     `;
   }}
 `;

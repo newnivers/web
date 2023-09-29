@@ -12,8 +12,11 @@ function DefaultLayout({ children }: Props) {
 }
 
 const Container = styled.section`
-  min-width: fit-content;
-  margin: 0 auto;
+  min-width: 1200px;
+
+  & *[id="main-content"] {
+    margin: 0 auto;
+  }
 `;
 
 export default DefaultLayout;
