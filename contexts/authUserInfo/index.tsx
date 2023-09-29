@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { LocalStorage } from "@/utils/cache";
 
 const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
