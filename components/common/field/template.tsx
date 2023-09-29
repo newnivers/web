@@ -18,7 +18,12 @@ const Container = styled.div`
       min-height: 27px;
       padding: 8px 12px;
       border: 1px solid ${colors.secondary_03};
-      border-radius: 10px;
+      border-radius: 30px;
+
+      &:has(input:disabled) {
+        background-color: ${colors.gray};
+        border: none;
+      }
     `;
   }}
 `;

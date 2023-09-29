@@ -9,6 +9,7 @@ import Field from "@/components/common/field";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import Text, { TextTags } from "@/components/common/text";
 import DuplicateUserChecker from "@/components/domains/myInfo/duplicateUserChecker";
+import EditButtons from "@/components/domains/myInfo/editButtons";
 import { AuthUserInfo } from "@/contexts";
 
 function MyInfoPage() {
@@ -17,6 +18,10 @@ function MyInfoPage() {
 
   const [isEditing, setEditing] = useState(false);
   const nickname = watch("nickname");
+
+  const onClickEditing = (isEditing: boolean) => {
+    setEditing(isEditing);
+  };
 
   return (
     <AuthUserInfo.Provider>
@@ -56,6 +61,7 @@ function MyInfoPage() {
                     path="nickname"
                     register={register}
                     registerOptions={{ required: true }}
+                    disabled={!isEditing}
                   />
                 </Field>
               </DotColumn>
@@ -67,6 +73,8 @@ function MyInfoPage() {
               />
             </SpacerSkleton>
           </Spacer>
+
+          <EditButtons isEditing={isEditing} _onClickEditing={onClickEditing} />
         </form>
       </Container>
     </AuthUserInfo.Provider>

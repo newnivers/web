@@ -62,6 +62,10 @@ const StyledInput = styled.input`
       &:focus {
         outline: none;
       }
+
+      &:disabled {
+        background-color: transparent;
+      }
     `;
   }}
 `;
