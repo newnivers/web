@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { DotColumn } from "@/components/common/column";
+import Field from "@/components/common/field";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import Text, { TextTags } from "@/components/common/text";
 
 function MyInfoPage() {
+  const { getValues, register, handleSubmit, formState } = useForm();
+
   return (
     <Container
       id="main-content"
@@ -14,27 +18,40 @@ function MyInfoPage() {
       justify="center"
       align="center"
     >
-      <Headline justify="center">
-        <Title as={TextTags.h1}>MY Page</Title>
-      </Headline>
-      <Spacer
-        align="center"
-        gap={30}
-        restStyle={{
-          width: "100%",
-          margin: "30px 0",
-        }}
+      <form
+        onSubmit={handleSubmit((data) => {
+          console.log(data);
+        })}
+        style={{ width: "100%" }}
       >
-        <Image
-          src="/img/thumbnail-default.png"
-          width={130}
-          height={130}
-          alt="thumbnail-default"
-        />
-        <DotColumn tag="닉네임">
-          <div>Test</div>
-        </DotColumn>
-      </Spacer>
+        <Headline justify="center">
+          <Title as={TextTags.h1}>MY Page</Title>
+        </Headline>
+        <Spacer
+          align="center"
+          gap={30}
+          restStyle={{
+            width: "100%",
+            margin: "30px 0",
+          }}
+        >
+          <Image
+            src="/img/thumbnail-default.png"
+            width={130}
+            height={130}
+            alt="thumbnail-default"
+          />
+          <DotColumn tag="닉네임">
+            <Field>
+              <Field.input
+                path="nickname"
+                register={register}
+                registerOptions={{ required: true }}
+              />
+            </Field>
+          </DotColumn>
+        </Spacer>
+      </form>
     </Container>
   );
 }
