@@ -2,23 +2,27 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import DefaultButton from "@/components/common/button";
 import { DotColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
+import HiddenFileInput from "@/components/common/hiddenFileInput";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import Text, { TextTags } from "@/components/common/text";
 import DuplicateUserChecker from "@/components/domains/myInfo/duplicateUserChecker";
 import { AuthUserInfo } from "@/contexts";
+import { useFileUpload } from "@/hooks";
 import { LocalStorage } from "@/utils/cache";
 
 const defaultDomain = process.env.NEXT_PUBLIC_DEFAULT_SERVER_DOMAIN;
 const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
 
 const localStorage = new LocalStorage();
+
+const queryClient = new QueryClient();
 
 function MyInfoPage() {
   const authUser = localStorage.get(authUserKey);
@@ -30,7 +34,7 @@ function MyInfoPage() {
         `${defaultDomain}/api/users/${authUser?.userId}`,
         {
           headers: {
-            Authorization: `Bearer ${authUser?.token}`,
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHBpcmVkIjoiMjAyMy0xMC0xNCAxMDoyMzozMiIsImlhdCI6MTY5NjAzNzAxMi41MDczOX0.OYBciE-G7-KBr55BeFZdTKj1k-AJus8tsZDGvyNCA_U`,
           },
         }
       );
@@ -38,19 +42,38 @@ function MyInfoPage() {
       return data;
     },
     {
-      initialData: {
-        id: 2,
-        nickname: "병혀니",
-        profileimage: "",
-        purchaseList: [],
-        reviewList: [],
-      },
       enabled: !!authUser?.userId,
     }
   );
 
-  const { getValues, register, handleSubmit, formState, resetField, watch } =
-    useForm({ defaultValues: { nickname: data.nickname } });
+  const { mutate } = useMutation(
+    async (form: { nickname: string; profileImage: string }) => {
+      const { data } = await axios.put(
+        `${defaultDomain}/api/users/${authUser?.userId}`,
+        form,
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHBpcmVkIjoiMjAyMy0xMC0xNCAxMDoyMzozMiIsImlhdCI6MTY5NjAzNzAxMi41MDczOX0.OYBciE-G7-KBr55BeFZdTKj1k-AJus8tsZDGvyNCA_U`,
+          },
+        }
+      );
+
+      return data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["user", authUser?.userId]);
+      },
+    }
+  );
+
+  const { register, handleSubmit, resetField, watch } = useForm({
+    defaultValues: { nickname: data?.nickname },
+  });
+
+  const [fileInfo, onChangeFile, fileUpload] = useFileUpload(
+    data?.profileImage
+  );
 
   const [isEditing, setEditing] = useState(false);
   const nickname = watch("nickname");
@@ -61,7 +84,27 @@ function MyInfoPage() {
     }
     setEditing(!isEditing);
   };
-  console.log(nickname);
+
+  const onSubmitMyInfo = async (data: { nickname: string }) => {
+    if (!fileInfo) {
+      return;
+    }
+
+    try {
+      const result = await fileUpload();
+
+      const form = {
+        nickname: data.nickname,
+        profileImage: result?.Location || "",
+      };
+
+      mutate(form);
+    } catch (error: any) {
+      throw new Error(error.message);
+    } finally {
+      setEditing(false);
+    }
+  };
 
   return (
     <AuthUserInfo.Provider>
@@ -71,12 +114,7 @@ function MyInfoPage() {
         justify="center"
         align="center"
       >
-        <form
-          onSubmit={handleSubmit((data) => {
-            console.log(data);
-          })}
-          style={{ width: "100%" }}
-        >
+        <form onSubmit={handleSubmit(onSubmitMyInfo)} style={{ width: "100%" }}>
           <Headline justify="center">
             <Title as={TextTags.h1}>MY Page</Title>
           </Headline>
@@ -88,12 +126,21 @@ function MyInfoPage() {
               margin: "30px 0",
             }}
           >
-            <Image
-              src="/img/thumbnail-default.png"
-              width={130}
-              height={130}
-              alt="thumbnail-default"
-            />
+            <HiddenFileInput
+              thumbnailStyle={{
+                width: "130px",
+                height: "130px",
+                borderRadius: "50%",
+              }}
+              onChangeFile={onChangeFile}
+            >
+              <Image
+                src={(fileInfo.data as string) || "/img/thumbnail-default.png"}
+                fill={true}
+                objectFit="contain"
+                alt="thumbnail-default"
+              />
+            </HiddenFileInput>
             <SpacerSkleton gap={14}>
               <DotColumn tag="닉네임">
                 <Field>
@@ -114,7 +161,6 @@ function MyInfoPage() {
               />
             </SpacerSkleton>
           </Spacer>
-
           <SpacerSkleton gap={isEditing ? 10 : 0} justify="center">
             {isEditing ? (
               <>
@@ -143,6 +189,14 @@ function MyInfoPage() {
             )}
           </SpacerSkleton>
         </form>
+        <UserActiveInfoWrapper type="vertical" align="left" gap={30}>
+          <SpacerSkleton>
+            <DotColumn tag="작품 구매 내역">{/* <Field></Field> */}</DotColumn>
+          </SpacerSkleton>
+          <SpacerSkleton>
+            <DotColumn tag="나의 후기">{/* <Field></Field> */}</DotColumn>
+          </SpacerSkleton>
+        </UserActiveInfoWrapper>
       </Container>
     </AuthUserInfo.Provider>
   );
@@ -168,6 +222,20 @@ const Headline = styled(SpacerSkleton)`
 
 const Title = styled(Text)`
   font-weight: 700;
+`;
+
+const UserActiveInfoWrapper = styled(SpacerSkleton)`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      width: 474px;
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 1px solid ${colors.secondary_03};
+      color: ${colors.primary_02};
+    `;
+  }}
 `;
 
 export default MyInfoPage;

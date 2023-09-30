@@ -15,8 +15,10 @@
     "*.js": "eslint --cache --fix"
   },
   "dependencies": {
+    "@newnivers/react": "^0.0.7",
     "@tanstack/react-query": "^4.33.0",
-    "axios": "^1.5.0",
+    "aws-sdk": "^2.1467.0",
+    "axios": "0.27.2",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",

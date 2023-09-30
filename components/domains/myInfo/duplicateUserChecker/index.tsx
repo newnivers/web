@@ -67,7 +67,7 @@ function DuplicateUserChecker<T extends FieldValues>({
   }
 
   return (
-    <DuplicateUserCheckButton onClick={onClickUserDuplcateCheck}>
+    <DuplicateUserCheckButton type="button" onClick={onClickUserDuplcateCheck}>
       <CheckerText>중복확인</CheckerText>
     </DuplicateUserCheckButton>
   );
