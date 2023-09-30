@@ -1,8 +1,13 @@
 import { FieldInput } from "./input";
+import { ReadOnlyTemplate, ReadOnlyInput } from "./shared";
 import { FieldTemplate } from "./template";
 
 const Field = Object.assign(FieldTemplate, {
-  input: FieldInput,
+  Input: FieldInput,
 });
 
-export default Field;
+const ReadOnlyField = Object.assign(ReadOnlyTemplate, {
+  Input: ReadOnlyInput,
+});
+
+export { Field, ReadOnlyField };

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import styled, { css } from "styled-components";
+import { commonTemplateStyle } from "./shared";
 
 interface Props {
   children: ReactNode;
@@ -14,11 +15,7 @@ const Container = styled.div`
     const { colors } = theme;
 
     return css`
-      min-width: 264px;
-      min-height: 27px;
-      padding: 8px 12px;
-      border: 1px solid ${colors.secondary_03};
-      border-radius: 30px;
+      ${commonTemplateStyle};
 
       &:has(input:disabled) {
         background-color: ${colors.gray};

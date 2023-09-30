@@ -2,26 +2,66 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
+import DefaultButton from "@/components/common/button";
 import { DotColumn } from "@/components/common/column";
-import Field from "@/components/common/field";
+import { Field } from "@/components/common/field";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import Text, { TextTags } from "@/components/common/text";
 import DuplicateUserChecker from "@/components/domains/myInfo/duplicateUserChecker";
-import EditButtons from "@/components/domains/myInfo/editButtons";
 import { AuthUserInfo } from "@/contexts";
+import { LocalStorage } from "@/utils/cache";
+
+const defaultDomain = process.env.NEXT_PUBLIC_DEFAULT_SERVER_DOMAIN;
+const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
+
+const localStorage = new LocalStorage();
 
 function MyInfoPage() {
+  const authUser = localStorage.get(authUserKey);
+
+  const { data } = useQuery(
+    ["user", authUser?.userId],
+    async () => {
+      const { data } = await axios.get(
+        `${defaultDomain}/api/users/${authUser?.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authUser?.token}`,
+          },
+        }
+      );
+
+      return data;
+    },
+    {
+      initialData: {
+        id: 2,
+        nickname: "병혀니",
+        profileimage: "",
+        purchaseList: [],
+        reviewList: [],
+      },
+      enabled: !!authUser?.userId,
+    }
+  );
+
   const { getValues, register, handleSubmit, formState, resetField, watch } =
-    useForm();
+    useForm({ defaultValues: { nickname: data.nickname } });
 
   const [isEditing, setEditing] = useState(false);
   const nickname = watch("nickname");
 
-  const onClickEditing = (isEditing: boolean) => {
-    setEditing(isEditing);
+  const onClickEditToggle = () => {
+    if (isEditing) {
+      resetField("nickname");
+    }
+    setEditing(!isEditing);
   };
+  console.log(nickname);
 
   return (
     <AuthUserInfo.Provider>
@@ -57,10 +97,11 @@ function MyInfoPage() {
             <SpacerSkleton gap={14}>
               <DotColumn tag="닉네임">
                 <Field>
-                  <Field.input
+                  <Field.Input
                     path="nickname"
                     register={register}
                     registerOptions={{ required: true }}
+                    value={nickname}
                     disabled={!isEditing}
                   />
                 </Field>
@@ -74,7 +115,33 @@ function MyInfoPage() {
             </SpacerSkleton>
           </Spacer>
 
-          <EditButtons isEditing={isEditing} _onClickEditing={onClickEditing} />
+          <SpacerSkleton gap={isEditing ? 10 : 0} justify="center">
+            {isEditing ? (
+              <>
+                <DefaultButton
+                  type="button"
+                  sort="secondary"
+                  onClick={onClickEditToggle}
+                >
+                  취소
+                </DefaultButton>
+                <DefaultButton
+                  type="submit"
+                  disabled={data.nickname === nickname}
+                >
+                  확인
+                </DefaultButton>
+              </>
+            ) : (
+              <DefaultButton
+                type="button"
+                sort="secondary"
+                onClick={onClickEditToggle}
+              >
+                수정
+              </DefaultButton>
+            )}
+          </SpacerSkleton>
         </form>
       </Container>
     </AuthUserInfo.Provider>

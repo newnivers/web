@@ -35,6 +35,11 @@ const StyledButton = styled.button<{ sort: ButtonSort }>`
         : colors.white};
       border: 1px solid ${colors.primary_01};
       border-radius: 30px;
+
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
     `;
   }}
 `;
