@@ -64,10 +64,55 @@ span,
 strong {
   margin: 0;
   padding: 0;
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
-    "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
-    "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    sans-serif;
+  font-family: "DM Sans", sans-serif;
+}
+
+@font-face {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/public/font/DMSans-ExtraBold.woff2") format("woff2"),
+    url("/public/font/DMSans-ExtraBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DM Sans", sans-serif;
+  font-family: 700;
+  font-display: swap;
+  src: url("/public/font/DMSans-Bold.woff2") format("woff2"),
+    url("/public/font/DMSans-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DM Sans", sans-serif;
+  font-family: 600;
+  font-display: swap;
+  src: url("/public/font/DMSans-SemiBold.woff2") format("woff2"),
+    url("/public/font/DMSans-SemiBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DM Sans", sans-serif;
+  font-family: 500;
+  font-display: swap;
+  src: url("/public/font/DMSans-Medium.woff2") format("woff2"),
+    url("/public/font/DMSans-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DM Sans", sans-serif;
+  font-family: 400;
+  font-display: swap;
+  src: url("/public/font/DMSans-Regular.woff2") format("woff2"),
+    url("/public/font/DMSans-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DM Sans", sans-serif;
+  font-family: 300;
+  font-display: swap;
+  src: url("/public/font/DMSans-Light.woff2") format("woff2"),
+    url("/public/font/DMSans-Light.woff") format("woff");
 }
 
 input,
@@ -106,4 +151,3 @@ li {
   height: 100%;
   overflow: hidden;
 }
-

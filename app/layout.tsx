@@ -1,6 +1,7 @@
 import "@/styles/global.css";
 
 import type { Metadata } from "next";
+import { DefaultLayout } from "@/components/common/layout";
 import {
   StyledComponentsRegistry,
   RecoilRegistry,
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <RecoilRegistry>
-            <ReactQueryRegistry>{children}</ReactQueryRegistry>
+            <ReactQueryRegistry>
+              <DefaultLayout>{children}</DefaultLayout>
+            </ReactQueryRegistry>
           </RecoilRegistry>
         </StyledComponentsRegistry>
       </body>

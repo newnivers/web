@@ -11,7 +11,7 @@ const Container = styled.div`
     const { colors } = theme;
 
     return css`
-      background-color: ${colors.main};
+      background-color: ${colors.primary_01};
     `;
   }}
 `;
