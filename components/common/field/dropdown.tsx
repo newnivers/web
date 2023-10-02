@@ -3,7 +3,7 @@ import type { MouseEvent } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
 import { commonFieldStyle } from "./shared";
-import { SpacerSkleton } from "../spacer";
+import Spacer from "../spacer";
 
 interface Props {
   options: { id: string; name: string }[];
@@ -21,7 +21,7 @@ export function FieldDropdown({
   const onShowableChange = (e: MouseEvent<HTMLDivElement>) => {
     const selectedId = e.currentTarget.id;
 
-    setShowList(!isShowList);
+    setShowList((prev) => !prev);
 
     if (onClickOption) {
       onClickOption(selectedId);
@@ -60,7 +60,7 @@ const StyledDropdown = styled.div`
   ${commonFieldStyle};
 `;
 
-const OptionList = styled(SpacerSkleton)<{ isShowList: boolean }>`
+const OptionList = styled(Spacer)<{ isShowList: boolean }>`
   ${({ theme, isShowList }) => {
     const { colors } = theme;
 
