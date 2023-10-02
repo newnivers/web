@@ -7,7 +7,7 @@ import type {
   UseFormResetField,
 } from "react-hook-form";
 import styled, { css } from "styled-components";
-import { commonInputStyle } from "./shared";
+import { commonFieldStyle } from "./shared";
 
 interface Props<T extends FieldValues>
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -35,7 +35,7 @@ const StyledInput = styled.input`
     const { colors } = theme;
 
     return css`
-      ${commonInputStyle};
+      ${commonFieldStyle};
 
       &::placeholder {
         font-size: 16px;
