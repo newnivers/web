@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const commonTemplateStyle = css`
+  position: relative;
   min-width: 264px;
   min-height: 27px;
   padding: 8px 12px;
@@ -8,7 +9,7 @@ export const commonTemplateStyle = css`
   border-radius: 30px;
 `;
 
-export const commonInputStyle = css`
+export const commonFieldStyle = css`
   display: block;
   width: 100%;
   height: 100%;
@@ -49,7 +50,7 @@ export const ReadOnlyTemplate = styled.div`
 `;
 
 export const ReadOnlyInput = styled.div`
-  ${commonInputStyle};
+  ${commonFieldStyle};
 
   text-align: left;
 `;

@@ -191,10 +191,28 @@ function MyInfoPage() {
         </form>
         <UserActiveInfoWrapper type="vertical" align="left" gap={30}>
           <SpacerSkleton>
-            <DotColumn tag="작품 구매 내역">{/* <Field></Field> */}</DotColumn>
+            <DotColumn tag="구매 내역">
+              <Field>
+                <Field.Dropdown
+                  options={[
+                    { id: "1", name: "test" },
+                    { id: "2", name: "test" },
+                    { id: "3", name: "test" },
+                  ]}
+                  placeholder="구매 내역 확인"
+                />
+              </Field>
+            </DotColumn>
           </SpacerSkleton>
           <SpacerSkleton>
-            <DotColumn tag="나의 후기">{/* <Field></Field> */}</DotColumn>
+            <DotColumn tag="나의 후기">
+              {/* <Field>
+                <Field.Dropdown
+                  options={data.reviewList}
+                  placeholder="나의 후기 확인"
+                />
+              </Field> */}
+            </DotColumn>
           </SpacerSkleton>
         </UserActiveInfoWrapper>
       </Container>

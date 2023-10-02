@@ -10,11 +10,21 @@ interface Props {
   justify?: CSSProperties["justifyContent"];
   children: ReactNode;
   restStyle?: CSSProperties;
+  className?: string;
 }
 
-function Spacer({ type, gap, align, justify, children, restStyle }: Props) {
+function Spacer({
+  type,
+  gap,
+  align,
+  justify,
+  children,
+  restStyle,
+  className,
+}: Props) {
   return (
     <SpacerSkleton
+      className={className}
       type={type}
       gap={gap}
       align={align}
