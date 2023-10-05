@@ -12,20 +12,16 @@ interface Props {
 
 function DotColumn({ tag, children }: Props) {
   return (
-    <Container>
-      <SpacerSkleton gap={16} align="center">
-        <SpacerSkleton gap={10} align="center">
-          <Dot />
-          <Tag>{tag}</Tag>
-          <Divider />
-        </SpacerSkleton>
-        {children}
+    <SpacerSkleton gap={16} align="center">
+      <SpacerSkleton gap={10} align="center">
+        <Dot />
+        <Tag>{tag}</Tag>
+        <Divider />
       </SpacerSkleton>
-    </Container>
+      {children}
+    </SpacerSkleton>
   );
 }
-
-const Container = styled.div``;
 
 const Dot = styled.div`
   ${({ theme }) => {
