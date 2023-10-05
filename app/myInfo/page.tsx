@@ -13,7 +13,6 @@ import HiddenFileInput from "@/components/common/hiddenFileInput";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import Text, { TextTags } from "@/components/common/text";
 import DuplicateUserChecker from "@/components/domains/myInfo/duplicateUserChecker";
-import { AuthUserInfo } from "@/contexts";
 import { useFileUpload } from "@/hooks";
 import { LocalStorage } from "@/utils/cache";
 
