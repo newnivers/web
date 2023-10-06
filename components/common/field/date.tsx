@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo } from "react";
 import { getMonth, getYear, startOfDay, add } from "date-fns";
 import DatePicker from "react-datepicker";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
@@ -7,8 +7,10 @@ import { commonFieldStyle } from "./shared";
 import { SpacerSkleton } from "../spacer";
 
 interface Props {
+  rawDate: Date | null | [Date | null, Date | null];
   selectsRange?: boolean;
   placeholder?: string;
+  onChange?: (...event: any[]) => void;
 }
 
 const now = new Date();
@@ -36,29 +38,39 @@ function CustomDatePickerHeader({
 }
 
 export function DateField({
+  rawDate,
   selectsRange = false,
   placeholder = "날짜 선택",
+  onChange,
 }: Props) {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>();
+  const currentDate = useMemo(() => {
+    return Array.isArray(rawDate)
+      ? { start: rawDate[0], end: rawDate[1] }
+      : { start: rawDate };
+  }, [rawDate]);
+
+  const onChangeDate = useCallback(
+    (update: any) => {
+      console.log(update);
+      if (onChange) {
+        onChange(update);
+      }
+    },
+    [onChange]
+  );
 
   return (
     <Container>
       <StyledDatePicker
         dateFormat="yyyy.MM.dd"
-        selected={startDate}
-        startDate={startDate}
-        endDate={endDate}
+        selected={currentDate?.start}
+        startDate={currentDate?.start}
+        endDate={currentDate?.end}
         renderCustomHeader={(props) => <CustomDatePickerHeader {...props} />}
         placeholderText={placeholder}
         minDate={startOfDay(now)}
         selectsRange={selectsRange}
-        onChange={(dates) => {
-          if (Array.isArray(dates)) {
-            setStartDate(dates[0]);
-            setEndDate(dates[1]);
-          }
-        }}
+        onChange={onChangeDate}
       />
     </Container>
   );

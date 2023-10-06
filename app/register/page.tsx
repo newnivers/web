@@ -77,7 +77,7 @@ function RegisterPage() {
             <SpacerSkleton gap={14}>
               <DotColumn tag="공연기간">
                 <Field>
-                  <Field.Date />
+                  <Field.Date rawDate={null} />
                 </Field>
               </DotColumn>
             </SpacerSkleton>
