@@ -1,4 +1,5 @@
 import "@/styles/global.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 import type { Metadata } from "next";
 import { DefaultLayout } from "@/components/common/layout";

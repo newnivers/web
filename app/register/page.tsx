@@ -77,11 +77,7 @@ function RegisterPage() {
             <SpacerSkleton gap={14}>
               <DotColumn tag="공연기간">
                 <Field>
-                  <Field.Input
-                    path="duration"
-                    register={register}
-                    registerOptions={{ required: true }}
-                  />
+                  <Field.Date rawDate={null} />
                 </Field>
               </DotColumn>
             </SpacerSkleton>
