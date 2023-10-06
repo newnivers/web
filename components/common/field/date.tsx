@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getMonth, getYear, startOfDay, add } from "date-fns";
 import DatePicker from "react-datepicker";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
@@ -6,6 +7,7 @@ import { commonFieldStyle } from "./shared";
 import { SpacerSkleton } from "../spacer";
 
 interface Props {
+  selectsRange?: boolean;
   placeholder?: string;
 }
 
@@ -33,15 +35,29 @@ function CustomDatePickerHeader({
   );
 }
 
-export function DateField({ placeholder = "날짜 선택" }: Props) {
+export function DateField({
+  selectsRange = false,
+  placeholder = "날짜 선택",
+}: Props) {
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>();
+
   return (
     <Container>
       <StyledDatePicker
+        dateFormat="yyyy.MM.dd"
+        selected={startDate}
+        startDate={startDate}
+        endDate={endDate}
         renderCustomHeader={(props) => <CustomDatePickerHeader {...props} />}
         placeholderText={placeholder}
         minDate={startOfDay(now)}
-        onChange={(date) => {
-          console.log(date);
+        selectsRange={selectsRange}
+        onChange={(dates) => {
+          if (Array.isArray(dates)) {
+            setStartDate(dates[0]);
+            setEndDate(dates[1]);
+          }
         }}
       />
     </Container>
@@ -53,6 +69,9 @@ const Container = styled.div`
     const { colors } = theme;
 
     return css`
+      & * {
+        font-weight: 600;
+      }
       & > .react-datepicker-wrapper {
         display: block;
       }
@@ -114,6 +133,7 @@ const HeaderContainer = styled(SpacerSkleton)`
 
       & > div[id="date-info"] {
         color: ${colors.primary_02};
+        font-size: 13.5px;
       }
     `;
   }}
