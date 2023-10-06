@@ -11,7 +11,7 @@ interface Props {
   onClickOption?: (id: string) => void;
 }
 
-export function FieldDropdown({
+export function DropdownField({
   options = [],
   placeholder,
   onClickOption,

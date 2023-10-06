@@ -18,7 +18,7 @@ interface Props<T extends FieldValues>
   watchedValue?: string;
 }
 
-export function FieldInput<T extends FieldValues>({
+export function InputField<T extends FieldValues>({
   path,
   register,
   registerOptions,
