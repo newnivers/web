@@ -2,7 +2,7 @@ import { useState } from "react";
 import ko from "date-fns/locale/ko";
 import DatePicker from "react-datepicker";
 import styled, { css } from "styled-components";
-import { commonFieldStyle, resetDateInputStyle } from "./shared";
+import { commonFieldStyle, resetSelectInputStyle } from "./shared";
 
 interface Props {
   timeCaption?: string;
@@ -43,7 +43,7 @@ const Container = styled.div`
     return css`
       & * {
         font-family: "Helvetica Neue", helvetica, arial, sans-serif;
-        font-weight: 500;
+        font-weight: 400;
       }
 
       & > .react-datepicker-wrapper {
@@ -58,6 +58,7 @@ const Container = styled.div`
 
           .react-datepicker--time-only {
             width: 100%;
+            border: none;
 
             .react-datepicker__triangle {
               display: none;
@@ -65,19 +66,20 @@ const Container = styled.div`
 
             .react-datepicker__time-container {
               width: 100%;
+              border: 1px solid #aeaeae;
+              border-radius: 0.3rem;
 
               .react-datepicker__header {
-                margin-top: 5px;
-                background: none;
               }
 
               .react-datepicker__time-box {
                 width: 100%;
-                font-size: 15px;
 
-                .react-datepicker__time-list-item {
-                  height: 40px;
-                  padding: 10px 10px;
+                .react-datepicker__time-list {
+                  .react-datepicker__time-list-item {
+                    height: 40px;
+                    padding: 12px 10px;
+                  }
                 }
               }
             }
@@ -94,7 +96,8 @@ const StyledTimeOnlyPicker = styled(DatePicker)`
 
     return css`
       ${commonFieldStyle};
-      ${resetDateInputStyle};
+      ${resetSelectInputStyle};
+      white-space: nowrap;
     `;
   }}
 `;

@@ -117,6 +117,7 @@ function MyInfoPage() {
           <Title as={TextTags.h1}>MY Page</Title>
         </Headline>
         <Spacer
+          justify="center"
           align="center"
           gap={30}
           restStyle={{

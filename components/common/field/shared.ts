@@ -2,18 +2,17 @@ import styled, { css } from "styled-components";
 
 export const commonTemplateStyle = css`
   position: relative;
-  /* min-width: 264px; */
-  min-height: 27px;
   padding: 8px 12px;
   border: 1px solid ${({ theme }) => theme.colors.secondary_03};
   border-radius: 30px;
+  font-size: 0.85em;
 `;
 
 export const commonFieldStyle = css`
-  display: block;
+  display: inline-block;
   width: 100%;
   height: 100%;
-  font-size: 14px;
+  font-size: inherit;
   font-weight: 400;
   border: none;
   color: inherit;
@@ -34,9 +33,11 @@ export const commonFieldStyle = css`
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+
+  caret-color: ${({ theme }) => theme.colors.gray_03};
 `;
 
-export const resetDateInputStyle = css`
+export const resetSelectInputStyle = css`
   text-align: center;
   cursor: pointer;
   caret-color: transparent;

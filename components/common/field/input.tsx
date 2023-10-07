@@ -37,12 +37,6 @@ const StyledInput = styled.input`
     return css`
       ${commonFieldStyle};
 
-      &::placeholder {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 1.5;
-      }
-
       &:focus {
         outline: none;
       }
