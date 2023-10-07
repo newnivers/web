@@ -3,7 +3,7 @@ import { getMonth, getYear, startOfDay, add } from "date-fns";
 import DatePicker from "react-datepicker";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import styled, { css } from "styled-components";
-import { commonFieldStyle } from "./shared";
+import { commonFieldStyle, resetSelectInputStyle } from "./shared";
 import { SpacerSkleton } from "../spacer";
 
 interface Props {
@@ -82,8 +82,10 @@ const Container = styled.div`
 
     return css`
       & * {
-        font-weight: 600;
+        font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+        font-weight: 500;
       }
+
       & > .react-datepicker-wrapper {
         display: block;
       }
@@ -91,6 +93,10 @@ const Container = styled.div`
       & > .react-datepicker__tab-loop {
         .react-datepicker-popper {
           .react-datepicker {
+            .react-datepicker__triangle {
+              display: none;
+            }
+
             .react-datepicker__header {
               margin-top: 5px;
               background: none;
@@ -99,10 +105,6 @@ const Container = styled.div`
               .react-datepicker__day-names {
                 display: none;
               }
-            }
-
-            .react-datepicker__triangle {
-              display: none;
             }
           }
         }
@@ -117,14 +119,7 @@ const StyledDatePicker = styled(DatePicker)`
 
     return css`
       ${commonFieldStyle};
-
-      text-align: center;
-      cursor: pointer;
-      caret-color: transparent;
-
-      &:focus {
-        outline: none;
-      }
+      ${resetSelectInputStyle};
     `;
   }}
 `;

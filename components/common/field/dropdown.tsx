@@ -2,18 +2,20 @@ import { useState } from "react";
 import type { MouseEvent } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
-import { commonFieldStyle } from "./shared";
+import { commonFieldStyle, resetSelectInputStyle } from "./shared";
 import Spacer from "../spacer";
 
 interface Props {
-  options: { id: string; name: string }[];
+  options: { id: string | number; name: string }[];
   placeholder?: string;
+  isShowIcon?: boolean;
   onClickOption?: (id: string) => void;
 }
 
 export function DropdownField({
   options = [],
   placeholder,
+  isShowIcon = true,
   onClickOption,
 }: Props) {
   const [isShowList, setShowList] = useState(false);
@@ -30,22 +32,24 @@ export function DropdownField({
 
   return (
     <Container onClick={onShowableChange}>
-      <StyledDropdown>{placeholder}</StyledDropdown>
-      <OptionList type="vertical" gap={10} isShowList={isShowList}>
+      <StyledDropdown placeholder={placeholder} />
+      <OptionList type="vertical" isShowList={isShowList}>
         {options.map(({ id, name }) => (
-          <li key={`${id}-${name}`} id={id}>
+          <Option key={`${id}-${name}`} id={`${id}`}>
             {name}
-          </li>
+          </Option>
         ))}
       </OptionList>
-      <DropdownIcon>
-        <Image
-          src={"/icon/arrow-down.svg"}
-          width={12}
-          height={12}
-          alt="arrow-down"
-        />
-      </DropdownIcon>
+      {isShowIcon && (
+        <DropdownIcon>
+          <Image
+            src={"/icon/arrow-down.svg"}
+            width={12}
+            height={12}
+            alt="arrow-down"
+          />
+        </DropdownIcon>
+      )}
     </Container>
   );
 }
@@ -56,8 +60,9 @@ const Container = styled.div`
   cursor: pointer;
 `;
 
-const StyledDropdown = styled.div`
+const StyledDropdown = styled.input`
   ${commonFieldStyle};
+  ${resetSelectInputStyle}
 `;
 
 const OptionList = styled(Spacer)<{ isShowList: boolean }>`
@@ -66,13 +71,13 @@ const OptionList = styled(Spacer)<{ isShowList: boolean }>`
 
     return css`
       position: absolute;
-      top: 40px;
+      top: 35px;
       left: 0;
       width: 100%;
-      max-height: 130px;
-      padding: 15px;
-      text-align: left;
-      border: 1px solid ${colors.secondary_03};
+      max-height: 150px;
+      text-align: center;
+      border: 1px solid #aeaeae;
+      border-radius: 0.3rem;
       background-color: ${colors.white};
       overflow-y: scroll;
       z-index: 9999;
@@ -82,8 +87,23 @@ const OptionList = styled(Spacer)<{ isShowList: boolean }>`
   }}
 `;
 
+const Option = styled.li`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+      padding: 10px 15px;
+
+      &:hover {
+        background-color: ${colors.gray_01_1};
+      }
+    `;
+  }};
+`;
+
 const DropdownIcon = styled.div`
   position: absolute;
   top: 6.5px;
-  right: 15px;
+  right: 9%;
 `;
