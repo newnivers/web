@@ -7,6 +7,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const withInterceptStdout = require("next-intercept-stdout");
 
 const nextConfig = {
+  images: {
+    domains: ["https://newniverse.s3.ap-northeast-2.amazonaws.com"],
+  },
   reactStrictMode: true,
   compiler: {
     styledComponents: true,

@@ -70,7 +70,7 @@ function MyInfoPage() {
     defaultValues: { nickname: data?.nickname },
   });
 
-  const [fileInfo, onChangeFile, fileUpload] = useFileUpload(
+  const { fileInfo, onChangeFile, fileUpload } = useFileUpload(
     data?.profileImage
   );
 
@@ -90,7 +90,7 @@ function MyInfoPage() {
     }
 
     try {
-      const result = await fileUpload();
+      const result = await fileUpload(fileInfo);
 
       const form = {
         nickname: data.nickname,

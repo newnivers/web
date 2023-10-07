@@ -1,15 +1,60 @@
 "use client";
 
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import DefaultButton from "@/components/common/button";
 import { TitleColumn, DotColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
 import { SpacerSkleton } from "@/components/common/spacer";
-import Text from "@/components/common/text";
+import TextEditor from "@/components/common/textEditor/textEditor";
+import { useFileUpload } from "@/hooks";
 
 function RegisterPage() {
   const { register, handleSubmit, resetField, watch } = useForm();
+  const htmlRef = useRef<string>("");
+  const cachedImgs = useRef<
+    { name: string; source: string | ArrayBuffer | null }[]
+  >([]);
+
+  const { fileUpload } = useFileUpload();
+
+  const onTest = async () => {
+    const domParser = new DOMParser();
+
+    const parsedDOM = domParser.parseFromString(htmlRef.current, "text/html");
+
+    const imgElements = Array.from(parsedDOM.querySelectorAll("img"));
+
+    if (!imgElements) {
+      return;
+    }
+
+    const uploadPromises = imgElements.map(async (imgElem) => {
+      const imgInfo = cachedImgs.current.find(
+        (cachedImg) => cachedImg.source === imgElem.src
+      );
+
+      if (imgInfo) {
+        const result = await fileUpload(
+          {
+            name: imgInfo.name,
+            data: imgInfo.source,
+          },
+          "image/png"
+        );
+
+        if (result?.Location) {
+          imgElem.src = result.Location;
+        }
+      }
+    });
+
+    await Promise.all(uploadPromises);
+
+    console.log(parsedDOM.documentElement.innerHTML);
+    console.log(typeof parsedDOM.documentElement.innerHTML);
+  };
 
   return (
     <SpacerSkleton id="main-content" type="vertical" gap={47} align="center">
@@ -109,6 +154,16 @@ function RegisterPage() {
         </FormWrapper>
         <DefaultButton type="submit">전송</DefaultButton>
       </RegisterInfo>
+      <TextEditor
+        _onImageUpload={({ file, source }) => {
+          const fileName = file.name.split(".")[0];
+          cachedImgs.current.push({ name: fileName, source });
+        }}
+        _onContentChange={({ html }) => {
+          htmlRef.current = html;
+        }}
+      />
+      <DefaultButton onClick={onTest}>전송</DefaultButton>
     </SpacerSkleton>
   );
 }
