@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const commonTemplateStyle = css`
   position: relative;
-  min-width: 264px;
+  /* min-width: 264px; */
   min-height: 27px;
   padding: 8px 12px;
   border: 1px solid ${({ theme }) => theme.colors.secondary_03};
@@ -34,6 +34,16 @@ export const commonFieldStyle = css`
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+`;
+
+export const resetDateInputStyle = css`
+  text-align: center;
+  cursor: pointer;
+  caret-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ReadOnlyTemplate = styled.div`

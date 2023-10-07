@@ -83,13 +83,20 @@ function RegisterPage() {
             </SpacerSkleton>
             <SpacerSkleton gap={14}>
               <DotColumn tag="공연시간">
-                <Field>
-                  <Field.Input
-                    path="time"
-                    register={register}
-                    registerOptions={{ required: true }}
-                  />
-                </Field>
+                <SpacerSkleton gap={8}>
+                  <Field width="100%">
+                    <Field.TimeOnly
+                      timeCaption="시간 선택"
+                      placeholderText="시작 시간"
+                    />
+                  </Field>
+                  <Field width="100%">
+                    <Field.TimeOnly
+                      timeCaption="시간 선택"
+                      placeholderText="종료 시간"
+                    />
+                  </Field>
+                </SpacerSkleton>
               </DotColumn>
             </SpacerSkleton>
           </Row>
