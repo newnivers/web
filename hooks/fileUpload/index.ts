@@ -2,6 +2,11 @@ import { useState } from "react";
 import type { ChangeEvent } from "react";
 import { useIsomorphicLayoutEffect } from "@newnivers/react";
 import AWS from "aws-sdk";
+import {
+  removeBase64Prefix,
+  base64ToUnit8Array,
+  createImageBlob,
+} from "@/utils/file";
 
 interface FileInfo {
   name: string;
@@ -14,16 +19,27 @@ const ACCESS_KEY_ID = process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID as string;
 const SECRET_ACCESS_KEY_ID = process.env
   .NEXT_PUBLIC_S3_SECRET_ACCESS_KEY_ID as string;
 
-function useFileUpload(profileImage: string | null) {
+function useFileUpload(originImage?: string) {
   const [fileInfo, setFileInfo] = useState<FileInfo>({
     name: "",
     data: "",
   });
 
-  const fileUpload = async () => {
+  const fileUpload = async (
+    fileInfo: {
+      name: string | undefined;
+      data: any;
+    },
+    type?: string
+  ) => {
     if (!fileInfo.name || !fileInfo.data) {
       return;
     }
+
+    const base64Data = removeBase64Prefix(fileInfo.data);
+    const byteArray = base64ToUnit8Array(base64Data);
+
+    const blob = createImageBlob(byteArray, type);
 
     try {
       AWS.config.update({
@@ -37,7 +53,7 @@ function useFileUpload(profileImage: string | null) {
           ACL: "public-read",
           Bucket: BUCKET_NAME,
           Key: `asset/${fileInfo.name}`,
-          Body: fileInfo.data,
+          Body: blob,
         },
       });
 
@@ -50,10 +66,10 @@ function useFileUpload(profileImage: string | null) {
   };
 
   const resetFile = () => {
-    if (profileImage) {
+    if (originImage) {
       setFileInfo({
         ...fileInfo,
-        data: profileImage,
+        data: originImage,
       });
 
       return;
@@ -86,17 +102,17 @@ function useFileUpload(profileImage: string | null) {
   };
 
   useIsomorphicLayoutEffect(() => {
-    if (!profileImage) {
+    if (!originImage) {
       return;
     }
 
     setFileInfo({
       ...fileInfo,
-      data: profileImage,
+      data: originImage,
     });
   }, []);
 
-  return [fileInfo, onChangeFile, fileUpload, resetFile] as const;
+  return { fileInfo, onChangeFile, fileUpload, resetFile };
 }
 
 export default useFileUpload;
