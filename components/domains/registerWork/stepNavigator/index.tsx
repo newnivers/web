@@ -1,7 +1,7 @@
 import { createContext, useContext, useCallback, useRef } from "react";
 import type { ReactNode } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-// import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
+import { useQueryParams } from "@/hooks/router";
 
 const StepNavigatorContext = createContext({
   currentStep: "",
@@ -19,9 +19,10 @@ interface Props {
 
 function StepNavigatorProvider({ steps, children }: Props) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { queryParams, setQueryParams } = useQueryParams(router, pathname);
 
-  const currentStep = searchParams.get("step") ?? steps[0];
+  const currentStep = queryParams.get("step") ?? steps[0];
   const currentStepPos = steps.indexOf(currentStep);
 
   const stepInfoRef = useRef({
@@ -51,16 +52,13 @@ function StepNavigatorProvider({ steps, children }: Props) {
 
     const currentStepPos = steps.indexOf(currentStep);
 
-    // router.push({
-    //   pathname: "/register",
-    //   query: {
-    //     step: currentStepPos + 1,
-    //   },
-    // });
+    setQueryParams({
+      step: currentStepPos + 1,
+    });
 
     stepInfoRef.current.isFirstStep = false;
     stepInfoRef.current.isLastPage = steps[currentStepPos + 1] === lastStep;
-  }, [currentStep, router, steps]);
+  }, [currentStep, setQueryParams, steps]);
 
   return (
     <StepNavigatorContext.Provider
