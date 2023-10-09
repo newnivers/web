@@ -53,7 +53,7 @@ function StepNavigatorProvider({ steps, children }: Props) {
     const currentStepPos = steps.indexOf(currentStep);
 
     setQueryParams({
-      step: currentStepPos + 1,
+      step: steps[currentStepPos + 1],
     });
 
     stepInfoRef.current.isFirstStep = false;

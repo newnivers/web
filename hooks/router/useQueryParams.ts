@@ -18,7 +18,7 @@ function useQueryParams<T>(router: AppRouterInstance, pathname: string) {
     const search = urlSearchParams.toString();
     const query = search ? `?${search}` : "";
 
-    router.replace(`${pathname}${query}`);
+    router.push(`${pathname}${query}`);
   };
 
   return { queryParams: searchParams, setQueryParams };
