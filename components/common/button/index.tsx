@@ -40,6 +40,10 @@ const StyledButton = styled.button<{ sort: ButtonSort }>`
       -moz-user-select: none;
       -webkit-user-select: none;
       -ms-user-select: none;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     `;
   }}
 `;
