@@ -1,9 +1,9 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import styled, { css } from "styled-components";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLElement> {
   type?: "vertical" | "horizontal";
   gap?: number;
   align?: CSSProperties["alignItems"];
@@ -11,6 +11,7 @@ interface Props {
   children: ReactNode;
   restStyle?: CSSProperties;
   className?: string;
+  as?: "div" | "section" | "article" | "main" | "footer" | "aside" | "form";
 }
 
 function Spacer({
@@ -21,6 +22,7 @@ function Spacer({
   children,
   restStyle,
   className,
+  as = "div",
 }: Props) {
   return (
     <SpacerSkleton
@@ -30,13 +32,14 @@ function Spacer({
       align={align}
       justify={justify}
       style={restStyle}
+      as={as}
     >
       {children}
     </SpacerSkleton>
   );
 }
 
-export const SpacerSkleton = styled.div<Props>`
+export const SpacerSkleton = styled.div<Omit<Props, "as">>`
   ${({ type, justify, align, gap }) => {
     return css`
       display: flex;

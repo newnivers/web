@@ -19,14 +19,22 @@ function RegisterWorkPage() {
         {(currentStep, currentStepPos) => (
           <RegisterInfo type="vertical" gap={47} align="center">
             <TitleColumn>{`${currentStepPos + 1}. ${
-              title.currentStep
+              title[currentStep]
             }`}</TitleColumn>
             <RegisterWorkForm>
-              {currentStep === "default" ? (
-                <RegisterWorkForm.DefaultInfo />
-              ) : (
-                <RegisterWorkForm.DetailInfo />
-              )}
+              {(register, control, cachedImages) =>
+                currentStep === "default" ? (
+                  <RegisterWorkForm.DefaultInfo
+                    register={register}
+                    control={control}
+                  />
+                ) : (
+                  <RegisterWorkForm.DetailInfo
+                    control={control}
+                    cachedImages={cachedImages}
+                  />
+                )
+              }
             </RegisterWorkForm>
           </RegisterInfo>
         )}

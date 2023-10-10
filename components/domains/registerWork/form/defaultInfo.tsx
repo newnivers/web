@@ -1,12 +1,15 @@
-import { useForm } from "react-hook-form";
+import type { UseFormRegister, Control, FieldValues } from "react-hook-form";
 import styled from "styled-components";
 import { DotColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
 import { SpacerSkleton } from "@/components/common/spacer";
 
-export function DefaultInfo() {
-  const { register, handleSubmit, resetField, watch } = useForm();
+interface Props {
+  register: UseFormRegister<FieldValues>;
+  control: Control<FieldValues, any>;
+}
 
+export function DefaultInfo({ register, control }: Props) {
   return (
     <>
       <Row type="vertical" gap={17}>
