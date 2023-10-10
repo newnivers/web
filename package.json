@@ -4,7 +4,7 @@
   "scripts": {
     "build": "next build",
     "cz": "./.yarn/unplugged/cz-customizable-npm-7.0.0-1704ad9243/node_modules/cz-customizable/standalone.js",
-    "dev": "next dev -H 127.0.0.1 -p 3000",
+    "dev": "next dev",
     "postinstall": "husky install",
     "lint": "next lint",
     "sort": "sort-package-json",

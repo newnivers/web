@@ -6,6 +6,11 @@ import { SpacerSkleton } from "@/components/common/spacer";
 import { RegisterWorkForm } from "@/components/domains/registerWork/form";
 import StepNavigator from "@/components/domains/registerWork/stepNavigator";
 
+const title: { [key: string]: string } = {
+  default: "기본 정보",
+  detail: "상세 정보",
+};
+
 function RegisterWorkPage() {
   return (
     <SpacerSkleton id="main-content" type="vertical" gap={47} align="center">
@@ -13,7 +18,9 @@ function RegisterWorkPage() {
       <StepNavigator.Provider steps={["default", "detail"]}>
         {(currentStep, currentStepPos) => (
           <RegisterInfo type="vertical" gap={47} align="center">
-            <TitleColumn>{`${currentStepPos + 1}. ${currentStep}`}</TitleColumn>
+            <TitleColumn>{`${currentStepPos + 1}. ${
+              title.currentStep
+            }`}</TitleColumn>
             <RegisterWorkForm>
               {currentStep === "default" ? (
                 <RegisterWorkForm.DefaultInfo />
