@@ -9,7 +9,7 @@ const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
 
 const localStorage = new LocalStorage();
 
-interface AuthUser {
+export interface AuthUser {
   token: string;
   id: string;
 }
