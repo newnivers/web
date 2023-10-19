@@ -29,7 +29,7 @@ const handlerResponse = <T>(response: AxiosResponse<T>) => {
 };
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_DEFAULT_SERVER_DOMAIN}`,
+  baseURL: `${process.env.NEXT_PUBLIC_DEFAULT_SERVER_DOMAIN}/api`,
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
