@@ -3,21 +3,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import type { AuthUser, AuthError } from "@/types";
 import { LocalStorage } from "@/utils/cache";
 
 const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
 
 const localStorage = new LocalStorage();
-
-export interface AuthUser {
-  token: string;
-  id: string;
-}
-
-interface AuthError {
-  isTrigger: boolean;
-  message: string;
-}
 
 export function useAuthUser() {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);

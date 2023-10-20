@@ -5,15 +5,15 @@ import type {
   Method,
   AxiosResponse,
 } from "axios";
-import type { AuthUser } from "@/contexts/authUserInfo";
+import type { AuthUser } from "@/types";
 import { LocalStorage } from "@/utils/cache";
 import { HTTP_METHOD } from "../shared";
 
-const authUser = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
+const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
 const localStorage = new LocalStorage();
 
 const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
-  const { token } = localStorage.get(authUser) as AuthUser;
+  const { token } = localStorage.get(authUserKey) as AuthUser;
 
   return {
     ...config,

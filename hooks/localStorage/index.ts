@@ -5,7 +5,7 @@ import { LocalStorage } from "@/utils/cache";
 const localStorage = new LocalStorage();
 
 function useLocalStorage<T = any>(key: string, initialValue: T) {
-  const [cachedValue, setCachedValue] = useState(() => {
+  const [cachedValue, setCachedValue] = useState<T>(() => {
     try {
       const value = localStorage.get(key);
 
