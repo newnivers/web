@@ -8,3 +8,13 @@ export interface AuthResponse {
   user_id: string;
   nickname: string;
 }
+
+export interface AuthUser {
+  token: string;
+  id: string;
+}
+
+export interface AuthError {
+  isTrigger: boolean;
+  message: string;
+}

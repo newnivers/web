@@ -3,19 +3,19 @@
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { usePostAuthorizationCode } from "@/queries";
-import { LocalStorage } from "@/utils/cache";
-
-const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
-
-const localStorage = new LocalStorage();
+import { useAuthUserStorage } from "@/hooks";
 
 export default function LoginRedirectPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [_, setAuthUserInfo] = useAuthUserStorage();
 
   const { mutate: postAuthorizationCode } = usePostAuthorizationCode({
     onSuccess: (data) => {
-      localStorage.set(authUserKey, data.results);
+      const {
+        results: { token, user_id },
+      } = data;
+      setAuthUserInfo({ token, id: user_id });
       router.replace("/");
     },
   });

@@ -1,27 +1,30 @@
+import { ERROR_MESSAGE } from "@/consts";
+import { isServer } from "@/utils";
+
 class LocalStorage {
   get(key: string) {
-    if (typeof window === "undefined") {
-      return;
+    if (isServer()) {
+      throw new Error(ERROR_MESSAGE.SERVER_RENDER_RENDER);
     }
 
-    const item = localStorage.getItem(key);
+    const value = localStorage.getItem(key);
 
-    return JSON.parse(item ?? "null");
+    if (!value) {
+      throw new Error(ERROR_MESSAGE.NO_CACHED_VALUE_LOCAL_STORAGE);
+    }
+
+    return JSON.parse(value);
   }
 
   set<T extends object | string>(key: string, value: T) {
-    if (typeof window === "undefined") {
-      return;
+    if (isServer()) {
+      throw new Error(ERROR_MESSAGE.SERVER_RENDER_RENDER);
     }
 
-    const targetValue =
-      typeof value === "object" ? JSON.stringify(value) : value;
+    const valueStrToCache =
+      typeof value !== "string" ? JSON.stringify(value) : value;
 
-    if (typeof targetValue !== "string") {
-      return;
-    }
-
-    localStorage.setItem(key, targetValue);
+    localStorage.setItem(key, valueStrToCache);
   }
 
   remove(key: string) {

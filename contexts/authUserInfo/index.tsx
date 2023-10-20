@@ -3,21 +3,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { LocalStorage } from "@/utils/cache";
-
-const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
-
-const localStorage = new LocalStorage();
-
-export interface AuthUser {
-  token: string;
-  id: string;
-}
-
-interface AuthError {
-  isTrigger: boolean;
-  message: string;
-}
+import type { AuthUser, AuthError } from "@/types";
+import { useAuthUserStorage } from "@/hooks";
 
 export function useAuthUser() {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
@@ -27,17 +14,18 @@ export function useAuthUser() {
     message: "",
   });
 
-  useEffect(() => {
-    const authUser = localStorage.get(authUserKey);
+  const [cachedAuthUser, setAuthUserInfo] = useAuthUserStorage();
 
+  useEffect(() => {
     setLoading(false);
 
-    if (!authUser) {
+    if (!cachedAuthUser) {
       setError({
         isTrigger: true,
         message: "auth failure",
       });
 
+      // 인증 실패에 따른 토큰 로테이션 요청 필요 or 사용자 세션 강제 종료
       return;
     }
 
@@ -63,7 +51,6 @@ function UserInfoProvider({ children }: Props) {
 
   useEffect(() => {
     if (error.isTrigger) {
-      localStorage.remove(authUserKey);
       router.replace("/login");
     }
   }, [error.isTrigger]);
