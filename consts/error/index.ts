@@ -4,3 +4,4 @@ export const ERROR_MESSAGE = {
 } as const;
 
 export type ErrorCandidates = keyof typeof ERROR_MESSAGE;
+export type ErrorMessage = { message: ErrorCandidates };
