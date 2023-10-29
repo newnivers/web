@@ -1,7 +1,7 @@
 import { ERROR_MESSAGE } from "@/consts";
-import { isServer } from "@/utils";
+import { isServer } from "@/utils/server";
 
-class LocalStorage {
+export class LocalStorage {
   get(key: string) {
     if (isServer()) {
       throw new Error(ERROR_MESSAGE.SERVER_RENDER_RENDER);
@@ -35,5 +35,3 @@ class LocalStorage {
     localStorage.removeItem(key);
   }
 }
-
-export default LocalStorage;
