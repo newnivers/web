@@ -43,3 +43,6 @@ __snapshots__
 
 # lighthouseci
 .lighthouseci/
+
+# IDE
+.idea
