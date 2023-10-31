@@ -13,7 +13,7 @@ const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
 
 const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const localStorage = new LocalStorage();
-  const { token } = localStorage.get(authUserKey) as AuthUser;
+  const token = localStorage.get(authUserKey) ?? "unauthorized";
 
   return {
     ...config,
