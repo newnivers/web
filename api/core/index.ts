@@ -10,10 +10,10 @@ import { LocalStorage } from "@/utils/cache";
 import { HTTP_METHOD } from "../shared";
 
 const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
-const localStorage = new LocalStorage();
 
 const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
-  const { token } = localStorage.get(authUserKey) as AuthUser;
+  const localStorage = new LocalStorage();
+  const token = localStorage.get(authUserKey) ?? "unauthorized";
 
   return {
     ...config,
@@ -38,7 +38,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 const factoryApiMethod =
   (method: Method) =>
-  (
+  async (
     url: AxiosRequestConfig["url"],
     config?: Omit<AxiosRequestConfig, "url">
   ): Promise<any> => {

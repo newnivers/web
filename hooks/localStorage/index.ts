@@ -1,17 +1,19 @@
 import { useCallback, useState } from "react";
 import type { ErrorMessage } from "@/consts";
 import { LocalStorage } from "@/utils/cache";
-
-const localStorage = new LocalStorage();
+import { isServer } from "@/utils";
 
 function useLocalStorage<T = any>(key: string, initialValue: T) {
   const [cachedValue, setCachedValue] = useState<T>(() => {
     try {
+      const localStorage = new LocalStorage();
       const value = localStorage.get(key);
 
-      return value;
+      return value ? JSON.parse(value) : initialValue;
     } catch (error: unknown) {
-      console.error((error as { message: ErrorMessage }).message);
+      if (isServer()) {
+        console.error((error as { message: ErrorMessage }).message);
+      }
 
       return initialValue;
     }

@@ -24,7 +24,7 @@ const localStorage = new LocalStorage();
 const queryClient = new QueryClient();
 
 function MyInfoPage() {
-  const authUser = localStorage.get(authUserKey);
+  const authUser = JSON.parse(localStorage.get(authUserKey) ?? "");
 
   const { data } = useQuery(
     ["user", authUser?.userId],

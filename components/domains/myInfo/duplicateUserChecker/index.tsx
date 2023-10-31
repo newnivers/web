@@ -26,11 +26,7 @@ function DuplicateUserChecker<T extends FieldValues>({
   const { refetch } = useQuery(
     ["check", "nickname"],
     async () => {
-      const authUser = localStorage.get(authUserKey) as {
-        token: string;
-        user_id: string;
-        nickname: string;
-      };
+      const authUser = JSON.parse(localStorage.get(authUserKey) ?? "");
 
       const { data } = await axios.get(
         `${defaultDomain}/api/users/check-nickname`,
