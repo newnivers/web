@@ -3,40 +3,43 @@
 import styled, { css } from "styled-components";
 import { TitleColumn } from "@/components/common/column";
 import { SpacerSkleton } from "@/components/common/spacer";
-import { RegisterWorkForm } from "@/components/domains/registerWork/form";
+import {
+  RegisterWorkForm,
+  BreadCrumbs,
+  titles,
+  steps,
+} from "@/components/domains/registerWork";
 import StepNavigator from "@/components/domains/registerWork/stepNavigator";
-
-const title: { [key: string]: string } = {
-  default: "기본 정보",
-  detail: "상세 정보",
-};
 
 function RegisterWorkPage() {
   return (
     <SpacerSkleton id="main-content" type="vertical" gap={47} align="center">
-      <Headline justify="center">작품 등록</Headline>
-      <StepNavigator.Provider steps={["default", "detail"]}>
+      <StepNavigator.Provider steps={steps}>
         {(currentStep, currentStepPos) => (
-          <RegisterInfo type="vertical" gap={47} align="center">
-            <TitleColumn>{`${currentStepPos + 1}. ${
-              title[currentStep]
-            }`}</TitleColumn>
-            <RegisterWorkForm>
-              {(register, control, cachedImages) =>
-                currentStep === "default" ? (
-                  <RegisterWorkForm.DefaultInfo
-                    register={register}
-                    control={control}
-                  />
-                ) : (
-                  <RegisterWorkForm.DetailInfo
-                    control={control}
-                    cachedImages={cachedImages}
-                  />
-                )
-              }
-            </RegisterWorkForm>
-          </RegisterInfo>
+          <>
+            <Headline justify="center">작품 등록</Headline>
+            <BreadCrumbs />
+            <RegisterInfo type="vertical" gap={47} align="center">
+              <TitleColumn>{`${currentStepPos + 1}. ${
+                titles[currentStep]
+              }`}</TitleColumn>
+              <RegisterWorkForm>
+                {(register, control, cachedImages) =>
+                  currentStep === "default" ? (
+                    <RegisterWorkForm.DefaultInfo
+                      register={register}
+                      control={control}
+                    />
+                  ) : (
+                    <RegisterWorkForm.DetailInfo
+                      control={control}
+                      cachedImages={cachedImages}
+                    />
+                  )
+                }
+              </RegisterWorkForm>
+            </RegisterInfo>
+          </>
         )}
       </StepNavigator.Provider>
     </SpacerSkleton>

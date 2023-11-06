@@ -26,8 +26,8 @@ function StepNavigatorProvider({ steps, children }: Props) {
   const currentStepPos = steps.indexOf(currentStep);
 
   const stepInfoRef = useRef({
-    isFirstStep: true,
-    isLastPage: false,
+    isFirstStep: currentStepPos === 0,
+    isLastPage: currentStepPos === steps.length - 1,
   });
 
   const movePrev = useCallback(() => {
