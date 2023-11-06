@@ -24,13 +24,21 @@ function CustomDatePickerHeader({
 }: ReactDatePickerCustomHeaderProps) {
   return (
     <HeaderContainer justify="center" align="center" gap={10}>
-      <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+      <button
+        type="button"
+        onClick={decreaseMonth}
+        disabled={prevMonthButtonDisabled}
+      >
         이전 날짜
       </button>
       <div id="date-info">{`${getYear(date)}.${getMonth(
         add(date, { months: 1 })
       )}`}</div>
-      <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+      <button
+        type="button"
+        onClick={increaseMonth}
+        disabled={nextMonthButtonDisabled}
+      >
         다음 날짜
       </button>
     </HeaderContainer>
