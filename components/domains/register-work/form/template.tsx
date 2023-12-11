@@ -70,9 +70,11 @@ export function RegisterWorkFormTemplate({ children }: Props) {
   // };
 
   return (
-    <Spacer type="vertical" as="form" align="center" gap={30}>
-      <FormWrapper>{children(register, control, cachedImages)}</FormWrapper>
-      <StepController gap={10} align="center">
+    <Spacer type="vertical" as="form" gap={78} restStyle={{ width: "100%" }}>
+      <Content type="vertical" gap={52}>
+        {children(register, control, cachedImages)}
+      </Content>
+      <StepController justify="flex-end" gap={10} align="center">
         {!isFirstStep && (
           <DefaultButton
             type="button"
@@ -94,7 +96,8 @@ export function RegisterWorkFormTemplate({ children }: Props) {
   );
 }
 
-const FormWrapper = styled(SpacerSkleton)`
+const Content = styled(SpacerSkleton)`
+  flex: 1;
   position: relative;
   white-space: nowrap;
 `;
