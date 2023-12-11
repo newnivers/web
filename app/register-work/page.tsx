@@ -8,8 +8,8 @@ import {
   BreadCrumbs,
   titles,
   steps,
-} from "@/components/domains/registerWork";
-import StepNavigator from "@/components/domains/registerWork/stepNavigator";
+  StepNavigator,
+} from "@/components/domains/register-work";
 
 function RegisterWorkPage() {
   return (

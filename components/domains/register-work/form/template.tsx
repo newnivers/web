@@ -5,7 +5,7 @@ import type { UseFormRegister, Control, FieldValues } from "react-hook-form";
 import styled from "styled-components";
 import DefaultButton from "@/components/common/button";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
-import StepNavigator from "@/components/domains/registerWork/stepNavigator";
+import { StepNavigator } from "@/components/domains/register-work/stepNavigator";
 // import { useFileUpload } from "@/hooks";
 
 interface Props {

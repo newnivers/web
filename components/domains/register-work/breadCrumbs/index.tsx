@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
-import { titles } from "@/components/domains/registerWork";
-import StepNavigator from "@/components/domains/registerWork/stepNavigator";
+import { titles } from "@/components/domains/register-work/shared";
+import { StepNavigator } from "@/components/domains/register-work/stepNavigator";
 
 export function BreadCrumbs() {
   const { currentStep } = StepNavigator.onlyHook();

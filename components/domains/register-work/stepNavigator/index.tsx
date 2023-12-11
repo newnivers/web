@@ -78,9 +78,7 @@ function StepNavigatorProvider({ steps, children }: Props) {
 
 const useStepNavigator = () => useContext(StepNavigatorContext);
 
-const StepNavigator = {
+export const StepNavigator = {
   Provider: StepNavigatorProvider,
   onlyHook: useStepNavigator,
 };
-
-export default StepNavigator;
