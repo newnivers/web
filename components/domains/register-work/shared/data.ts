@@ -20,6 +20,9 @@ export const subTitles: {
       ],
     },
   ],
+  detail: [],
+  price: [],
+  seat: [],
 };
 
 export const steps = ["default", "detail", "price", "seat"];

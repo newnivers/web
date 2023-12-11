@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import type { ReactNode, MutableRefObject } from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import type { UseFormRegister, Control, FieldValues } from "react-hook-form";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import DefaultButton from "@/components/common/button";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import { StepNavigator } from "@/components/domains/register-work/stepNavigator";
@@ -76,21 +77,34 @@ export function RegisterWorkFormTemplate({ children }: Props) {
       </Content>
       <StepController justify="flex-end" gap={10} align="center">
         {!isFirstStep && (
-          <DefaultButton
-            type="button"
-            sort="secondary"
-            onClick={() => movePrev()}
-          >
-            이전
-          </DefaultButton>
+          <StepButton type="button" onClick={() => movePrev()}>
+            <Image
+              src="/icon/double-arrow-left.svg"
+              width={16}
+              height={16}
+              alt="double-arrow-left"
+            />
+            <p>이전 페이지</p>
+          </StepButton>
         )}
 
         {!isLastStep && (
-          <DefaultButton type="button" onClick={() => moveNext()}>
-            다음
-          </DefaultButton>
+          <StepButton type="button" onClick={() => moveNext()}>
+            <p>다음 페이지</p>
+            <Image
+              src="/icon/double-arrow-right.svg"
+              width={16}
+              height={16}
+              alt="dobule-arrow-right"
+            />
+          </StepButton>
         )}
-        {isLastStep && <DefaultButton type="submit">전송</DefaultButton>}
+        {isLastStep && (
+          <>
+            <StepButton type="button">미리보기</StepButton>
+            <StepButton type="submit">작품등록</StepButton>
+          </>
+        )}
       </StepController>
     </Spacer>
   );
@@ -103,3 +117,21 @@ const Content = styled(SpacerSkleton)`
 `;
 
 const StepController = styled(SpacerSkleton)``;
+
+const StepButton = styled.button`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      width: 148px;
+      height: 56px;
+      border: 1px solid ${colors.secondary[400]};
+      border-radius: 4px;
+      color: ${colors.secondary[400]};
+    `;
+  }}
+`;
