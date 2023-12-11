@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styled, { css } from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import { titles } from "@/components/domains/register-work/shared";
@@ -7,10 +8,28 @@ export function BreadCrumbs() {
   const { currentStep } = StepNavigator.onlyHook();
 
   return (
-    <Container as="ul" align="center" gap={10}>
-      {Object.entries(titles).map(([key, val]) => (
-        <BreadCrumb key={key} active={currentStep === key}>
-          {val}
+    <Container as="ul" align="center" gap={12}>
+      {Object.entries(titles).map(([key, val], idx, self) => (
+        <BreadCrumb
+          key={key}
+          justify="center"
+          align="center"
+          gap={12}
+          active={currentStep === key}
+        >
+          <p>{`0${idx + 1}. ${val}`}</p>
+          {self.length - 1 !== idx && (
+            <Image
+              src={`${
+                currentStep === key
+                  ? "/icon/right-arrow-active.svg"
+                  : "/icon/right-arrow-unactive.svg"
+              }`}
+              width={16}
+              height={16}
+              alt="right-arrow"
+            />
+          )}
         </BreadCrumb>
       ))}
     </Container>
@@ -19,16 +38,15 @@ export function BreadCrumbs() {
 
 const Container = styled(SpacerSkleton)``;
 
-const BreadCrumb = styled.li<{ active: boolean }>`
+const BreadCrumb = styled(SpacerSkleton)<{ active: boolean }>`
   ${({ theme, active }) => {
     const { colors } = theme;
 
     return css`
-      padding: 10px;
-      background-color: ${active ? colors.primary_01 : colors.white};
-      color: ${active ? colors.white : colors.primary_01};
-      border: 1.4px solid ${colors.primary_01};
-      border-radius: 30px;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 30px;
+      color: ${active ? colors.secondary[900] : colors.secondary[400]};
     `;
   }}
 `;

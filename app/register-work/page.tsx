@@ -13,12 +13,15 @@ import {
 
 function RegisterWorkPage() {
   return (
-    <SpacerSkleton id="main-content" type="vertical" gap={47} align="center">
+    <SpacerSkleton id="main-content" type="vertical" gap={52} align="center">
       <StepNavigator.Provider steps={steps}>
         {(currentStep, currentStepPos) => (
           <>
-            <Headline justify="center">작품 등록</Headline>
-            <BreadCrumbs />
+            <Headline type="vertical" justify="center" align="center" gap={40}>
+              <p id="title">작품등록</p>
+              <BreadCrumbs />
+            </Headline>
+
             <RegisterInfo type="vertical" gap={47} align="center">
               <TitleColumn>{`${currentStepPos + 1}. ${
                 titles[currentStep]
@@ -51,11 +54,13 @@ const Headline = styled(SpacerSkleton)`
     const { colors } = theme;
 
     return css`
-      width: 474px;
-      border-bottom: 1px solid ${colors.secondary_03};
-      font-size: 2.5rem;
-      font-weight: 600;
-      color: ${colors.primary_02};
+      /* width: 474px; */
+
+      & > p#title {
+        font-size: 32px;
+        font-weight: 600;
+        color: ${colors.secondary[900]};
+      }
     `;
   }}
 `;
