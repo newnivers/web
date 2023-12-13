@@ -1,14 +1,15 @@
 "use client";
 
+import { createElement } from "react";
 import styled, { css } from "styled-components";
-import { TitleColumn } from "@/components/common/column";
 import { SpacerSkleton } from "@/components/common/spacer";
 import {
-  RegisterWorkForm,
   BreadCrumbs,
-  subTitles,
   steps,
   StepNavigator,
+  WorkForm,
+  RegisterWorkFormTemplate,
+  WorkFormComponents,
 } from "@/components/domains/register-work";
 
 function RegisterWorkPage() {
@@ -23,30 +24,11 @@ function RegisterWorkPage() {
             </Headline>
 
             <RegisterInfo type="vertical" gap={47} align="center">
-              <RegisterWorkForm>
-                {(register, control, cachedImages) => {
-                  return (
-                    <>
-                      {subTitles[currentStep].map((col) => (
-                        <SpacerSkleton key={col.key} type="vertical" gap={16}>
-                          <TitleColumn name={col.name} desc={col.desc} />
-                          {currentStep === "default" ? (
-                            <RegisterWorkForm.DefaultInfo
-                              register={register}
-                              control={control}
-                            />
-                          ) : (
-                            <RegisterWorkForm.DetailInfo
-                              control={control}
-                              cachedImages={cachedImages}
-                            />
-                          )}
-                        </SpacerSkleton>
-                      ))}
-                    </>
-                  );
-                }}
-              </RegisterWorkForm>
+              <WorkForm.Provider>
+                <RegisterWorkFormTemplate>
+                  {createElement(WorkFormComponents[currentStep])}
+                </RegisterWorkFormTemplate>
+              </WorkForm.Provider>
             </RegisterInfo>
           </>
         )}
