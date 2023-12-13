@@ -2,9 +2,17 @@ import { createContext, useContext, useCallback, useRef } from "react";
 import type { ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useQueryParams } from "@/hooks/router";
+import type { WorkFormSort } from "../shared/type";
 
-const StepNavigatorContext = createContext({
-  currentStep: "",
+const StepNavigatorContext = createContext<{
+  currentStep: WorkFormSort;
+  currentStepPos: number;
+  isFirstStep: boolean;
+  isLastStep: boolean;
+  movePrev: () => void;
+  moveNext: () => void;
+}>({
+  currentStep: "default",
   currentStepPos: 0,
   isFirstStep: true,
   isLastStep: false,
@@ -13,8 +21,8 @@ const StepNavigatorContext = createContext({
 });
 
 interface Props {
-  steps: string[];
-  children: (currentStep: string, currentStepPos: number) => ReactNode;
+  steps: WorkFormSort[];
+  children: (currentStep: WorkFormSort, currentStepPos: number) => ReactNode;
 }
 
 function StepNavigatorProvider({ steps, children }: Props) {
@@ -22,7 +30,7 @@ function StepNavigatorProvider({ steps, children }: Props) {
   const pathname = usePathname();
   const { queryParams, setQueryParams } = useQueryParams(router, pathname);
 
-  const currentStep = queryParams.get("step") ?? steps[0];
+  const currentStep = (queryParams.get("step") as WorkFormSort) ?? steps[0];
   const currentStepPos = steps.indexOf(currentStep);
 
   const stepInfoRef = useRef({

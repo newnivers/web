@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import type { UseFormRegister, Control, FieldValues } from "react-hook-form";
 import styled, { css } from "styled-components";
-import DefaultButton from "@/components/common/button";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import { StepNavigator } from "@/components/domains/register-work/stepNavigator";
 // import { useFileUpload } from "@/hooks";
