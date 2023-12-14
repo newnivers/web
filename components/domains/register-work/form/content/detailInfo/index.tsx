@@ -1,7 +1,11 @@
+import { TitleColumn } from "@/components/common/column";
+import { SpacerSkleton } from "@/components/common/spacer";
 import type { FormContentProps } from "../type";
 
 export function DetailInfo({ classifications }: FormContentProps) {
-  console.log("detail", classifications);
-
-  return <div>detailInfo</div>;
+  return classifications.map(({ key, name, desc }) => (
+    <SpacerSkleton key={key} type="vertical">
+      <TitleColumn name={name} desc={desc} />
+    </SpacerSkleton>
+  ));
 }
