@@ -1,4 +1,4 @@
-import type { WorkFormSort } from "./type";
+import type { WorkFormSort, Classification } from "./type";
 
 export const titles: { [key in WorkFormSort]: string } = {
   default: "기본정보",
@@ -7,8 +7,8 @@ export const titles: { [key in WorkFormSort]: string } = {
   seat: "좌석정보",
 };
 
-export const subTitles: {
-  [key in WorkFormSort]: { key: string; name: string; desc?: string[] }[];
+export const classification: {
+  [key in WorkFormSort]: Classification[];
 } = {
   default: [
     { key: "work-info", name: "작품 정보" },
