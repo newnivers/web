@@ -10,6 +10,7 @@ import {
   WorkForm,
   RegisterWorkFormTemplate,
   WorkFormComponents,
+  classificationInfo,
 } from "@/components/domains/register-work";
 
 function RegisterWorkPage() {
@@ -26,7 +27,9 @@ function RegisterWorkPage() {
             <RegisterInfo type="vertical" gap={47} align="center">
               <WorkForm.Provider>
                 <RegisterWorkFormTemplate>
-                  {createElement(WorkFormComponents[currentStep])}
+                  {createElement(WorkFormComponents[currentStep], {
+                    classifications: classificationInfo[currentStep],
+                  })}
                 </RegisterWorkFormTemplate>
               </WorkForm.Provider>
             </RegisterInfo>
