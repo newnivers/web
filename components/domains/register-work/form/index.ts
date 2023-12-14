@@ -1,13 +1,12 @@
 import type { ComponentType } from "react";
+import { DefaultInfo, DetailInfo, PriceInfo, SeatInfo } from "./content";
 import { WorkForm } from "./context";
-import { DefaultInfo } from "./defaultInfo";
-import { DetailInfo } from "./detailInfo";
-import { PriceInfo } from "./priceInfo";
-import { SeatInfo } from "./seatInfo";
 import { RegisterWorkFormTemplate } from "./template";
-import type { WorkFormSort } from "../shared/type";
+import type { WorkFormSort, Classification } from "../shared/type";
 
-const WorkFormComponents: { [sort in WorkFormSort]: ComponentType<any> } = {
+const WorkFormComponents: {
+  [sort in WorkFormSort]: ComponentType<{ classifications: Classification[] }>;
+} = {
   default: DefaultInfo,
   detail: DetailInfo,
   price: PriceInfo,

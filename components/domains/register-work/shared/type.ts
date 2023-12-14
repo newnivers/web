@@ -36,3 +36,9 @@ export interface WorkFormPerStep {
   price: PriceWorkForm;
   seat: SeatWorkForm;
 }
+
+export interface Classification {
+  key: string;
+  name: string;
+  desc?: string[];
+}
