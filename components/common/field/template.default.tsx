@@ -5,18 +5,18 @@ import type { ThemeColors } from "@/styles/theme/colors";
 type FormTemplateStyle = Pick<CSSProperties, "width" | "height">;
 
 interface Props {
-  style?: FormTemplateStyle;
-  disabled?: boolean;
-  error?: boolean;
-  children?: ReactNode;
+  style: FormTemplateStyle;
+  disabled: boolean;
+  error: boolean;
+  children: ReactNode;
 }
 
-export function FieldTemplate({
+export function DefaultFieldTemplate({
   style = { width: "100%", height: "100%" },
   disabled = false,
   error = false,
   children,
-}: Props) {
+}: Partial<Props>) {
   return (
     <Container style={style} disabled={disabled} error={error}>
       {children}
@@ -24,11 +24,7 @@ export function FieldTemplate({
   );
 }
 
-const Container = styled.div<{
-  style: FormTemplateStyle;
-  disabled: boolean;
-  error: boolean;
-}>`
+const Container = styled.div<Omit<Props, "children">>`
   ${({ style: { width, height }, disabled, error, theme }) => {
     const { colors } = theme;
     const borderColor = getBorderColor(colors, disabled, error);
