@@ -12,7 +12,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
       <TitleColumn name={name} desc={desc} />
       <IconFieldTemplate iconType="calendar">
         <DefaultFieldTemplate>
-          <input />
+          <input className="reset icon" />
         </DefaultFieldTemplate>
       </IconFieldTemplate>
     </SpacerSkleton>

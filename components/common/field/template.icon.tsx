@@ -15,7 +15,7 @@ export function IconFieldTemplate({ iconType, children }: Props) {
     iconType === "selector" || iconType === "calendar";
 
   return (
-    <Container>
+    <Container iconType={iconType}>
       {isShowCalendar && (
         <Icon pos="left">
           <Image
@@ -41,10 +41,15 @@ export function IconFieldTemplate({ iconType, children }: Props) {
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<Pick<Props, "iconType">>`
   position: relative;
   width: fit-content;
   height: fit-content;
+
+  & > div#default-template > input.reset.icon {
+    box-sizing: border-box;
+    ${({ iconType }) => getIconInputWidthStyle(iconType)};
+  }
 `;
 
 const Icon = styled.div<{ pos: "left" | "right" }>`
@@ -52,3 +57,11 @@ const Icon = styled.div<{ pos: "left" | "right" }>`
   top: 20%;
   ${({ pos }) => (pos === "left" ? "left: 12px" : "right: 12px")}
 `;
+
+const getIconInputWidthStyle = (iconType: IconType) => {
+  if (iconType === "selector") {
+    return "width: calc(100% - 24px);";
+  }
+
+  return "width: calc(100% - 48px);";
+};

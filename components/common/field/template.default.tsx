@@ -18,7 +18,12 @@ export function DefaultFieldTemplate({
   children,
 }: Partial<Props>) {
   return (
-    <Container style={style} disabled={disabled} error={error}>
+    <Container
+      id="default-template"
+      style={style}
+      disabled={disabled}
+      error={error}
+    >
       {children}
     </Container>
   );
@@ -42,6 +47,21 @@ const Container = styled.div<Omit<Props, "children">>`
 
       &:has(input:focus) {
         border: 1px solid ${colors.secondary[500]};
+      }
+
+      & > input.reset {
+        margin: 0;
+        padding: 0;
+        border: none;
+        line-height: normal;
+        color: inherit;
+        background-color: transparent;
+        box-shadow: none;
+        outline: none;
+
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
       }
     `;
   }}
