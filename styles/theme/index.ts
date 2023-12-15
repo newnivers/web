@@ -1,5 +1,5 @@
-import colors from "./colors";
-import media from "./media";
+import { colors } from "./colors";
+import { media } from "./media";
 
 const styledTheme = {
   colors,

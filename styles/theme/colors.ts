@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
   // legacy color system
   primary_01: "#4F9EF7",
   primary_02: "#486284",
@@ -43,4 +43,4 @@ const colors = {
   },
 } as const;
 
-export default colors;
+export type ThemeColors = typeof colors;

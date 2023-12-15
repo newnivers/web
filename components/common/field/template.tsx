@@ -1,40 +1,66 @@
-import type { ReactNode } from "react";
+import type { ReactNode, CSSProperties } from "react";
 import styled, { css } from "styled-components";
-import { commonTemplateStyle } from "./shared";
+import type { ThemeColors } from "@/styles/theme/colors";
 
-type CSSWidth =
-  | "auto"
-  | "inherit"
-  | "initial"
-  | `${number}px`
-  | `${number}%`
-  | `${number}em`
-  | `${number}rem`
-  | `${number}vw`
-  | `${number}vh`;
+type FormTemplateStyle = Pick<CSSProperties, "width" | "height">;
 
 interface Props {
-  width?: CSSWidth;
+  style: FormTemplateStyle;
+  disabled: boolean;
+  error: boolean;
   children: ReactNode;
 }
 
-export function FieldTemplate({ width = "264px", children }: Props) {
-  return <Container width={width}>{children}</Container>;
+export function FieldTemplate({ style, disabled, error, children }: Props) {
+  return (
+    <Container style={style} disabled={disabled} error={error}>
+      {children}
+    </Container>
+  );
 }
 
-const Container = styled.div<{ width: CSSWidth }>`
-  ${({ theme, width }) => {
+const Container = styled.div<Omit<Props, "children">>`
+  ${({ style: { width, height }, disabled, error, theme }) => {
     const { colors } = theme;
+    const borderColor = getBorderColor(colors, disabled, error);
+    const backgroundColor = getBackgroundColor(colors, disabled);
 
     return css`
-      ${commonTemplateStyle};
+      min-width: 138px;
+      min-height: 40px;
+      width: ${typeof width === "string" ? width : `${width}px`};
+      height: ${typeof height === "string" ? width : `${width}px`};
+      padding: 8px 12px;
+      border: 1px solid ${borderColor};
+      border-radius: 12px;
+      background-color: ${backgroundColor};
 
-      width: ${width};
-
-      &:has(input:disabled) {
-        background-color: ${colors.gray};
-        border: none;
+      &:has(input:focus) {
+        border: 1px solid ${colors.secondary[500]};
       }
     `;
   }}
 `;
+
+const getBorderColor = (
+  colors: ThemeColors,
+  disabled: boolean,
+  error: boolean
+) => {
+  if (disabled) {
+    return colors.secondary[400];
+  }
+  if (error) {
+    return colors.system.red;
+  }
+
+  return colors.secondary[400];
+};
+
+const getBackgroundColor = (colors: ThemeColors, disabled: boolean) => {
+  if (disabled) {
+    return colors.secondary[150];
+  }
+
+  return colors.secondary.white;
+};
