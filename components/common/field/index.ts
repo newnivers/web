@@ -1,2 +1,3 @@
-export * from "./template.default";
-export * from "./template.icon";
+import { DefaultFieldTemplate } from "./template.default";
+
+export const Field = Object.assign(DefaultFieldTemplate, {});
