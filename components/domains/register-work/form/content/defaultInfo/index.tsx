@@ -6,9 +6,10 @@ import { SpacerSkleton } from "@/components/common/spacer";
 import type { FormContentProps } from "../type";
 
 export function DefaultInfo({ classifications }: FormContentProps) {
-  const { control } = useForm<FieldValues>({
+  const { register, control } = useForm<FieldValues>({
     defaultValues: {
       mock: "",
+      mock2: "",
     },
   });
 
@@ -17,6 +18,15 @@ export function DefaultInfo({ classifications }: FormContentProps) {
       <TitleColumn name={name} desc={desc} />
       <Field style={{ width: "200px" }}>
         <Field.ControlledInput control={control} name="mock" />
+      </Field>
+      <Field style={{ width: "300px" }}>
+        <Field.UncontrolledInput
+          register={register}
+          path="mock2"
+          registerOptions={{
+            required: true,
+          }}
+        />
       </Field>
     </SpacerSkleton>
   ));
