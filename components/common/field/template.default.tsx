@@ -86,7 +86,6 @@ const Container = styled.div<Omit<Props, "children">>`
         padding: 0;
         border: none;
         line-height: normal;
-        color: inherit;
         background-color: transparent;
         box-shadow: none;
         outline: none;
