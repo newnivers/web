@@ -15,6 +15,20 @@ interface Props extends UseControllerProps {
   disabled?: boolean;
 }
 
+const getSelectedLabel = (selectOptions: SelectOption[], value: string) => {
+  if (selectOptions.length === 0) {
+    return "";
+  }
+
+  const option = selectOptions.find((option) => option.value === value);
+
+  if (!option?.label) {
+    return "";
+  }
+
+  return option.label;
+};
+
 export function Selector({
   selectOptions = [],
   placeholder = "",
@@ -23,7 +37,9 @@ export function Selector({
 }: Props) {
   const { field } = useController(controllerProps);
 
-  const [value, setValue] = useState(field.value ?? "");
+  const [label, setLabel] = useState(
+    getSelectedLabel(selectOptions, field.value)
+  );
   const [isShowSelectOptions, setShowSelectOptions] = useState(false);
 
   const onClickSelector = () => {
@@ -42,7 +58,7 @@ export function Selector({
       return;
     }
 
-    setValue(value);
+    setLabel(getSelectedLabel(selectOptions, value));
     setShowSelectOptions((prev) => !prev);
 
     field.onChange(value);
@@ -53,7 +69,7 @@ export function Selector({
       <SelectInput
         type="button"
         className="reset icon"
-        value={value}
+        value={label}
         onClick={onClickSelector}
         placeholder={placeholder}
         disabled={disabled}

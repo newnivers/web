@@ -35,9 +35,9 @@ export function DefaultInfo({ classifications }: FormContentProps) {
           control={control}
           name="mock3"
           selectOptions={[
-            { value: "test", label: "test" },
-            { value: "test2", label: "test2" },
-            { value: "test3", label: "test3" },
+            { value: "test", label: "테스트" },
+            { value: "test2", label: "테스트2" },
+            { value: "test3", label: "테스트3" },
           ]}
         />
       </Field>
