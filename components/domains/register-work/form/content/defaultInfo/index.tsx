@@ -10,6 +10,8 @@ export function DefaultInfo({ classifications }: FormContentProps) {
     defaultValues: {
       mock: "",
       mock2: "",
+      mock3: "test3",
+      mock4: "",
     },
   });
 
@@ -22,10 +24,33 @@ export function DefaultInfo({ classifications }: FormContentProps) {
       <Field style={{ width: "300px" }}>
         <Field.UncontrolledInput
           register={register}
+          placeholder="입력값을 넣어주세요"
           path="mock2"
           registerOptions={{
             required: true,
           }}
+        />
+      </Field>
+      <Field style={{ width: "300px" }} iconType="selector">
+        <Field.Selector
+          control={control}
+          name="mock3"
+          selectOptions={[
+            { value: "test", label: "테스트" },
+            { value: "test2", label: "테스트2" },
+            { value: "test3", label: "테스트3" },
+          ]}
+        />
+      </Field>
+      <Field style={{ width: "300px" }} iconType="calendar">
+        <Field.Selector
+          control={control}
+          name="mock4"
+          selectOptions={[
+            { value: "test", label: "test" },
+            { value: "test2", label: "test2" },
+            { value: "test3", label: "test3" },
+          ]}
         />
       </Field>
     </SpacerSkleton>
