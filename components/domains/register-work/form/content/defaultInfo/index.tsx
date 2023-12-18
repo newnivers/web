@@ -10,6 +10,8 @@ export function DefaultInfo({ classifications }: FormContentProps) {
     defaultValues: {
       mock: "",
       mock2: "",
+      mock3: "",
+      mock4: "",
     },
   });
 
@@ -26,6 +28,29 @@ export function DefaultInfo({ classifications }: FormContentProps) {
           registerOptions={{
             required: true,
           }}
+        />
+      </Field>
+      <Field style={{ width: "300px" }} iconType="dropdown">
+        <Field.Selector
+          selectedLabel="test"
+          control={control}
+          name="mock3"
+          selectOptions={[
+            { value: "test", label: "test" },
+            { value: "test2", label: "test2" },
+            { value: "test3", label: "test3" },
+          ]}
+        />
+      </Field>
+      <Field style={{ width: "300px" }} iconType="calendar">
+        <Field.Selector
+          control={control}
+          name="mock4"
+          selectOptions={[
+            { value: "test", label: "test" },
+            { value: "test2", label: "test2" },
+            { value: "test3", label: "test3" },
+          ]}
         />
       </Field>
     </SpacerSkleton>
