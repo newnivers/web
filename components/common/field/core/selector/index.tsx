@@ -10,14 +10,12 @@ export interface SelectOption {
 }
 
 interface Props extends UseControllerProps {
-  selectedLabel?: string;
   selectOptions?: SelectOption[];
   placeholder?: string;
   disabled?: boolean;
 }
 
 export function Selector({
-  selectedLabel = "",
   selectOptions = [],
   placeholder = "",
   disabled = false,
@@ -25,7 +23,7 @@ export function Selector({
 }: Props) {
   const { field } = useController(controllerProps);
 
-  const [value, setValue] = useState(selectedLabel);
+  const [value, setValue] = useState(field.value ?? "");
   const [isShowSelectOptions, setShowSelectOptions] = useState(false);
 
   const onClickSelector = () => {
@@ -46,6 +44,8 @@ export function Selector({
 
     setValue(value);
     setShowSelectOptions((prev) => !prev);
+
+    field.onChange(value);
   };
 
   return (

@@ -10,7 +10,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
     defaultValues: {
       mock: "",
       mock2: "",
-      mock3: "",
+      mock3: "test3",
       mock4: "",
     },
   });
@@ -32,7 +32,6 @@ export function DefaultInfo({ classifications }: FormContentProps) {
       </Field>
       <Field style={{ width: "300px" }} iconType="dropdown">
         <Field.Selector
-          selectedLabel="test"
           control={control}
           name="mock3"
           selectOptions={[
