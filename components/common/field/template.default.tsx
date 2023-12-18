@@ -5,7 +5,7 @@ import type { ThemeColors } from "@/styles/theme/colors";
 
 type FormTemplateStyle = Pick<CSSProperties, "width" | "height">;
 
-type IconType = "dropdown" | "calendar" | "default";
+type IconType = "selector" | "calendar" | "default";
 
 interface Props {
   style: FormTemplateStyle;
@@ -24,7 +24,7 @@ export function DefaultFieldTemplate({
 }: Partial<Props>) {
   const isShowCalendar = iconType === "calendar";
   const isShowArrowDownIcon =
-    iconType === "dropdown" || iconType === "calendar";
+    iconType === "selector" || iconType === "calendar";
 
   return (
     <Container
@@ -35,9 +35,9 @@ export function DefaultFieldTemplate({
       iconType={iconType}
     >
       {isShowCalendar && (
-        <Icon pos="left">
+        <Icon>
           <Image
-            src="/icon/selector-calendar.svg"
+            src="/icon/field-calendar.svg"
             width={18}
             height={20}
             alt="selector-calendar"
@@ -46,9 +46,9 @@ export function DefaultFieldTemplate({
       )}
       {children}
       {isShowArrowDownIcon && (
-        <Icon pos="right">
+        <Icon>
           <Image
-            src="/icon/selector-arrow-down.svg"
+            src="/icon/field-arrow-down.svg"
             width={11.31}
             height={6.71}
             alt="selector-arrow-down"
@@ -60,13 +60,16 @@ export function DefaultFieldTemplate({
 }
 
 const Container = styled.div<Omit<Props, "children">>`
-  ${({ style: { width, height }, disabled, error, iconType, theme }) => {
+  ${({ style: { width, height }, disabled, error, theme }) => {
     const { colors } = theme;
     const borderColor = getBorderColor(colors, disabled, error);
     const backgroundColor = getBackgroundColor(colors, disabled);
 
     return css`
       position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       min-width: 138px;
       min-height: 40px;
       width: ${typeof width === "string" ? width : `${width}px`};
@@ -94,19 +97,11 @@ const Container = styled.div<Omit<Props, "children">>`
         -moz-appearance: none;
         appearance: none;
       }
-
-      & > input.reset.icon {
-        width: ${calcIconInputWidth(iconType)};
-      }
     `;
   }}
 `;
 
-const Icon = styled.div<{ pos: "left" | "right" }>`
-  position: absolute;
-  top: 20%;
-  ${({ pos }) => (pos === "left" ? "left: 12px" : "right: 12px")}
-`;
+const Icon = styled.div``;
 
 const getBorderColor = (
   colors: ThemeColors,
@@ -129,13 +124,4 @@ const getBackgroundColor = (colors: ThemeColors, disabled: boolean) => {
   }
 
   return colors.secondary.white;
-};
-
-const calcIconInputWidth = (iconType: IconType) => {
-  if (iconType === "dropdown") {
-    return "calc(100% - 24px);";
-  }
-  if (iconType === "calendar") {
-    return "calc(100% - 48px);";
-  }
 };

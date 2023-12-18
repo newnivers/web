@@ -24,13 +24,14 @@ export function DefaultInfo({ classifications }: FormContentProps) {
       <Field style={{ width: "300px" }}>
         <Field.UncontrolledInput
           register={register}
+          placeholder="입력값을 넣어주세요"
           path="mock2"
           registerOptions={{
             required: true,
           }}
         />
       </Field>
-      <Field style={{ width: "300px" }} iconType="dropdown">
+      <Field style={{ width: "300px" }} iconType="selector">
         <Field.Selector
           control={control}
           name="mock3"

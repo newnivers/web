@@ -5,6 +5,7 @@ export const TextField = styled.input<{ disabled: boolean }>`
     const { colors } = theme;
 
     return css`
+      font-size: 16px;
       color: ${disabled ? colors.secondary[400] : colors.secondary[500]};
 
       &::placeholder {
