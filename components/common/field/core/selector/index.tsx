@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { MouseEvent } from "react";
 import { useController } from "react-hook-form";
 import type { UseControllerProps } from "react-hook-form";
@@ -37,6 +37,8 @@ export function Selector({
 }: Props) {
   const { field } = useController(controllerProps);
 
+  const selectorRef = useRef<HTMLInputElement | null>(null);
+
   const [label, setLabel] = useState(
     getSelectedLabel(selectOptions, field.value)
   );
@@ -64,9 +66,24 @@ export function Selector({
     field.onChange(value);
   };
 
+  useEffect(() => {
+    if (selectorRef.current && isShowSelectOptions) {
+      document.addEventListener("click", onClickSelector);
+    }
+
+    return () => {
+      if (!isShowSelectOptions) {
+        return;
+      }
+
+      document.removeEventListener("click", onClickSelector);
+    };
+  }, [isShowSelectOptions]);
+
   return (
     <>
       <SelectInput
+        ref={selectorRef}
         type="button"
         className="reset icon"
         value={label}
@@ -94,6 +111,7 @@ const SelectInput = styled.input`
     const { colors } = theme;
 
     return css`
+      height: 100%;
       text-align: left;
       cursor: pointer;
 
