@@ -12,6 +12,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
       mock2: "",
       mock3: "test3",
       mock4: "",
+      mock5: false,
     },
   });
 
@@ -53,6 +54,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
           ]}
         />
       </Field>
+      <Field.Checkbox control={control} name="mock5" />
     </SpacerSkleton>
   ));
 }
