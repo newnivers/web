@@ -20,10 +20,10 @@ export function DefaultInfo({ classifications }: FormContentProps) {
     <SpacerSkleton key={key} type="vertical" gap={16}>
       <TitleColumn name={name} desc={desc} />
       <Field style={{ width: "200px" }}>
-        <Field.ControlledInput control={control} name="mock" />
+        <Field.ControlledText control={control} name="mock" />
       </Field>
       <Field style={{ width: "300px" }}>
-        <Field.UncontrolledInput
+        <Field.UncontrolledText
           register={register}
           placeholder="입력값을 넣어주세요"
           path="mock2"

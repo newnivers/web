@@ -7,7 +7,7 @@ interface Props extends UseControllerProps {
   disabled?: boolean;
 }
 
-export function ControlledInput({
+export function ControlledText({
   placeholder = "",
   disabled = false,
   ...controllerProps
