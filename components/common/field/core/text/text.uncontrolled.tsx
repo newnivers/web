@@ -17,7 +17,7 @@ interface Props<T extends FieldValues>
   registerOptions: RegisterOptions;
 }
 
-export function UncontrolledInput<T extends FieldValues>({
+export function UncontrolledText<T extends FieldValues>({
   path,
   register,
   registerOptions,

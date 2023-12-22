@@ -1,7 +1,7 @@
 import {
-  ControlledInput,
+  ControlledText,
   TextField,
-  UncontrolledInput,
+  UncontrolledText,
   Selector,
   Checkbox,
 } from "./core";
@@ -9,8 +9,8 @@ import { DefaultFieldTemplate } from "./template.default";
 
 export const Field = Object.assign(DefaultFieldTemplate, {
   DefaultText: TextField,
-  ControlledInput,
-  UncontrolledInput,
+  ControlledText,
+  UncontrolledText,
   Selector,
   Checkbox,
 });

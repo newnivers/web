@@ -7,7 +7,7 @@ interface Props extends UseControllerProps {
   disabled?: boolean;
 }
 
-export function ControlledInput({
+export function ControlledText({
   placeholder = "",
   disabled = false,
   ...controllerProps
@@ -17,6 +17,7 @@ export function ControlledInput({
   return (
     <TextField
       className="reset"
+      id={field.name}
       {...field}
       placeholder={placeholder}
       disabled={disabled}

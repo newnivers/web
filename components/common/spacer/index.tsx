@@ -3,7 +3,7 @@
 import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import styled, { css } from "styled-components";
 
-interface Props extends HTMLAttributes<HTMLElement> {
+export interface Props extends HTMLAttributes<HTMLElement> {
   type?: "vertical" | "horizontal";
   gap?: number;
   align?: CSSProperties["alignItems"];
