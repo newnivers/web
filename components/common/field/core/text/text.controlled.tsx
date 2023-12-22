@@ -17,6 +17,7 @@ export function ControlledText({
   return (
     <TextField
       className="reset"
+      id={field.name}
       {...field}
       placeholder={placeholder}
       disabled={disabled}
