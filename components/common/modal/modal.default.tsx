@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import styled, { css } from "styled-components";
 
 interface Props {
@@ -8,6 +8,18 @@ interface Props {
 }
 
 export function DefaultModal({ isShow, onClose, children }: Props) {
+  useEffect(() => {
+    if (isShow) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isShow]);
+
   if (!isShow) {
     return null;
   }
