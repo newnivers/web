@@ -32,6 +32,7 @@ export default function RootLayout({
           <RecoilRegistry>
             <ReactQueryRegistry>
               <DefaultLayout>{children}</DefaultLayout>
+              <div id="modal-portal"></div>
             </ReactQueryRegistry>
           </RecoilRegistry>
         </StyledComponentsRegistry>

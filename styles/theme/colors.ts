@@ -30,6 +30,8 @@ export const colors = {
   },
   secondary: {
     black: "#0A0A0A",
+    "black-30": "rgba(0, 0, 0, 0.3)",
+    "black-50": "rgba(0, 0, 0, 0.5)",
     white: "#FFFFFF",
     900: "#1D1D1D",
     500: "#505050",
