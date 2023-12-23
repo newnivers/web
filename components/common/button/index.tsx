@@ -30,11 +30,12 @@ const StyledButton = styled.button<{ sort: ButtonSort }>`
       min-width: 130px;
       min-height: 45px;
       padding: 12px 20px;
-      background-color: ${sort === "primary"
-        ? colors.primary_01
-        : colors.white};
-      border: 1px solid ${colors.primary_01};
-      border-radius: 30px;
+      background-color: ${colors.secondary["900"]};
+      border: 1px solid ${colors.secondary["900"]};
+      border-radius: 0.25rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 150%;
 
       user-select: none;
       -moz-user-select: none;

@@ -1,9 +1,10 @@
+import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
-import DatePicker, { ReactDatePickerProps } from "react-datepicker";
-import { Dispatch, SetStateAction } from "react";
-import "./calendarStyle.scss";
 import { format } from "date-fns";
 import ko from "date-fns/locale/ko";
+import type { ReactDatePickerProps } from "react-datepicker";
+import DatePicker from "react-datepicker";
+import "./calendarStyle.scss";
 
 type CustomCalendarProps = Omit<ReactDatePickerProps, "onChange"> & {
   onClickDate: Dispatch<SetStateAction<Date | null>>;
