@@ -19,6 +19,7 @@ function DefaultLayout({ children }: Props) {
 const Container = styled.section`
   min-width: 1400px;
   margin-top: 80px;
+  padding: 0 10rem;
 
   & *[id="main-content"] {
     width: 1200px;
