@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import type { HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes } from "react";
+import styled from "styled-components";
 import type { TypoToken } from "@/styles/theme/typography";
 
 interface TypoProps extends HTMLAttributes<HTMLSpanElement> {
