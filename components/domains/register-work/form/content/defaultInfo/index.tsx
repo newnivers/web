@@ -1,10 +1,9 @@
-import { useState } from "react";
 import type { FieldValues } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { TitleColumn, InputColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
-import { DefaultModal } from "@/components/common/modal";
 import { SpacerSkleton } from "@/components/common/spacer";
+import { WorkPeriodRegister } from "./workPeriodRegister";
 import type { FormContentProps } from "../type";
 
 export function DefaultInfo({ classifications }: FormContentProps) {
@@ -17,16 +16,10 @@ export function DefaultInfo({ classifications }: FormContentProps) {
       mock5: false,
     },
   });
-  const [isShow, setShow] = useState(false);
 
   return (
     <>
-      <DefaultModal isShow={isShow} onClose={() => setShow(false)}>
-        <div>test</div>
-      </DefaultModal>
-      <button type="button" onClick={() => setShow(true)}>
-        모달 켜기
-      </button>
+      <WorkPeriodRegister />
       {classifications.map(({ key, name, desc }) => (
         <SpacerSkleton key={key} type="vertical" gap={16}>
           <TitleColumn name={name} desc={desc} />
