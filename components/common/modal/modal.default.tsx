@@ -55,7 +55,6 @@ const Content = styled.div`
     const { colors } = theme;
 
     return css`
-      padding: 28px;
       border-radius: 12px;
       background-color: ${colors.secondary.white};
       box-shadow: 0 5px 15px ${colors.secondary["black-30"]};
