@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
-import Spacer, { SpacerSkleton } from "@/components/common/spacer";
+import { SpacerSkleton } from "@/components/common/spacer";
 import { StepNavigator } from "@/components/domains/register-work/stepNavigator";
 // import { useFileUpload } from "@/hooks";
 
@@ -14,7 +14,11 @@ export function RegisterWorkFormTemplate({ children }: Props) {
     StepNavigator.onlyHook();
 
   return (
-    <Spacer type="vertical" as="form" gap={78} restStyle={{ width: "100%" }}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <Content type="vertical" gap={52}>
         {children}
       </Content>
@@ -49,9 +53,16 @@ export function RegisterWorkFormTemplate({ children }: Props) {
           </>
         )}
       </StepController>
-    </Spacer>
+    </Form>
   );
 }
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 78px;
+  width: 100%;
+`;
 
 const Content = styled(SpacerSkleton)`
   flex: 1;
