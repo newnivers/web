@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import { format } from "date-fns";
 import ko from "date-fns/locale/ko";
@@ -7,13 +6,13 @@ import DatePicker from "react-datepicker";
 import "./calendarStyle.scss";
 
 type CustomCalendarProps = Omit<ReactDatePickerProps, "onChange"> & {
-  onClickDate: Dispatch<SetStateAction<Date | null>>;
+  onChangeDate: (date: Date | null) => void;
   // yyyy-MM-dd 포멧으로 변환된 날짜의 모음입니다.
   notCompleteDates?: string[];
 };
 
 export default function CustomCalendar({
-  onClickDate,
+  onChangeDate,
   notCompleteDates = [],
   ...rest
 }: CustomCalendarProps) {
@@ -41,7 +40,7 @@ export default function CustomCalendar({
   return (
     <DatePicker
       {...rest}
-      onChange={(date) => onClickDate(date)}
+      onChange={onChangeDate}
       showDisabledMonthNavigation
       inline
       locale={ko}

@@ -26,7 +26,7 @@ export function DefaultModal({ isShow, onClose, children }: Props) {
 
   return (
     <Backdrop onClick={onClose}>
-      <Content>{children}</Content>
+      <Content onClick={(e) => e.stopPropagation()}>{children}</Content>
     </Backdrop>
   );
 }

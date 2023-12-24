@@ -15,13 +15,13 @@ div:has(> .react-datepicker) {
 }
 
 .react-datepicker__navigation-icon:before {
-  border-color: #1D1D1D;
+  border-color: #1d1d1d;
 }
 
 // datepicker day styling
 .react-datepicker__day-names .react-datepicker__day-name {
   &:first-child {
-    color: #DD2424;
+    color: #dd2424;
   }
 
   font-size: 0.75rem;
@@ -44,7 +44,7 @@ div:has(> .react-datepicker) {
 
 .react-datepicker__week div {
   &:first-child {
-    color: #DD2424;
+    color: #dd2424;
   }
 
   font-size: 1rem;
@@ -54,25 +54,43 @@ div:has(> .react-datepicker) {
 }
 
 .react-datepicker__day--selected {
-  background-color: #1D1D1D;
-  color: #FFF;
+  background-color: #1d1d1d;
+  color: #fff;
 
   &:hover {
-    background-color: #1D1D1D;
+    background-color: #1d1d1d;
   }
 }
 
 .react-datepicker__day--selected.react-datepicker__day--not-complete {
-  border: 1px solid #1D1D1D;
+  border: 1px solid #1d1d1d;
   background-color: transparent;
-  color: #0A0A0A;
+  color: #0a0a0a;
 }
 
 .react-datepicker__day--exclude {
-  color: #D4D4D4 !important;
+  color: #d4d4d4 !important;
 }
 
 .react-datepicker__day--not-complete {
-  border: 1px solid #A6A6A6;
+  border: 1px solid #a6a6a6;
 }
 
+.react-datepicker__day--highlighted {
+  border: 1px solid #1d1d1d;
+  background-color: #fff;
+  color: #000;
+
+  &:hover {
+    background-color: #fff;
+  }
+}
+
+.react-datepicker__day--highlighted.confirmed {
+  background-color: #1d1d1d;
+  color: #fff;
+
+  &:hover {
+    background-color: #1d1d1d;
+  }
+}

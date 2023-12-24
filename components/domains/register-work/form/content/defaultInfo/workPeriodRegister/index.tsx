@@ -3,6 +3,7 @@ import Image from "next/image";
 import styled, { css } from "styled-components";
 import { DefaultModal } from "@/components/common/modal";
 import { SpacerSkleton } from "@/components/common/spacer";
+import { WorkPeriodModalContent } from "./workPeriodModalContent";
 
 export function WorkPeriodRegister() {
   const [isShow, setShow] = useState(false);
@@ -14,7 +15,7 @@ export function WorkPeriodRegister() {
   return (
     <>
       <DefaultModal isShow={isShow} onClose={onClickModalShow}>
-        <div>test</div>
+        <WorkPeriodModalContent />
       </DefaultModal>
       <RegisterButton type="button" onClick={onClickModalShow}>
         <SpacerSkleton align="center" gap={6}>

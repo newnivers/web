@@ -21,6 +21,10 @@ export default function ReservationCalendar({
     null
   );
 
+  const onChangeDate = (date: Date | null) => {
+    setDate(date);
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -30,7 +34,7 @@ export default function ReservationCalendar({
             <CustomHeader headerProps={headerProps} />
           )}
           selected={date}
-          onClickDate={setDate}
+          onChangeDate={onChangeDate}
         />
         <DaySchedules
           schedules={schedules}
