@@ -75,22 +75,3 @@ div:has(> .react-datepicker) {
 .react-datepicker__day--not-complete {
   border: 1px solid #a6a6a6;
 }
-
-.react-datepicker__day--highlighted {
-  border: 1px solid #1d1d1d;
-  background-color: #fff;
-  color: #000;
-
-  &:hover {
-    background-color: #fff;
-  }
-}
-
-.react-datepicker__day--highlighted.confirmed {
-  background-color: #1d1d1d;
-  color: #fff;
-
-  &:hover {
-    background-color: #1d1d1d;
-  }
-}

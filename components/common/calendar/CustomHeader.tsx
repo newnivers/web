@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { getMonth, getYear } from "date-fns";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
@@ -8,11 +9,13 @@ import frontArrowSrc from "@/public/icon/front_icon.png";
 
 export default function CustomHeader({
   headerProps,
+  style = {},
 }: {
   headerProps: ReactDatePickerCustomHeaderProps;
+  style?: CSSProperties;
 }) {
   return (
-    <CalendarCustomHeader>
+    <CalendarCustomHeader style={{ ...style }}>
       <button
         onClick={headerProps.decreaseMonth}
         disabled={headerProps.prevMonthButtonDisabled}
