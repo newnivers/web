@@ -1,6 +1,10 @@
 import type { MouseEvent } from "react";
 import { useMemo, useState } from "react";
+import styled, { css } from "styled-components";
+import DefaultButton from "@/components/common/button";
 import { CustomCalendar, CustomHeader } from "@/components/common/calendar";
+import { SpacerSkleton } from "@/components/common/spacer";
+import Typography from "@/components/common/text/Typography";
 
 interface Round {
   id: string;
@@ -109,13 +113,145 @@ export function WorkPeriodModalContent() {
   };
 
   return (
-    <CustomCalendar
-      renderCustomHeader={(headerProps) => (
-        <CustomHeader headerProps={headerProps} />
-      )}
-      selected={null}
-      onChangeDate={onChangeDate}
-      highlightDates={dates}
-    />
+    <Container style={{ width: "1000px", height: "652px" }}>
+      <CalendarWrapper>
+        <CustomCalendar
+          renderCustomHeader={(headerProps) => (
+            <CustomHeader
+              headerProps={headerProps}
+              style={{ padding: "0 15px" }}
+            />
+          )}
+          selected={null}
+          onChangeDate={onChangeDate}
+          highlightDates={dates}
+        />
+      </CalendarWrapper>
+      <VerticalDivider />
+      <SpacerSkleton type="vertical" style={{ flex: "1" }}>
+        <SpacerSkleton style={{ flex: "2" }}>
+          {dates.length === 0 ? (
+            <SpacerSkleton
+              justify="center"
+              align="center"
+              style={{ height: "inherit", flex: "1" }}
+            >
+              <EmptyRoundTypography typo="subhead01">
+                왼쪽 달력의 날짜를 클릭해서 <br />
+                일정을 등록해주세요!
+              </EmptyRoundTypography>
+            </SpacerSkleton>
+          ) : (
+            <Rounds></Rounds>
+          )}
+        </SpacerSkleton>
+        <HorizationalDivider />
+        <SpacerSkleton
+          justify="flex-end"
+          align="center"
+          style={{ flex: "0.17", padding: "16px 32px" }}
+        >
+          <DefaultButton>
+            <RegisterButtonTypography typo="subhead03">
+              등록하기
+            </RegisterButtonTypography>
+          </DefaultButton>
+        </SpacerSkleton>
+      </SpacerSkleton>
+    </Container>
   );
 }
+
+const Container = styled(SpacerSkleton)`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      position: relative;
+      border-top: 1px solid ${colors.secondary[150]};
+    `;
+  }}
+`;
+
+const CalendarWrapper = styled.div`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      flex: 1;
+      margin-top: 40px;
+
+      .react-datepicker {
+        .react-datepicker__day-names {
+          .react-datepicker__day-name {
+            width: 56.29px;
+            height: 32px;
+            margin: 0;
+          }
+        }
+
+        .react-datepicker__week {
+          .react-datepicker__day {
+            width: 52.86px;
+            height: 52.86px;
+            margin: 0.105rem;
+            padding: 14px;
+            border-radius: 50%;
+          }
+        }
+
+        .react-datepicker__day--highlighted {
+          border: 1px solid ${colors.secondary[900]};
+          background-color: ${colors.secondary.white};
+          color: ${colors.secondary.black};
+
+          &:hover {
+            background-color: ${colors.secondary.white};
+          }
+        }
+
+        .react-datepicker__day--highlighted.confirmed {
+          background-color: ${colors.secondary[900]};
+          color: ${colors.secondary.black};
+
+          &:hover {
+            background-color: ${colors.secondary[900]};
+          }
+        }
+      }
+    `;
+  }}
+`;
+
+const VerticalDivider = styled.div`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      width: 1px;
+      background-color: ${colors.secondary[150]};
+    `;
+  }}
+`;
+
+const HorizationalDivider = styled.div`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      width: 100%;
+      height: 1px;
+      background-color: ${colors.secondary[150]};
+    `;
+  }}
+`;
+
+const Rounds = styled.ul``;
+
+const EmptyRoundTypography = styled(Typography)`
+  color: ${({ theme }) => theme.colors.secondary[500]};
+`;
+
+const RegisterButtonTypography = styled(Typography)`
+  color: ${({ theme }) => theme.colors.secondary.white};
+`;
