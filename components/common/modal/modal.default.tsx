@@ -1,13 +1,21 @@
 import { useEffect, type ReactNode } from "react";
+import Image from "next/image";
 import styled, { css } from "styled-components";
+import { SpacerSkleton } from "@/components/common/spacer";
 
 interface Props {
   isShow: boolean;
   onClose: () => void;
+  showCloseButton?: boolean;
   children: ReactNode;
 }
 
-export function DefaultModal({ isShow, onClose, children }: Props) {
+export function DefaultModal({
+  isShow,
+  onClose,
+  showCloseButton = true,
+  children,
+}: Props) {
   useEffect(() => {
     if (isShow) {
       document.body.style.overflow = "hidden";
@@ -26,7 +34,21 @@ export function DefaultModal({ isShow, onClose, children }: Props) {
 
   return (
     <Backdrop onClick={onClose}>
-      <Content onClick={(e) => e.stopPropagation()}>{children}</Content>
+      <Content onClick={(e) => e.stopPropagation()}>
+        {showCloseButton && (
+          <SpacerSkleton justify="flex-end" style={{ padding: "8px 16px" }}>
+            <button onClick={onClose}>
+              <Image
+                src="/icon/modal-close.svg"
+                width={24}
+                height={24}
+                alt="modal-close"
+              />
+            </button>
+          </SpacerSkleton>
+        )}
+        {children}
+      </Content>
     </Backdrop>
   );
 }
