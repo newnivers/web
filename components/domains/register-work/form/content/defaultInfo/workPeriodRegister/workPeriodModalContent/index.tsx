@@ -1,8 +1,10 @@
 import type { MouseEvent } from "react";
 import { useMemo, useState } from "react";
 import styled, { css } from "styled-components";
+import DefaultButton from "@/components/common/button";
 import { CustomCalendar, CustomHeader } from "@/components/common/calendar";
 import { SpacerSkleton } from "@/components/common/spacer";
+import Typography from "@/components/common/text/Typography";
 
 interface Round {
   id: string;
@@ -125,8 +127,37 @@ export function WorkPeriodModalContent() {
           highlightDates={dates}
         />
       </CalendarWrapper>
-      <Divider />
-      <RoundRegister>round</RoundRegister>
+      <VerticalDivider />
+      <SpacerSkleton type="vertical" style={{ flex: "1" }}>
+        <SpacerSkleton style={{ flex: "2" }}>
+          {dates.length === 0 ? (
+            <SpacerSkleton
+              justify="center"
+              align="center"
+              style={{ height: "inherit", flex: "1" }}
+            >
+              <EmptyRoundTypography typo="subhead01">
+                왼쪽 달력의 날짜를 클릭해서 <br />
+                일정을 등록해주세요!
+              </EmptyRoundTypography>
+            </SpacerSkleton>
+          ) : (
+            <Rounds></Rounds>
+          )}
+        </SpacerSkleton>
+        <HorizationalDivider />
+        <SpacerSkleton
+          justify="flex-end"
+          align="center"
+          style={{ flex: "0.17", padding: "16px 32px" }}
+        >
+          <DefaultButton>
+            <RegisterButtonTypography typo="subhead03">
+              등록하기
+            </RegisterButtonTypography>
+          </DefaultButton>
+        </SpacerSkleton>
+      </SpacerSkleton>
     </Container>
   );
 }
@@ -136,6 +167,7 @@ const Container = styled(SpacerSkleton)`
     const { colors } = theme;
 
     return css`
+      position: relative;
       border-top: 1px solid ${colors.secondary[150]};
     `;
   }}
@@ -191,18 +223,35 @@ const CalendarWrapper = styled.div`
   }}
 `;
 
-const Divider = styled.div`
+const VerticalDivider = styled.div`
   ${({ theme }) => {
     const { colors } = theme;
 
     return css`
       width: 1px;
-      height: inherit;
       background-color: ${colors.secondary[150]};
     `;
   }}
 `;
 
-const RoundRegister = styled.div`
-  flex: 1;
+const HorizationalDivider = styled.div`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      width: 100%;
+      height: 1px;
+      background-color: ${colors.secondary[150]};
+    `;
+  }}
+`;
+
+const Rounds = styled.ul``;
+
+const EmptyRoundTypography = styled(Typography)`
+  color: ${({ theme }) => theme.colors.secondary[500]};
+`;
+
+const RegisterButtonTypography = styled(Typography)`
+  color: ${({ theme }) => theme.colors.secondary.white};
 `;
