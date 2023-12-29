@@ -10,7 +10,7 @@ interface SelectOption {
 interface Props {
   defaultValue?: string | number;
   selectOptions: SelectOption[];
-  onSelect: (e: MouseEvent<HTMLUListElement>) => void;
+  onSelect: (selected: string) => void;
   placeholder?: string;
   disabled?: boolean;
 }
@@ -69,7 +69,7 @@ export function DefaultSelector({
     setLabel(getSelectedLabel(selectOptions, value));
     setShowSelectOptions((prev) => !prev);
 
-    onSelect(e);
+    onSelect(value);
   };
 
   useEffect(() => {

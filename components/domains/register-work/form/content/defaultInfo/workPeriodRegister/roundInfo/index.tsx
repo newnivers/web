@@ -13,6 +13,23 @@ interface Props {
   workPeriod: WorkPeriod;
 }
 
+const getTimeIntervals = () => {
+  let currentTime = dayjs().startOf("day");
+  const endOfDay = dayjs().endOf("day");
+
+  const timeIntervals = [];
+
+  while (currentTime.isBefore(endOfDay)) {
+    timeIntervals.push({
+      value: currentTime.format("HH:mm"),
+      label: currentTime.format("HH:mm"),
+    });
+    currentTime = currentTime.add(30, "minute");
+  }
+
+  return timeIntervals;
+};
+
 export function RoundInfo({ workPeriod }: Props) {
   const date = dayjs(workPeriod.date);
 
@@ -38,8 +55,13 @@ export function RoundInfo({ workPeriod }: Props) {
       <RoundList>
         <Spacer align="center" gap={12} as="li" style={{ padding: "8px 0" }}>
           <Typography typo="subhead03">1회차</Typography>
-          <Field style={{ width: "319px" }}>
-            <Field.DefaultSelector selectOptions={[]} onSelect={() => {}} />
+          <Field style={{ width: "300px" }}>
+            <Field.DefaultSelector
+              selectOptions={getTimeIntervals()}
+              onSelect={(value) => {
+                console.log(value);
+              }}
+            />
           </Field>
           <SpacerSkleton align="center" gap={12}>
             <button>

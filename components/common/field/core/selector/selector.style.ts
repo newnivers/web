@@ -32,9 +32,10 @@ export const SelectOptions = styled.div`
       left: 0;
       top: 48px;
       width: inherit;
-      height: fit-content;
+      height: 200px;
       border: 1px solid ${colors.secondary[200]};
       border-radius: 12px;
+      overflow-y: scroll;
     `;
   }}
 `;
