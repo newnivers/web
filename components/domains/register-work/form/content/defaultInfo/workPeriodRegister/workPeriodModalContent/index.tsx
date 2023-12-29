@@ -139,6 +139,9 @@ export function WorkPeriodModalContent() {
                 <RoundInfo
                   key={workPeriod.date.toString()}
                   workPeriod={workPeriod}
+                  onClickRemoveDate={onClickRemoveDate}
+                  onClickAddRound={onClickAddRound}
+                  onClickRemoveRound={onClickRemoveRound}
                 />
               ))}
             </WorkPeriods>
