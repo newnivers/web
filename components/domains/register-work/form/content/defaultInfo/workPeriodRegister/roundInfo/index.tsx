@@ -1,23 +1,31 @@
 import Image from "next/image";
-import styled from "styled-components";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+import styled, { css } from "styled-components";
 import { Field } from "@/components/common/field";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
 import type { WorkPeriod } from "../shared";
+
+dayjs.locale("ko");
 
 interface Props {
   workPeriod: WorkPeriod;
 }
 
 export function RoundInfo({ workPeriod }: Props) {
+  const date = dayjs(workPeriod.date);
+
+  const dateName = date.format("YYYY년 MM월 DD일 (ddd요일)");
+
   return (
-    <Spacer type="vertical" gap={8} as="li">
+    <Container type="vertical" gap={8} as="li">
       <SpacerSkleton
         justify="space-between"
         align="center"
         style={{ padding: "0 8px" }}
       >
-        <DateTypography typo="body02">{`2023년 12월 18일 (수요일)`}</DateTypography>
+        <DateTypography typo="body02">{dateName}</DateTypography>
         <button>
           <Image
             src="/icon/default-close.svg"
@@ -53,9 +61,29 @@ export function RoundInfo({ workPeriod }: Props) {
           </SpacerSkleton>
         </Spacer>
       </RoundList>
-    </Spacer>
+    </Container>
   );
 }
+
+const Container = styled(SpacerSkleton)`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      &:first-child {
+        padding-bottom: 20px;
+      }
+
+      &:not(:first-child) {
+        padding: 20px 0;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid ${colors.secondary[200]};
+      }
+    `;
+  }}
+`;
 
 const DateTypography = styled(Typography)`
   color: ${({ theme }) => theme.colors.secondary.black};

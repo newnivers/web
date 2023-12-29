@@ -103,7 +103,6 @@ export function WorkPeriodModalContent() {
 
     setWorkPeriods(updatedWorkPeroids);
   };
-  console.log(workPeriods);
 
   return (
     <Container style={{ width: "1000px", height: "652px" }}>
@@ -182,6 +181,10 @@ const CalendarWrapper = styled.div`
       margin-top: 40px;
 
       .react-datepicker {
+        .react-datepicker__header {
+          padding-top: 0;
+        }
+
         .react-datepicker__day-names {
           .react-datepicker__day-name {
             width: 56.29px;
@@ -248,7 +251,8 @@ const HorizationalDivider = styled.div`
 
 const WorkPeriods = styled.ul`
   flex: 1;
-  padding: 40px 32px;
+  margin-top: 40px;
+  padding: 0 32px;
 `;
 
 const EmptyRoundTypography = styled(Typography)`

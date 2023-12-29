@@ -50,6 +50,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.27.2"],\
             ["cz-customizable", "npm:7.0.0"],\
             ["date-fns", "npm:2.30.0"],\
+            ["dayjs", "npm:1.11.10"],\
             ["eslint", "npm:8.16.0"],\
             ["eslint-config-airbnb-base", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:15.0.0"],\
             ["eslint-config-airbnb-typescript", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:17.1.0"],\
@@ -5983,6 +5984,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["dayjs", [\
+        ["npm:1.11.10", {\
+          "packageLocation": "./.yarn/cache/dayjs-npm-1.11.10-2b4382efc1-a6b5a3813b.zip/node_modules/dayjs/",\
+          "packageDependencies": [\
+            ["dayjs", "npm:1.11.10"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["debug", [\
         ["npm:2.6.9", {\
           "packageLocation": "./.yarn/cache/debug-npm-2.6.9-7d4cb597dc-d2f51589ca.zip/node_modules/debug/",\
@@ -9945,6 +9955,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.27.2"],\
             ["cz-customizable", "npm:7.0.0"],\
             ["date-fns", "npm:2.30.0"],\
+            ["dayjs", "npm:1.11.10"],\
             ["eslint", "npm:8.16.0"],\
             ["eslint-config-airbnb-base", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:15.0.0"],\
             ["eslint-config-airbnb-typescript", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:17.1.0"],\
