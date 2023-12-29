@@ -9,9 +9,18 @@ export interface Props extends HTMLAttributes<HTMLElement> {
   align?: CSSProperties["alignItems"];
   justify?: CSSProperties["justifyContent"];
   children: ReactNode;
-  restStyle?: CSSProperties;
+  style?: CSSProperties;
   className?: string;
-  as?: "div" | "section" | "article" | "main" | "footer" | "aside" | "form";
+  as?:
+    | "div"
+    | "section"
+    | "article"
+    | "main"
+    | "footer"
+    | "aside"
+    | "form"
+    | "ul"
+    | "li";
 }
 
 function Spacer({
@@ -20,7 +29,7 @@ function Spacer({
   align,
   justify,
   children,
-  restStyle,
+  style,
   className,
   as = "div",
 }: Props) {
@@ -31,7 +40,7 @@ function Spacer({
       gap={gap}
       align={align}
       justify={justify}
-      style={restStyle}
+      style={style}
       as={as}
     >
       {children}

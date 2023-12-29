@@ -5,16 +5,8 @@ import DefaultButton from "@/components/common/button";
 import { CustomCalendar, CustomHeader } from "@/components/common/calendar";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
-
-interface Round {
-  id: string;
-  time: string | null;
-}
-
-interface WorkPeriod {
-  date: Date;
-  rounds: Round[];
-}
+import { RoundInfo } from "../roundInfo";
+import type { WorkPeriod } from "../shared";
 
 export function WorkPeriodModalContent() {
   const [workPeriods, setWorkPeriods] = useState<WorkPeriod[]>([]);
@@ -112,6 +104,29 @@ export function WorkPeriodModalContent() {
     setWorkPeriods(updatedWorkPeroids);
   };
 
+  const onSelectRound = (date: Date, roundId: string, value: string) => {
+    const updatedWorkPeriods = workPeriods.map((workPeriod) => {
+      if (workPeriod.date.toString() === date.toString()) {
+        const updatedRounds = workPeriod.rounds.map((round) => {
+          if (round.id === roundId) {
+            return { ...round, time: value };
+          }
+
+          return round;
+        });
+
+        return {
+          ...workPeriod,
+          rounds: updatedRounds,
+        };
+      }
+
+      return workPeriod;
+    });
+
+    setWorkPeriods(updatedWorkPeriods);
+  };
+
   return (
     <Container style={{ width: "1000px", height: "652px" }}>
       <CalendarWrapper>
@@ -142,7 +157,18 @@ export function WorkPeriodModalContent() {
               </EmptyRoundTypography>
             </SpacerSkleton>
           ) : (
-            <Rounds></Rounds>
+            <WorkPeriods>
+              {workPeriods.map((workPeriod) => (
+                <RoundInfo
+                  key={workPeriod.date.toString()}
+                  workPeriod={workPeriod}
+                  onClickRemoveDate={onClickRemoveDate}
+                  onClickAddRound={onClickAddRound}
+                  onClickRemoveRound={onClickRemoveRound}
+                  onSelectRound={onSelectRound}
+                />
+              ))}
+            </WorkPeriods>
           )}
         </SpacerSkleton>
         <HorizationalDivider />
@@ -182,6 +208,10 @@ const CalendarWrapper = styled.div`
       margin-top: 40px;
 
       .react-datepicker {
+        .react-datepicker__header {
+          padding-top: 0;
+        }
+
         .react-datepicker__day-names {
           .react-datepicker__day-name {
             width: 56.29px;
@@ -246,7 +276,13 @@ const HorizationalDivider = styled.div`
   }}
 `;
 
-const Rounds = styled.ul``;
+const WorkPeriods = styled.ul`
+  flex: 1;
+  height: 500px;
+  margin-top: 40px;
+  padding: 0 32px;
+  overflow-y: scroll;
+`;
 
 const EmptyRoundTypography = styled(Typography)`
   color: ${({ theme }) => theme.colors.secondary[500]};
