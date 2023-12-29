@@ -5,16 +5,8 @@ import DefaultButton from "@/components/common/button";
 import { CustomCalendar, CustomHeader } from "@/components/common/calendar";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
-
-interface Round {
-  id: string;
-  time: string | null;
-}
-
-interface WorkPeriod {
-  date: Date;
-  rounds: Round[];
-}
+import { RoundInfo } from "../roundInfo";
+import type { WorkPeriod } from "../shared";
 
 export function WorkPeriodModalContent() {
   const [workPeriods, setWorkPeriods] = useState<WorkPeriod[]>([]);
@@ -111,6 +103,7 @@ export function WorkPeriodModalContent() {
 
     setWorkPeriods(updatedWorkPeroids);
   };
+  console.log(workPeriods);
 
   return (
     <Container style={{ width: "1000px", height: "652px" }}>
@@ -142,7 +135,14 @@ export function WorkPeriodModalContent() {
               </EmptyRoundTypography>
             </SpacerSkleton>
           ) : (
-            <Rounds></Rounds>
+            <WorkPeriods>
+              {workPeriods.map((workPeriod) => (
+                <RoundInfo
+                  key={workPeriod.date.toString()}
+                  workPeriod={workPeriod}
+                />
+              ))}
+            </WorkPeriods>
           )}
         </SpacerSkleton>
         <HorizationalDivider />
@@ -246,7 +246,10 @@ const HorizationalDivider = styled.div`
   }}
 `;
 
-const Rounds = styled.ul``;
+const WorkPeriods = styled.ul`
+  flex: 1;
+  padding: 40px 32px;
+`;
 
 const EmptyRoundTypography = styled(Typography)`
   color: ${({ theme }) => theme.colors.secondary[500]};

@@ -42,7 +42,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
           </InputColumn>
           <InputColumn id="mock3" name="관람연령" labelPos="top">
             <Field style={{ width: "300px" }} iconType="selector">
-              <Field.Selector
+              <Field.ControlledSelector
                 control={control}
                 name="mock3"
                 selectOptions={[
@@ -55,7 +55,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
           </InputColumn>
 
           <Field style={{ width: "300px" }} iconType="calendar">
-            <Field.Selector
+            <Field.ControlledSelector
               control={control}
               name="mock4"
               selectOptions={[

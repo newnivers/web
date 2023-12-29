@@ -39,10 +39,10 @@ export function DefaultModal({
           <SpacerSkleton justify="flex-end" style={{ padding: "8px 16px" }}>
             <button onClick={onClose}>
               <Image
-                src="/icon/modal-close.svg"
+                src="/icon/default-close.svg"
                 width={24}
                 height={24}
-                alt="modal-close"
+                alt="default-close"
               />
             </button>
           </SpacerSkleton>
