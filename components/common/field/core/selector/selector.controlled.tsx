@@ -15,15 +15,23 @@ interface Props extends UseControllerProps {
   disabled?: boolean;
 }
 
-const getSelectedLabel = (selectOptions: SelectOption[], value: string) => {
+const getSelectedLabel = (
+  selectOptions: SelectOption[],
+  placeholder: string,
+  value: string
+) => {
+  if (!value) {
+    return placeholder;
+  }
+
   if (selectOptions.length === 0) {
-    return "";
+    return placeholder;
   }
 
   const option = selectOptions.find((option) => option.value === value);
 
   if (!option?.label) {
-    return "";
+    return placeholder;
   }
 
   return option.label;
@@ -40,7 +48,7 @@ export function ControlledSelector({
   const selectorRef = useRef<HTMLInputElement | null>(null);
 
   const [label, setLabel] = useState(
-    getSelectedLabel(selectOptions, field.value)
+    getSelectedLabel(selectOptions, placeholder, field.value)
   );
   const [isShowSelectOptions, setShowSelectOptions] = useState(false);
 
@@ -60,7 +68,7 @@ export function ControlledSelector({
       return;
     }
 
-    setLabel(getSelectedLabel(selectOptions, value));
+    setLabel(getSelectedLabel(selectOptions, placeholder, value));
     setShowSelectOptions((prev) => !prev);
 
     field.onChange(value);

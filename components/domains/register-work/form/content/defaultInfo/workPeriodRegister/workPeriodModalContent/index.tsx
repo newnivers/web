@@ -104,6 +104,29 @@ export function WorkPeriodModalContent() {
     setWorkPeriods(updatedWorkPeroids);
   };
 
+  const onSelectRound = (date: Date, roundId: string, value: string) => {
+    const updatedWorkPeriods = workPeriods.map((workPeriod) => {
+      if (workPeriod.date.toString() === date.toString()) {
+        const updatedRounds = workPeriod.rounds.map((round) => {
+          if (round.id === roundId) {
+            return { ...round, time: value };
+          }
+
+          return round;
+        });
+
+        return {
+          ...workPeriod,
+          rounds: updatedRounds,
+        };
+      }
+
+      return workPeriod;
+    });
+
+    setWorkPeriods(updatedWorkPeriods);
+  };
+
   return (
     <Container style={{ width: "1000px", height: "652px" }}>
       <CalendarWrapper>
@@ -142,6 +165,7 @@ export function WorkPeriodModalContent() {
                   onClickRemoveDate={onClickRemoveDate}
                   onClickAddRound={onClickAddRound}
                   onClickRemoveRound={onClickRemoveRound}
+                  onSelectRound={onSelectRound}
                 />
               ))}
             </WorkPeriods>
@@ -254,8 +278,10 @@ const HorizationalDivider = styled.div`
 
 const WorkPeriods = styled.ul`
   flex: 1;
+  height: 500px;
   margin-top: 40px;
   padding: 0 32px;
+  overflow-y: scroll;
 `;
 
 const EmptyRoundTypography = styled(Typography)`

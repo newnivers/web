@@ -15,6 +15,7 @@ interface Props {
   onClickRemoveDate: (e: MouseEvent<HTMLButtonElement>) => void;
   onClickAddRound: (e: MouseEvent<HTMLButtonElement>) => void;
   onClickRemoveRound: (e: MouseEvent<HTMLButtonElement>) => void;
+  onSelectRound: (date: Date, roundId: string, value: string) => void;
 }
 
 const getTimeIntervals = () => {
@@ -39,6 +40,7 @@ export function RoundInfo({
   onClickRemoveDate,
   onClickAddRound,
   onClickRemoveRound,
+  onSelectRound,
 }: Props) {
   const date = dayjs(workPeriod.date);
 
@@ -71,12 +73,13 @@ export function RoundInfo({
             style={{ padding: "8px 0" }}
           >
             <Typography typo="subhead03">{`${idx + 1}회차`}</Typography>
-            <Field style={{ width: "300px" }}>
+            <Field iconType="selector" style={{ width: "300px" }}>
               <Field.DefaultSelector
                 selectOptions={getTimeIntervals()}
                 onSelect={(value) => {
-                  console.log(value);
+                  onSelectRound(workPeriod.date, round.id, value);
                 }}
+                placeholder="시간을 선택해주세요."
               />
             </Field>
             <SpacerSkleton align="center" gap={12}>

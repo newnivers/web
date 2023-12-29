@@ -17,20 +17,21 @@ interface Props {
 
 const getSelectedLabel = (
   selectOptions: SelectOption[],
+  placeholder: string,
   value?: string | number
 ) => {
   if (!value) {
-    return "";
+    return placeholder;
   }
 
   if (selectOptions.length === 0) {
-    return "";
+    return placeholder;
   }
 
   const option = selectOptions.find((option) => option.value === value);
 
   if (!option?.label) {
-    return "";
+    return placeholder;
   }
 
   return option.label;
@@ -46,7 +47,7 @@ export function DefaultSelector({
   const selectorRef = useRef<HTMLInputElement | null>(null);
 
   const [label, setLabel] = useState(
-    getSelectedLabel(selectOptions, defaultValue)
+    getSelectedLabel(selectOptions, placeholder, defaultValue)
   );
   const [isShowSelectOptions, setShowSelectOptions] = useState(false);
 
