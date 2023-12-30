@@ -39,7 +39,6 @@ export default function CustomCalendar({
 
   return (
     <DatePicker
-      {...rest}
       onChange={onChangeDate}
       showDisabledMonthNavigation
       inline
@@ -47,6 +46,7 @@ export default function CustomCalendar({
       onMonthChange={setMonth}
       disabledKeyboardNavigation
       dayClassName={makeDayClassName}
+      {...rest}
     />
   );
 }
