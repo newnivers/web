@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, CSSProperties } from "react";
 import styled, { css } from "styled-components";
 import Spacer, { SpacerSkleton } from "@/components/common/spacer";
 import type { Props as SpacerProps } from "@/components/common/spacer";
@@ -16,6 +16,7 @@ interface Props {
   labelPos?: LabelPos;
   unit?: string;
   spacer?: OmitedSpacerProps;
+  inputStyle?: CSSProperties;
   children: ReactNode;
 }
 

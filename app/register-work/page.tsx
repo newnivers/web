@@ -15,7 +15,12 @@ import {
 
 function RegisterWorkPage() {
   return (
-    <SpacerSkleton id="main-content" type="vertical" gap={52} align="center">
+    <SpacerSkleton
+      type="vertical"
+      gap={52}
+      align="center"
+      style={{ width: "1168px", margin: "0 auto" }}
+    >
       <StepNavigator.Provider steps={steps}>
         {(currentStep) => (
           <>
