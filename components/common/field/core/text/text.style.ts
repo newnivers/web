@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-export const TextField = styled.input<{ disabled: boolean }>`
-  ${({ disabled, theme }) => {
+export const TextField = styled.input<{ disabled?: boolean }>`
+  ${({ disabled = false, theme }) => {
     const { colors } = theme;
 
     return css`

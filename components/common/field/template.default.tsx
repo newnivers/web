@@ -3,12 +3,10 @@ import Image from "next/image";
 import styled, { css } from "styled-components";
 import type { ThemeColors } from "@/styles/theme/colors";
 
-type FormTemplateStyle = Pick<CSSProperties, "width" | "height">;
-
 type IconType = "selector" | "calendar" | "default";
 
 interface Props {
-  style: FormTemplateStyle;
+  style: CSSProperties;
   disabled: boolean;
   error: boolean;
   iconType: IconType;
@@ -81,6 +79,12 @@ const Container = styled.div<Omit<Props, "children">>`
 
       &:has(input:focus) {
         border: 1px solid ${colors.secondary[500]};
+      }
+
+      &:has(input:disabled) {
+        & > input {
+          cursor: not-allowed;
+        }
       }
 
       & > input.reset {

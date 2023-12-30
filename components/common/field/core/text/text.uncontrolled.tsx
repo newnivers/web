@@ -10,7 +10,7 @@ import { TextField } from "./text.style";
 interface Props<T extends FieldValues>
   extends Pick<
     InputHTMLAttributes<HTMLInputElement>,
-    "placeholder" | "disabled"
+    "placeholder" | "disabled" | "type"
   > {
   path: Path<T>;
   register: UseFormRegister<T>;
