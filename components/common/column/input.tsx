@@ -38,7 +38,12 @@ function InputColumn({
       <InputLabel htmlFor={id}>
         <LabelText>{name}</LabelText>
       </InputLabel>
-      <SpacerSkleton type="horizontal" align="center" gap={8}>
+      <SpacerSkleton
+        type="horizontal"
+        align="center"
+        gap={8}
+        style={{ width: "100%" }}
+      >
         {children}
         {unit && <UnitText>{unit}</UnitText>}
       </SpacerSkleton>
