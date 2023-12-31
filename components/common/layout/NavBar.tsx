@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import Typography from "@/components/common/text/Typography";
+import TicketSearchBar from "@/components/domains/search";
 
 export default function NavBar() {
   return (
@@ -10,6 +11,7 @@ export default function NavBar() {
         <MenuButton>Ticket</MenuButton>
       </NavMenu>
       <UserMenu>
+        <TicketSearchBar />
         <MenuButton>LOGIN</MenuButton>
         <MenuButton>작품등록</MenuButton>
         <MenuButton>등록확인</MenuButton>
