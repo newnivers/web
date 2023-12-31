@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import styled from "styled-components";
+import NavBar from "@/components/common/layout/NavBar";
 import { AuthUserInfo } from "@/contexts";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 function DefaultLayout({ children }: Props) {
   return (
     <Container>
+      <NavBar />
       <AuthUserInfo.Provider>{children}</AuthUserInfo.Provider>
     </Container>
   );
@@ -18,7 +20,6 @@ function DefaultLayout({ children }: Props) {
 
 const Container = styled.section`
   min-width: 1400px;
-  margin-top: 80px;
   padding: 0 10rem;
 
   & *[id="main-content"] {
