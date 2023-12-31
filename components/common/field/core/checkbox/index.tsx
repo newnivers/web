@@ -1,3 +1,4 @@
+import type { ChangeEvent } from "react";
 import { useController } from "react-hook-form";
 import type { UseControllerProps } from "react-hook-form";
 import styled, { css } from "styled-components";
@@ -6,10 +7,21 @@ type CheckboxStatus = "default" | "disabled";
 
 interface Props extends UseControllerProps {
   status?: CheckboxStatus;
+  showLabel?: boolean;
 }
 
-export function Checkbox({ status = "default", ...controllerProps }: Props) {
+export function Checkbox({
+  status = "default",
+  showLabel = true,
+  ...controllerProps
+}: Props) {
   const { field } = useController(controllerProps);
+
+  const onChangeChecked = (e: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+
+    field.onChange(checked);
+  };
 
   return (
     <>
@@ -17,10 +29,12 @@ export function Checkbox({ status = "default", ...controllerProps }: Props) {
         type="checkbox"
         id={field.name}
         name={field.name}
+        defaultChecked={field.value}
         disabled={status === "disabled"}
+        onChange={onChangeChecked}
       />
       <CheckLabel htmlFor={field.name} status={status}>
-        <LabelText status={status}>{field.name}</LabelText>
+        {showLabel && <LabelText status={status}>{field.name}</LabelText>}
       </CheckLabel>
     </>
   );
