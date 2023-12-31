@@ -15,7 +15,11 @@ export function DetailInfo({ classifications }: FormContentProps) {
   return classifications.map(({ key, name, desc }) => (
     <SpacerSkleton key={key} type="vertical" gap={24}>
       <TitleColumn name={name} desc={desc} />
-      <InputColumn id="image" name="이미지 등록" spacer={{ gap: 30 }}>
+      <InputColumn
+        id="image"
+        name="이미지 등록"
+        spacer={{ align: "start", gap: 30 }}
+      >
         <ImageRegister control={control} name="image" />
       </InputColumn>
     </SpacerSkleton>
