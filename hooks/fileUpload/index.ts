@@ -19,7 +19,14 @@ const ACCESS_KEY_ID = process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID as string;
 const SECRET_ACCESS_KEY_ID = process.env
   .NEXT_PUBLIC_S3_SECRET_ACCESS_KEY_ID as string;
 
-function useFileUpload(originImage?: string) {
+function useFileUpload(
+  args: {
+    originImage?: string;
+    onFileChangedSuccess?: (fileInfo: FileInfo) => void;
+  } = {}
+) {
+  const { originImage, onFileChangedSuccess } = args;
+
   const [fileInfo, setFileInfo] = useState<FileInfo>({
     name: "",
     data: "",
@@ -94,6 +101,10 @@ function useFileUpload(originImage?: string) {
 
     reader.onloadend = () => {
       setFileInfo({ name, data: reader.result });
+
+      if (onFileChangedSuccess) {
+        onFileChangedSuccess({ name, data: reader.result });
+      }
     };
 
     if (file) {

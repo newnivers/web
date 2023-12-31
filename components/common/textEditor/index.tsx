@@ -1,7 +1,9 @@
+import type { CSSProperties } from "react";
 import { useMemo, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 import type ReactQuill from "react-quill";
 import type { ReactQuillProps } from "react-quill";
+import type { RuleSet } from "styled-components";
 import styled, { css } from "styled-components";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
@@ -9,7 +11,8 @@ interface ForwardedQuillComponent extends ReactQuillProps {
 }
 
 interface Props extends ReactQuillProps {
-  height?: string;
+  containerStyle?: CSSProperties;
+  qlEditorStyle?: RuleSet<object>;
   _onContentChange: (res: { html: string; text: string }) => void;
   _onImageUpload: (res: {
     file: File;
@@ -37,7 +40,8 @@ const defaultToolbarContainer = [
 ];
 
 function TextEditor({
-  height = "300px",
+  containerStyle = {},
+  qlEditorStyle = css``,
   _onContentChange,
   _onImageUpload,
   ...rest
@@ -128,7 +132,7 @@ function TextEditor({
   const modules = useMemo(() => rest.modules ?? createDefaultModules(), []);
 
   return (
-    <Container height={height}>
+    <Container style={containerStyle} $qlEditorStyle={qlEditorStyle}>
       <SSRReactQuill
         forwardedRef={quillRef}
         modules={modules}
@@ -139,19 +143,30 @@ function TextEditor({
   );
 }
 
-const Container = styled.div<{ height: string }>`
-  ${({ theme, height }) => {
+const Container = styled.div<{ $qlEditorStyle: RuleSet<object> }>`
+  ${({ theme, $qlEditorStyle }) => {
     const { colors } = theme;
 
     return css`
       position: relative;
 
       & .ql-editor {
-        height: ${height};
         font-size: 16px;
         font-weight: 400;
         line-height: 1.5;
         user-select: none;
+      }
+
+      & .ql-toolbar.ql-snow {
+        border: 1px solid ${colors.secondary[200]};
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+
+      & .ql-container.ql-snow {
+        border: 1px solid ${colors.secondary[200]};
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
       }
 
       & .ql-editor::before {
@@ -167,6 +182,8 @@ const Container = styled.div<{ height: string }>`
       & .ql-editor em {
         font-style: italic;
       }
+
+      ${$qlEditorStyle}
     `;
   }}
 `;
