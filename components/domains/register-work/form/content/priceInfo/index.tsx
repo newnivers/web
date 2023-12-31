@@ -12,6 +12,7 @@ export function PriceInfo({ classifications }: FormContentProps) {
     defaultValues: {
       is_free: true,
       purchase_limit_count: "",
+      price: "",
     },
   });
 
@@ -45,11 +46,24 @@ export function PriceInfo({ classifications }: FormContentProps) {
                 required: true,
               }}
               type="number"
-              placeholder="인당매수를 입력해주세요.(ex. 1인 1매)"
+              placeholder="인당매수를 입력해주세요 (ex. 1인 1매)"
             />
           </Field>
         </InputColumn>
       </SpacerSkleton>
+      <InputColumn id="price" name="작품가격" unit="원">
+        <Field style={{ width: "478px" }}>
+          <Field.UncontrolledText
+            path="price"
+            register={register}
+            registerOptions={{
+              required: true,
+            }}
+            type="number"
+            placeholder="좌석 기본 판매가격을 입력해주세요"
+          />
+        </Field>
+      </InputColumn>
     </SpacerSkleton>
   ));
 }
