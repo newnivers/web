@@ -62,12 +62,12 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                 return (
                   <>
                     <SpacerSkleton gap={32}>
-                      <InputColumn id="category" name="카테고리">
-                        <Field
-                          iconType="selector"
-                          style={{ width: "504px" }}
-                          disabled={true}
-                        >
+                      <InputColumn
+                        id="category"
+                        name="카테고리"
+                        spacer={{ style: { width: "100%" } }}
+                      >
+                        <Field iconType="selector" disabled={true}>
                           <Field.ControlledSelector
                             control={control}
                             name="category"
@@ -78,8 +78,12 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                           />
                         </Field>
                       </InputColumn>
-                      <InputColumn id="title" name="작품이름">
-                        <Field style={{ width: "504px" }}>
+                      <InputColumn
+                        id="title"
+                        name="작품이름"
+                        spacer={{ style: { width: "100%" } }}
+                      >
+                        <Field>
                           <Field.UncontrolledText
                             register={register}
                             placeholder="작품 이름을 입력해주세요."
@@ -92,8 +96,12 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                       </InputColumn>
                     </SpacerSkleton>
                     <SpacerSkleton gap={32}>
-                      <InputColumn id="place" name="장소">
-                        <Field iconType="selector" style={{ width: "504px" }}>
+                      <InputColumn
+                        id="place"
+                        name="장소"
+                        spacer={{ style: { width: "100%" } }}
+                      >
+                        <Field iconType="selector">
                           <Field.ControlledSelector
                             control={control}
                             name="place"
@@ -107,8 +115,12 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                           />
                         </Field>
                       </InputColumn>
-                      <InputColumn id="genre" name="장르">
-                        <Field style={{ width: "504px" }}>
+                      <InputColumn
+                        id="genre"
+                        name="장르"
+                        spacer={{ style: { width: "100%" } }}
+                      >
+                        <Field>
                           <Field.UncontrolledText
                             register={register}
                             placeholder="장르를 입력해주세요."
@@ -125,8 +137,9 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                         id="age_limit"
                         name="관람연령"
                         unit="세 이상"
+                        spacer={{ style: { width: "100%" } }}
                       >
-                        <Field style={{ width: "276px" }}>
+                        <Field>
                           <Field.UncontrolledText
                             register={register}
                             placeholder="나이를 입력해주세요."
@@ -138,8 +151,13 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                           />
                         </Field>
                       </InputColumn>
-                      <InputColumn id="running_time" name="러낭타임" unit="분">
-                        <Field style={{ width: "276px" }}>
+                      <InputColumn
+                        id="running_time"
+                        name="러낭타임"
+                        unit="분"
+                        spacer={{ style: { width: "100%" } }}
+                      >
+                        <Field>
                           <Field.UncontrolledText
                             register={register}
                             placeholder="총 시간을 입력해주세요."
@@ -151,8 +169,13 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                           />
                         </Field>
                       </InputColumn>
-                      <InputColumn id="inter_mission" name="인터미션" unit="분">
-                        <Field style={{ width: "276px" }}>
+                      <InputColumn
+                        id="inter_mission"
+                        name="인터미션"
+                        unit="분"
+                        spacer={{ style: { width: "100%" } }}
+                      >
+                        <Field>
                           <Field.UncontrolledText
                             register={register}
                             placeholder="쉬는 시간을 입력해주세요."

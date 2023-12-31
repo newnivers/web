@@ -29,7 +29,11 @@ function InputColumn({
 }: Props) {
   const inputColumnStyle: OmitedSpacerProps =
     labelPos === "left"
-      ? { type: "horizontal", align: "center", gap: 8 }
+      ? {
+          type: "horizontal",
+          align: "center",
+          gap: 8,
+        }
       : { type: "vertical", align: "baseline", gap: 8 };
 
   return (
