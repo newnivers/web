@@ -21,7 +21,7 @@ export default function NavBar() {
 }
 
 const Container = styled.div`
-  padding: 0.75rem 0;
+  padding: 0.75rem 10rem;
   display: flex;
   justify-content: space-between;
 `;
