@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import styled from "styled-components";
+import Footer from "@/components/common/layout/Footer";
 import NavBar from "@/components/common/layout/NavBar";
 import { AuthUserInfo } from "@/contexts";
 
@@ -11,10 +12,13 @@ interface Props {
 
 function DefaultLayout({ children }: Props) {
   return (
-    <Container>
+    <>
       <NavBar />
-      <AuthUserInfo.Provider>{children}</AuthUserInfo.Provider>
-    </Container>
+      <Container>
+        <AuthUserInfo.Provider>{children}</AuthUserInfo.Provider>
+      </Container>
+      <Footer />
+    </>
   );
 }
 
@@ -25,6 +29,7 @@ const Container = styled.section`
   & *[id="main-content"] {
     width: 1200px;
     margin: 0 auto;
+    min-height: 42rem;
   }
 `;
 
