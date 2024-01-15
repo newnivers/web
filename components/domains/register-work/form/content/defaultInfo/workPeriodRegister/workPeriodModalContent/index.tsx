@@ -8,7 +8,15 @@ import Typography from "@/components/common/text/Typography";
 import { RoundInfo } from "../roundInfo";
 import type { WorkPeriod } from "../shared";
 
-export function WorkPeriodModalContent() {
+interface Props {
+  onConfirmWorkPeriods: (workPeriods: WorkPeriod[]) => void;
+  onClickModalShow: () => void;
+}
+
+export function WorkPeriodModalContent({
+  onConfirmWorkPeriods,
+  onClickModalShow,
+}: Props) {
   const [workPeriods, setWorkPeriods] = useState<WorkPeriod[]>([]);
 
   const dates = useMemo(
@@ -127,6 +135,11 @@ export function WorkPeriodModalContent() {
     setWorkPeriods(updatedWorkPeriods);
   };
 
+  const onConfirm = () => {
+    onConfirmWorkPeriods(workPeriods);
+    onClickModalShow();
+  };
+
   return (
     <Container style={{ width: "1000px", height: "652px" }}>
       <CalendarWrapper>
@@ -177,7 +190,7 @@ export function WorkPeriodModalContent() {
           align="center"
           style={{ flex: "0.17", padding: "16px 32px" }}
         >
-          <DefaultButton>
+          <DefaultButton onClick={onConfirm}>
             <RegisterButtonTypography typo="subhead03">
               등록하기
             </RegisterButtonTypography>

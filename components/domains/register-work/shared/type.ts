@@ -11,6 +11,8 @@ export type DefaultWorkForm = Pick<
   | "age_limit"
   | "running_time"
   | "inter_mission"
+  | "ticket_open_at"
+  | "ticket_close_at"
   | "schedules"
 >;
 
@@ -25,10 +27,7 @@ export type PriceWorkForm = Pick<
 >;
 
 // 좌석 배치도에 대한 컬럼 추가 필요
-export type SeatWorkForm = Pick<
-  WorkForm,
-  "reserved_seat" | "ticket_open_at" | "ticket_close_at"
->;
+export type SeatWorkForm = Pick<WorkForm, "reserved_seat">;
 
 export interface WorkFormPerStep {
   default: DefaultWorkForm;

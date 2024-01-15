@@ -1,19 +1,13 @@
-import type { FieldValues } from "react-hook-form";
-import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { TitleColumn, InputColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
+import { WorkForm } from "../../context";
 import type { FormContentProps } from "../type";
 
 export function SeatInfo({ classifications }: FormContentProps) {
-  const { control, register } = useForm<FieldValues>({
-    defaultValues: {
-      unreserved_seat: true,
-      all_seat_num: 0,
-    },
-  });
+  const { register, control } = WorkForm.onlyHook();
 
   return classifications.map(({ key, name, desc }) => (
     <SpacerSkleton key={key} type="vertical" gap={24}>
