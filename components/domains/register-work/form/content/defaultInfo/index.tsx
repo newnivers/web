@@ -1,6 +1,6 @@
+import { useCallback } from "react";
 import dayjs from "dayjs";
-import type { FieldValues } from "react-hook-form";
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
   CustomCalendar,
   CustomInput,
@@ -10,6 +10,9 @@ import { TitleColumn, InputColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
 import { SpacerSkleton } from "@/components/common/spacer";
 import { WorkPeriodRegister } from "./workPeriodRegister";
+import type { WorkPeriod } from "./workPeriodRegister/shared";
+import { WorkPeriodModalContent } from "./workPeriodRegister/workPeriodModalContent";
+import { WorkForm } from "../../context";
 import type { FormContentProps } from "../type";
 
 const getTimeIntervals = () => {
@@ -30,26 +33,19 @@ const getTimeIntervals = () => {
 };
 
 export function DefaultInfo({ classifications }: FormContentProps) {
-  const { register, control, watch } = useForm<FieldValues>({
-    defaultValues: {
-      title: "",
-      category: "TICKET",
-      place: "",
-      genre: "",
-      age_limit: "",
-      running_time: "",
-      inter_mission: "",
-      ticket_open_date: Date.now(),
-      ticket_open_time: "",
-      ticket_close_date: Date.now(),
-      ticket_close_time: "",
-    },
-  });
+  const { register, control, watch, setValue } = WorkForm.onlyHook();
 
-  const [ticketOpenDate, ticketCloseDate]: [Date, Date] = watch([
-    "ticket_open_date",
-    "ticket_close_date",
+  const [ticketOpenAt, ticketCloseAt]: [Date, Date] = watch([
+    "ticket_open_at",
+    "ticket_close_at",
   ]);
+
+  const onCofirmWorkPeriods = useCallback(
+    (workPeriods: WorkPeriod[]) => {
+      setValue("schedules", workPeriods);
+    },
+    [setValue]
+  );
 
   return (
     <>
@@ -71,9 +67,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                           <Field.ControlledSelector
                             control={control}
                             name="category"
-                            selectOptions={[
-                              { value: "TICKET", label: "Ticket" },
-                            ]}
+                            selectOptions={[{ value: "SHOW", label: "Ticket" }]}
                             disabled={true}
                           />
                         </Field>
@@ -204,7 +198,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                         render={({ field }) => (
                           <CustomCalendar
                             inline={false}
-                            selected={ticketOpenDate}
+                            selected={ticketOpenAt}
                             onChangeDate={(date) => {
                               field.onChange(date);
                             }}
@@ -236,7 +230,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                         render={({ field }) => (
                           <CustomCalendar
                             inline={false}
-                            selected={ticketCloseDate}
+                            selected={ticketCloseAt}
                             onChangeDate={(date) => {
                               field.onChange(date);
                             }}
@@ -260,7 +254,16 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                   </SpacerSkleton>
                 );
               case "show-period":
-                return <WorkPeriodRegister />;
+                return (
+                  <WorkPeriodRegister>
+                    {(onClickModalShow) => (
+                      <WorkPeriodModalContent
+                        onConfirmWorkPeriods={onCofirmWorkPeriods}
+                        onClickModalShow={onClickModalShow}
+                      />
+                    )}
+                  </WorkPeriodRegister>
+                );
               default:
                 return null;
             }

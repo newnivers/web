@@ -1,39 +1,42 @@
-import type { ReactNode, MutableRefObject } from "react";
-import { createContext, useContext, useRef } from "react";
-import type { WorkFormPerStep } from "../shared/type";
+import type { ReactNode } from "react";
+import { createContext, useContext } from "react";
+import type { FieldValues, UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { defaultDescription, defaultCautionDescription } from "../shared";
 
-const initWorkForm: WorkFormPerStep = {
-  default: {
-    category: "SHOW",
-    title: "",
-    place: 0,
-    genre: "",
-    age_limit: 0,
-    running_time: 0,
-    inter_mission: 0,
-    schedules: [],
+const initWorkForm = {
+  category: "SHOW",
+  title: "",
+  place: 0,
+  genre: "",
+  age_limit: 0,
+  running_time: 0,
+  inter_mission: 0,
+  ticket_open_at: "",
+  ticket_close_at: "",
+  schedules: [],
+
+  image: "",
+  description: {
+    html: defaultDescription,
+    images: [],
   },
-  detail: {
-    image: "",
-    description: "",
-    caution_description: "",
+  caution_description: {
+    html: defaultCautionDescription,
+    images: [],
   },
-  price: {
-    is_free: true,
-    purchase_limit_count: 1,
-    price: 0,
-  },
-  seat: {
-    reserved_seat: false,
-    ticket_open_at: "",
-    ticket_close_at: "",
-  },
+
+  is_free: true,
+  purchase_limit_count: 1,
+  price: 0,
+
+  reserved_seat: false,
 };
 
 const WorkFormContext = createContext<{
-  cachedWorkForm: WorkFormPerStep;
+  workForm: UseFormReturn<FieldValues> | null;
 }>({
-  cachedWorkForm: initWorkForm,
+  workForm: null,
 });
 
 interface Props {
@@ -41,18 +44,26 @@ interface Props {
 }
 
 function WorkFormProvider({ children }: Props) {
-  const cachedWorkForm = useRef<WorkFormPerStep>(initWorkForm);
+  const workForm = useForm<FieldValues>({
+    defaultValues: initWorkForm,
+  });
 
   return (
-    <WorkFormContext.Provider
-      value={{ cachedWorkForm: cachedWorkForm.current }}
-    >
+    <WorkFormContext.Provider value={{ workForm }}>
       {children}
     </WorkFormContext.Provider>
   );
 }
 
-const useWorkForm = () => useContext(WorkFormContext);
+const useWorkForm = () => {
+  const { workForm } = useContext(WorkFormContext);
+
+  if (!workForm) {
+    throw new Error("useWorkForm must be used within a WorkFormProvider");
+  }
+
+  return workForm;
+};
 
 export const WorkForm = {
   Provider: WorkFormProvider,

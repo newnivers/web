@@ -1,11 +1,15 @@
+import type { ReactNode } from "react";
 import { useCallback, useState } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
 import { DefaultModal } from "@/components/common/modal";
 import { SpacerSkleton } from "@/components/common/spacer";
-import { WorkPeriodModalContent } from "./workPeriodModalContent";
 
-export function WorkPeriodRegister() {
+interface Props {
+  children: (onClickModalShow: () => void) => ReactNode;
+}
+
+export function WorkPeriodRegister({ children }: Props) {
   const [isShow, setShow] = useState(false);
 
   const onClickModalShow = useCallback(() => {
@@ -15,7 +19,7 @@ export function WorkPeriodRegister() {
   return (
     <>
       <DefaultModal isShow={isShow} onClose={onClickModalShow}>
-        <WorkPeriodModalContent />
+        {children(onClickModalShow)}
       </DefaultModal>
       <RegisterButton type="button" onClick={onClickModalShow}>
         <SpacerSkleton align="center" gap={6}>
