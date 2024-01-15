@@ -41,3 +41,8 @@ export interface Classification {
   name: string;
   desc?: string[];
 }
+
+export interface EditorImage {
+  name: string;
+  source: string | ArrayBuffer | null[];
+}

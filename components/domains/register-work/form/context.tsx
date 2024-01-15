@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { createContext, useContext } from "react";
 import type { FieldValues, UseFormReturn } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { defaultDescription, defaultCautionDescription } from "../shared";
 
 const initWorkForm = {
   category: "SHOW",
@@ -16,8 +17,14 @@ const initWorkForm = {
   schedules: [],
 
   image: "",
-  description: "",
-  caution_description: "",
+  description: {
+    html: defaultDescription,
+    images: [],
+  },
+  caution_description: {
+    html: defaultCautionDescription,
+    images: [],
+  },
 
   is_free: true,
   purchase_limit_count: 1,
