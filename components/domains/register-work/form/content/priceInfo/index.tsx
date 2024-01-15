@@ -25,7 +25,6 @@ export function PriceInfo({ classifications }: FormContentProps) {
             <Field.Checkbox
               control={control}
               name="is_free"
-              showLabel={false}
               status="disabled"
             />
             <ReadyToCostTypography typo="body03">

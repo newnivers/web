@@ -7,12 +7,12 @@ type CheckboxStatus = "default" | "disabled";
 
 interface Props extends UseControllerProps {
   status?: CheckboxStatus;
-  showLabel?: boolean;
+  labelName?: string;
 }
 
 export function Checkbox({
   status = "default",
-  showLabel = true,
+  labelName,
   ...controllerProps
 }: Props) {
   const { field } = useController(controllerProps);
@@ -34,7 +34,7 @@ export function Checkbox({
         onChange={onChangeChecked}
       />
       <CheckLabel htmlFor={field.name} status={status}>
-        {showLabel && <LabelText status={status}>{field.name}</LabelText>}
+        {labelName && <LabelText status={status}>{labelName}</LabelText>}
       </CheckLabel>
     </>
   );
