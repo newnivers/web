@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
+import { Account } from "@/components/domains/my-info";
 
 function MyInfoPage() {
   const router = useRouter();
@@ -14,7 +15,7 @@ function MyInfoPage() {
       <Headline>
         <Typography typo="headline">마이페이지</Typography>
       </Headline>
-      <SpacerSkleton align="baseline" gap={161}>
+      <SpacerSkleton gap={161}>
         <SpacerSkleton type="vertical" gap={20} as="nav">
           <Link
             href={{
@@ -33,8 +34,8 @@ function MyInfoPage() {
             <Typography typo="subhead02">나의 후기</Typography>
           </Link>
         </SpacerSkleton>
-        <SpacerSkleton type="vertical" gap={24}>
-          <div>사용자 정보</div>
+        <SpacerSkleton type="vertical" gap={24} style={{ width: "100%" }}>
+          <Account />
           <div>예약 신청 내역</div>
         </SpacerSkleton>
       </SpacerSkleton>

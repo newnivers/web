@@ -20,7 +20,8 @@ export interface Props extends HTMLAttributes<HTMLElement> {
     | "aside"
     | "form"
     | "ul"
-    | "li";
+    | "li"
+    | "button";
 }
 
 function Spacer({
