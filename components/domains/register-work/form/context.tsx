@@ -36,12 +36,16 @@ const WorkFormContext = createContext<{
       file: File,
       source: string | ArrayBuffer | null
     ) => void;
+    processCachedImagesFromHtml: (
+      originHtml: string
+    ) => Promise<string | undefined>;
   };
 }>({
   workForm: null,
   editorManager: {
     cachedEditorImages: { current: [] },
     updateEditorImages: () => {},
+    processCachedImagesFromHtml: async () => undefined,
   },
 });
 
