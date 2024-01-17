@@ -7,9 +7,19 @@ export function useEditorManager() {
 
   const cachedEditorImages = useRef<EditorImage[]>([]);
 
+  const checkDuplicateImage = (inputSource: string | ArrayBuffer | null) => {
+    return cachedEditorImages.current.find(
+      (cachedImage) => cachedImage.source === inputSource
+    );
+  };
+
   const updateEditorImages = useCallback(
     (file: File, source: string | ArrayBuffer | null) => {
       if (currentStep !== "detail") {
+        return;
+      }
+
+      if (checkDuplicateImage(source)) {
         return;
       }
 
