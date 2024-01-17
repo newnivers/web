@@ -44,5 +44,5 @@ export interface Classification {
 
 export interface EditorImage {
   name: string;
-  source: string | ArrayBuffer | null[];
+  source: string | ArrayBuffer | null;
 }

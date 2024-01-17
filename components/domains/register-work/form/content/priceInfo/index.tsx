@@ -7,9 +7,9 @@ import { WorkForm } from "../../context";
 import type { FormContentProps } from "../type";
 
 export function PriceInfo({ classifications }: FormContentProps) {
-  const { register, control, getValues } = WorkForm.onlyHook();
-
-  console.log(getValues());
+  const {
+    workForm: { register, control },
+  } = WorkForm.onlyHook();
 
   return classifications.map(({ key, name, desc }) => (
     <SpacerSkleton key={key} type="vertical" gap={24}>

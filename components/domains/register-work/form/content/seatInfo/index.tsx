@@ -7,7 +7,9 @@ import { WorkForm } from "../../context";
 import type { FormContentProps } from "../type";
 
 export function SeatInfo({ classifications }: FormContentProps) {
-  const { register, control } = WorkForm.onlyHook();
+  const {
+    workForm: { register, control },
+  } = WorkForm.onlyHook();
 
   return classifications.map(({ key, name, desc }) => (
     <SpacerSkleton key={key} type="vertical" gap={24}>
