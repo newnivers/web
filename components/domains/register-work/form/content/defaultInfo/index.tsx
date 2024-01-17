@@ -33,7 +33,9 @@ const getTimeIntervals = () => {
 };
 
 export function DefaultInfo({ classifications }: FormContentProps) {
-  const { register, control, watch, setValue } = WorkForm.onlyHook();
+  const {
+    workForm: { register, control, watch, setValue },
+  } = WorkForm.onlyHook();
 
   const [ticketOpenAt, ticketCloseAt]: [Date, Date] = watch([
     "ticket_open_at",

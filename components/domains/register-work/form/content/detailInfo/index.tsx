@@ -8,7 +8,10 @@ import { WorkForm } from "../../context";
 import type { FormContentProps } from "../type";
 
 export function DetailInfo({ classifications }: FormContentProps) {
-  const { control, getValues } = WorkForm.onlyHook();
+  const {
+    workForm: { control, getValues },
+    editorManager,
+  } = WorkForm.onlyHook();
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { description, caution_description } = getValues();
@@ -31,9 +34,9 @@ export function DetailInfo({ classifications }: FormContentProps) {
         <Controller
           control={control}
           name="description"
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { onChange } }) => (
             <TextEditor
-              defaultValue={description.html}
+              defaultValue={description}
               containerStyle={{ width: "100%" }}
               qlEditorStyle={css`
                 .ql-editor {
@@ -45,22 +48,10 @@ export function DetailInfo({ classifications }: FormContentProps) {
                 }
               `}
               _onImageUpload={({ file, source }) => {
-                const fileName = file.name.split(".")[0];
-                const updatedImages = value.images.concat({
-                  name: fileName,
-                  source,
-                });
-
-                onChange({
-                  ...value,
-                  images: updatedImages,
-                });
+                editorManager.updateEditorImages(file, source);
               }}
               _onContentChange={({ html }) => {
-                onChange({
-                  ...value,
-                  html,
-                });
+                onChange(html);
               }}
             />
           )}
@@ -74,9 +65,9 @@ export function DetailInfo({ classifications }: FormContentProps) {
         <Controller
           control={control}
           name="caution_description"
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { onChange } }) => (
             <TextEditor
-              defaultValue={caution_description.html}
+              defaultValue={caution_description}
               containerStyle={{ width: "100%" }}
               qlEditorStyle={css`
                 .ql-editor {
@@ -88,22 +79,10 @@ export function DetailInfo({ classifications }: FormContentProps) {
                 }
               `}
               _onImageUpload={({ file, source }) => {
-                const fileName = file.name.split(".")[0];
-                const updatedImages = value.images.concat({
-                  name: fileName,
-                  source,
-                });
-
-                onChange({
-                  ...value,
-                  images: updatedImages,
-                });
+                editorManager.updateEditorImages(file, source);
               }}
               _onContentChange={({ html }) => {
-                onChange({
-                  ...value,
-                  html,
-                });
+                onChange(html);
               }}
             />
           )}
