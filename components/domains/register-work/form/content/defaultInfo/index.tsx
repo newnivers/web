@@ -37,9 +37,9 @@ export function DefaultInfo({ classifications }: FormContentProps) {
     workForm: { register, control, watch, setValue },
   } = WorkForm.onlyHook();
 
-  const [ticketOpenAt, ticketCloseAt]: [Date, Date] = watch([
-    "ticket_open_at",
-    "ticket_close_at",
+  const [ticketOpenDate, ticketCloseDate]: [Date, Date] = watch([
+    "ticket_open_date",
+    "ticket_close_date",
   ]);
 
   const onCofirmWorkPeriods = useCallback(
@@ -200,7 +200,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                         render={({ field }) => (
                           <CustomCalendar
                             inline={false}
-                            selected={ticketOpenAt}
+                            selected={ticketOpenDate}
                             onChangeDate={(date) => {
                               field.onChange(date);
                             }}
@@ -232,7 +232,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                         render={({ field }) => (
                           <CustomCalendar
                             inline={false}
-                            selected={ticketCloseAt}
+                            selected={ticketCloseDate}
                             onChangeDate={(date) => {
                               field.onChange(date);
                             }}

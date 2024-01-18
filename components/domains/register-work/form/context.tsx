@@ -14,8 +14,10 @@ const initWorkForm = {
   age_limit: 0,
   running_time: 0,
   inter_mission: 0,
-  ticket_open_at: "",
-  ticket_close_at: "",
+  ticket_open_date: "",
+  ticket_open_time: "",
+  ticket_close_date: "",
+  ticket_close_time: "",
   schedules: [],
 
   image: "",
@@ -26,6 +28,7 @@ const initWorkForm = {
   price: 0,
 
   reserved_seat: false,
+  seat_max_count: 0,
 };
 
 const WorkFormContext = createContext<{
