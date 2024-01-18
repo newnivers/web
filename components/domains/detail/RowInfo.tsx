@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
 
@@ -12,6 +13,8 @@ export interface RowInfoData {
 }
 
 export default function RowInfo({ infoData }: { infoData: RowInfoData }) {
+  console.log(dayjs(infoData?.startDate).format("YYYY-MM-DD"));
+
   return (
     <Container>
       <KeyWrapper>
@@ -24,7 +27,9 @@ export default function RowInfo({ infoData }: { infoData: RowInfoData }) {
       </KeyWrapper>
       <TextWrapper>
         <Text typo="body02">{infoData.place}</Text>
-        <Text typo="body02">{`${infoData.startDate}~${infoData.endDate}`}</Text>
+        <Text typo="body02">{`${dayjs(infoData?.startDate).format(
+          "YYYY-MM-DD"
+        )}~${dayjs(infoData?.endDate).format("YYYY-MM-DD")}`}</Text>
         <Text typo="body02">{`만 ${infoData.ageLimit}세 이상`}</Text>
         <Text typo="body02">{`총 ${infoData.runningTime}분`}</Text>
         <Text typo="body02">{`${infoData.interMission}분`}</Text>
