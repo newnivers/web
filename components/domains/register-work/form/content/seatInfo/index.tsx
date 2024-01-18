@@ -16,14 +16,14 @@ export function SeatInfo({ classifications }: FormContentProps) {
       <TitleColumn name={name} desc={desc} />
       <SpacerSkleton gap={30}>
         <InputColumn
-          id="unreserved_seat"
+          id="reserved_seat"
           name="좌석종류"
           spacer={{ style: { width: "100%" } }}
         >
           <SpacerSkleton align="center" gap={10}>
             <Field.Checkbox
               control={control}
-              name="unreserved_seat"
+              name="reserved_seat"
               labelName="비지정석"
               status="disabled"
             />
@@ -60,14 +60,14 @@ export function SeatInfo({ classifications }: FormContentProps) {
         </Field>
       </InputColumn>
       <InputColumn
-        id="all_seat_num"
+        id="seat_max_count"
         name="총 좌석수"
         spacer={{ style: { width: "100%" } }}
         unit="석"
       >
         <Field>
           <Field.UncontrolledText
-            path="all_seat_num"
+            path="seat_max_count"
             register={register}
             registerOptions={{
               required: true,
