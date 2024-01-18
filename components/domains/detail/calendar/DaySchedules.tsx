@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
 import format from "date-fns/format";
+import dayjs from "dayjs";
 import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
 import type { Schedule } from "./type";
@@ -7,28 +8,37 @@ import type { Schedule } from "./type";
 type DaySchedulesProps = {
   schedules: Schedule[];
   onClickSchedule: Dispatch<SetStateAction<number | null>>;
+  selectedDate: Date | null;
   clickedId: number | null;
 };
 
 export default function DaySchedules({
   schedules,
+  selectedDate,
   onClickSchedule,
   clickedId,
 }: DaySchedulesProps) {
   return (
     <GridContainer>
-      {schedules.map((schedule, index) => {
-        return (
-          <AvailableSchedule key={schedule.id}>
-            <Typography typo="body02">
-              {`${index + 1}회 | ${format(
-                new Date(schedule.startAt),
-                "HH:mm"
-              )}`}
-            </Typography>
-          </AvailableSchedule>
-        );
-      })}
+      {schedules
+        .filter((schedule) => {
+          return (
+            dayjs(schedule.startAt).startOf("day").valueOf() ===
+            selectedDate?.valueOf()
+          );
+        })
+        .map((schedule, index) => {
+          return (
+            <AvailableSchedule key={schedule.id}>
+              <Typography typo="body02">
+                {`${index + 1}회 | ${format(
+                  new Date(schedule.startAt),
+                  "HH:mm"
+                )}`}
+              </Typography>
+            </AvailableSchedule>
+          );
+        })}
     </GridContainer>
   );
 }

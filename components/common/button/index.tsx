@@ -54,8 +54,7 @@ const ButtonText = styled(Text)<{ sort: ButtonSort }>`
     const { colors } = theme;
 
     return css`
-      font-weight: 700;
-      line-height: 24px;
+      ${theme.typoToken.subhead02}
       letter-spacing: 0.5px;
       color: ${sort === "primary" ? colors.white : colors.primary_01};
     `;
