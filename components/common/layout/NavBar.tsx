@@ -24,6 +24,9 @@ const Container = styled.div`
   padding: 0.75rem 10rem;
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  height: 72px;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 const NavMenu = styled.div`
   display: flex;

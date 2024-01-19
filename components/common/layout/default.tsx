@@ -24,7 +24,9 @@ function DefaultLayout({ children }: Props) {
 
 const Container = styled.section`
   min-width: 1400px;
+  min-height: calc(100% - 407px);
   padding: 0 10rem;
+  background-color: ${({ theme }) => theme.colors.white};
 
   & *[id="main-content"] {
     width: 1200px;

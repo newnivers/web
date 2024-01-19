@@ -23,6 +23,15 @@ a {
   font-size: 100%;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #1d1d1d;
+}
+
 input,
 textarea {
   user-select: auto;
