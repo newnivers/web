@@ -43,7 +43,7 @@ export default function Footer() {
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary["900"]};
-  height: 20.9rem;
+  height: 335px;
   padding: 3rem 10rem 1.5rem 10rem;
 `;
 

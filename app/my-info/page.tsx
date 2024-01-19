@@ -2,20 +2,20 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
-import { Account } from "@/components/domains/my-info";
+import { Account, Cardboard } from "@/components/domains/my-info";
 
 function MyInfoPage() {
   const router = useRouter();
 
   return (
-    <SpacerSkleton type="vertical" gap={30}>
+    <SpacerSkleton id="main-content" type="vertical" gap={30}>
       <Headline>
         <Typography typo="headline">마이페이지</Typography>
       </Headline>
-      <SpacerSkleton gap={161}>
+      <SpacerSkleton justify="space-between" gap={161}>
         <SpacerSkleton type="vertical" gap={20} as="nav">
           <Link
             href={{
@@ -34,9 +34,79 @@ function MyInfoPage() {
             <Typography typo="subhead02">나의 후기</Typography>
           </Link>
         </SpacerSkleton>
-        <SpacerSkleton type="vertical" gap={24} style={{ width: "100%" }}>
+        <SpacerSkleton type="vertical" gap={24} style={{ flex: 2 }}>
           <Account />
-          <div>예약 신청 내역</div>
+          <SpacerSkleton type="vertical" gap={24}>
+            <div>
+              <h4>
+                <Typography typo="subhead01">예약/신청 내역</Typography>
+              </h4>
+            </div>
+            <History>
+              <ul>
+                <CardboardList>
+                  <Cardboard
+                    image="/img/test-poster.png"
+                    title="현대무용 <시차적 관점>"
+                    start_at="2023.01.15 (목) 오전 10:00"
+                    price="무료"
+                    visitor_count={100}
+                    space="서울예술대학교 빨간대문"
+                  >
+                    test
+                  </Cardboard>
+                </CardboardList>
+                <CardboardList>
+                  <Cardboard
+                    image="/img/test-poster.png"
+                    title="현대무용 <시차적 관점>"
+                    start_at="2023.01.15 (목) 오전 10:00"
+                    price="무료"
+                    visitor_count={100}
+                    space="서울예술대학교 빨간대문"
+                  >
+                    test
+                  </Cardboard>
+                </CardboardList>
+                <CardboardList>
+                  <Cardboard
+                    image="/img/test-poster.png"
+                    title="현대무용 <시차적 관점>"
+                    start_at="2023.01.15 (목) 오전 10:00"
+                    price="무료"
+                    visitor_count={100}
+                    space="서울예술대학교 빨간대문"
+                  >
+                    test
+                  </Cardboard>
+                </CardboardList>
+                <CardboardList>
+                  <Cardboard
+                    image="/img/test-poster.png"
+                    title="현대무용 <시차적 관점>"
+                    start_at="2023.01.15 (목) 오전 10:00"
+                    price="무료"
+                    visitor_count={100}
+                    space="서울예술대학교 빨간대문"
+                  >
+                    test
+                  </Cardboard>
+                </CardboardList>
+                <CardboardList>
+                  <Cardboard
+                    image="/img/test-poster.png"
+                    title="현대무용 <시차적 관점>"
+                    start_at="2023.01.15 (목) 오전 10:00"
+                    price="무료"
+                    visitor_count={100}
+                    space="서울예술대학교 빨간대문"
+                  >
+                    test
+                  </Cardboard>
+                </CardboardList>
+              </ul>
+            </History>
+          </SpacerSkleton>
         </SpacerSkleton>
       </SpacerSkleton>
     </SpacerSkleton>
@@ -46,6 +116,19 @@ function MyInfoPage() {
 const Headline = styled.div`
   width: fit-content;
   margin: 0 auto;
+`;
+
+const History = styled.div``;
+
+const CardboardList = styled.li`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      padding: 24px 0;
+      border-bottom: 1px solid ${colors.secondary[200]};
+    `;
+  }}
 `;
 
 export default MyInfoPage;
