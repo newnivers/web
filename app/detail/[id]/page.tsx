@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import styled from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
@@ -10,25 +9,13 @@ import {
   ReservationCalendar,
   TabContainer,
 } from "@/components/domains/detail";
-import detailFixture from "@/fixture/detailPageFixture";
+import { useTicketDetail } from "@/queries";
 
 export default function DetailPage({ params }: { params: { id: number } }) {
-  const { data } = detailFixture;
-  // TODO: 제거 예정
-  const rowInfos = useMemo(() => {
-    return {
-      place: data.place,
-      startDate: data.startDate,
-      endDate: data.endDate,
-      ageLimit: data.ageLimit,
-      runningTime: data.runningTime,
-      interMission: data.interMission,
-      price: Number(data.price),
-    };
-  }, [data]);
+  const { data, rowInfos } = useTicketDetail(params.id);
 
-  if (!data) {
-    return <div>로딩</div>;
+  if (!data || !rowInfos) {
+    return <div>Error Page</div>;
   }
 
   return (

@@ -38,10 +38,10 @@ const axiosInstance: AxiosInstance = axios.create({
 
 const factoryApiMethod =
   (method: Method) =>
-  async (
+  async <T = any>(
     url: AxiosRequestConfig["url"],
     config?: Omit<AxiosRequestConfig, "url">
-  ): Promise<any> => {
+  ): Promise<T> => {
     return axiosInstance({
       ...handleRequest({ url, ...config }),
       method,
