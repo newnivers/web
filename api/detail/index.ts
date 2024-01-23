@@ -9,7 +9,7 @@ export interface DetailResponseData extends RequestData {
 }
 
 export interface ArtInfo {
-  id?: number;
+  id: number;
   user?: number;
   place: string;
   title: string;

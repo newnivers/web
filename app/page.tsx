@@ -1,17 +1,18 @@
 "use client";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { LandingPage, MainBanner } from "@/components/domains/landing-page";
 
 export default function Home() {
-  return <Container>Home Page</Container>;
+  return (
+    <Container>
+      <MainBanner
+        title="SEOUL INSTITUTE OF THE ARTS"
+        date="2023.11.05 (Sun) ~ 2023.11.12 (Sun)"
+      ></MainBanner>
+      <LandingPage />
+    </Container>
+  );
 }
 
-const Container = styled.div`
-  ${({ theme }) => {
-    const { colors } = theme;
-
-    return css`
-      background-color: ${colors.primary_01};
-    `;
-  }}
-`;
+const Container = styled.div``;
