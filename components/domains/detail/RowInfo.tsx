@@ -13,8 +13,6 @@ export interface RowInfoData {
 }
 
 export default function RowInfo({ infoData }: { infoData: RowInfoData }) {
-  console.log(dayjs(infoData?.startDate).format("YYYY-MM-DD"));
-
   return (
     <Container>
       <KeyWrapper>
