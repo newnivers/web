@@ -39,6 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@swc/plugin-styled-components", "npm:1.5.87"],\
             ["@tanstack/react-query", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:4.35.7"],\
             ["@tanstack/react-query-devtools", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:4.35.7"],\
+            ["@tanstack/react-table", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:8.11.7"],\
             ["@types/date-fns", "npm:2.6.0"],\
             ["@types/node", "npm:20.5.7"],\
             ["@types/react", "npm:18.2.25"],\
@@ -3997,6 +3998,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/tanstack__react-query",\
             "react-dom",\
             "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/react-table", [\
+        ["npm:8.11.7", {\
+          "packageLocation": "./.yarn/cache/@tanstack-react-table-npm-8.11.7-19453719b7-47aaf7b94e.zip/node_modules/@tanstack/react-table/",\
+          "packageDependencies": [\
+            ["@tanstack/react-table", "npm:8.11.7"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:8.11.7", {\
+          "packageLocation": "./.yarn/__virtual__/@tanstack-react-table-virtual-eab6fed312/0/cache/@tanstack-react-table-npm-8.11.7-19453719b7-47aaf7b94e.zip/node_modules/@tanstack/react-table/",\
+          "packageDependencies": [\
+            ["@tanstack/react-table", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:8.11.7"],\
+            ["@tanstack/table-core", "npm:8.11.7"],\
+            ["@types/react", "npm:18.2.25"],\
+            ["@types/react-dom", "npm:18.2.7"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tanstack/table-core", [\
+        ["npm:8.11.7", {\
+          "packageLocation": "./.yarn/cache/@tanstack-table-core-npm-8.11.7-ea21014ab0-0db445806a.zip/node_modules/@tanstack/table-core/",\
+          "packageDependencies": [\
+            ["@tanstack/table-core", "npm:8.11.7"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9944,6 +9981,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@swc/plugin-styled-components", "npm:1.5.87"],\
             ["@tanstack/react-query", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:4.35.7"],\
             ["@tanstack/react-query-devtools", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:4.35.7"],\
+            ["@tanstack/react-table", "virtual:80e4d76db020c97a35892c7ad887c9d6e3dd4aecb7a2044e07b00527e59285ab299ea90004d6b5cb08544f24c5454957ff60a0a17a6821f2f306f9d305397128#npm:8.11.7"],\
             ["@types/date-fns", "npm:2.6.0"],\
             ["@types/node", "npm:20.5.7"],\
             ["@types/react", "npm:18.2.25"],\
