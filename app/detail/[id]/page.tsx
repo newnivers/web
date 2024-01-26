@@ -7,8 +7,8 @@ import {
   Genre,
   TicketMainInfo,
   ReservationCalendar,
-  TabContainer,
 } from "@/components/domains/detail";
+import Tab from "@/components/domains/detail/tab";
 import { useTicketDetail } from "@/queries";
 
 export default function DetailPage({ params }: { params: { id: number } }) {
@@ -19,19 +19,24 @@ export default function DetailPage({ params }: { params: { id: number } }) {
   }
 
   return (
-    <SpacerSkleton id="main-content" type="vertical">
-      <DetailHeader>
-        <Genre genre={data.genre} />
-        <TicketTitle typo="headline">{data.title}</TicketTitle>
-      </DetailHeader>
-      <DetailContent>
-        <DetailInfoWrapper>
-          <TicketMainInfo image={data.image} infoData={rowInfos} />
-          <TabContainer />
-        </DetailInfoWrapper>
-        <ReservationCalendar schedules={data.schedules} disabled={false} />
-      </DetailContent>
-    </SpacerSkleton>
+      <SpacerSkleton id="main-content" type="vertical">
+        <DetailHeader>
+          <Genre genre={data.genre} />
+          <TicketTitle typo="headline">{data.title}</TicketTitle>
+        </DetailHeader>
+        <DetailContent>
+          <DetailInfoWrapper>
+            <TicketMainInfo image={data.image} infoData={rowInfos} />
+            <Tab>
+              <Tab.Review reviews={data.comments ?? []} />
+              <Tab.Location />
+              <Tab.Info />
+              <Tab.CancelInfo />
+            </Tab>
+          </DetailInfoWrapper>
+          <ReservationCalendar schedules={data.schedules} disabled={false} />
+        </DetailContent>
+      </SpacerSkleton>
   );
 }
 
