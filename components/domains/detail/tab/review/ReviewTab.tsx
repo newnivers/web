@@ -1,36 +1,27 @@
 import styled from "styled-components";
+import type { CommentInfo } from "@/api/detail";
 import Typography from "@/components/common/text/Typography";
 import ReviewContent from "./ReviewContent";
 import ReviewTextarea from "./ReviewTextarea";
 
-const reviewFixture = [
-  {
-    id: "12",
-    nickname: "얼럴얼",
-    rating: 3,
-    content: "이건 쓰래기야!",
-  },
-  {
-    id: "1",
-    nickname: "얼럴얼djf",
-    rating: 0,
-    content: "이건 쓰래기야!!@!#!#",
-  },
-];
-
-export default function ReviewTab() {
+export default function ReviewTab({
+  reviews,
+  artId,
+}: {
+  reviews: CommentInfo[];
+  artId: number;
+}) {
   return (
     <>
-      <ReviewTextarea />
-      <ReviewCountTitle typo="subhead01">{`총 ${reviewFixture.length}개`}</ReviewCountTitle>
-      {reviewFixture.map(({ id, nickname, rating, content }) => {
+      <ReviewTextarea artId={artId} />
+      <ReviewCountTitle typo="subhead01">{`총 ${reviews.length}개`}</ReviewCountTitle>
+      {reviews.map(({ author, score, description }, index) => {
         return (
           <ReviewContent
-            id={id}
-            key={id}
-            nickname={nickname}
-            rating={rating}
-            content={content}
+            key={index}
+            author={author}
+            score={score}
+            description={description}
           />
         );
       })}

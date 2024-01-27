@@ -1,15 +1,30 @@
 import type { ChangeEvent } from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled, { css } from "styled-components";
 import Rating from "@/components/common/rating";
 import Typography from "@/components/common/text/Typography";
+import { AuthUserInfo } from "@/contexts";
+import { usePostComment } from "@/queries";
 
-export default function ReviewTextarea() {
+export default function ReviewTextarea({ artId }: { artId: number }) {
+  const { authUser } = useContext(AuthUserInfo.Context);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const postComment = usePostComment(artId);
 
   const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(event.target.value);
+  };
+
+  const postReview = () => {
+    if (authUser?.id) {
+      postComment({
+        score: rating,
+        description: review,
+        art: artId,
+        author: Number(authUser.id),
+      });
+    }
   };
 
   return (
@@ -28,7 +43,7 @@ export default function ReviewTextarea() {
           ※ 게시판 운영 규정에 맞지 않는 글은 사전 통보없이 삭제될 수 있습니다.
           <br />※ 게시물로 인해 발생하는 문제는 작성자 본인에게 책임이 있습니다.
         </Caution>
-        <ReviewRegisterButton>
+        <ReviewRegisterButton onClick={postReview}>
           <Typography typo="body02">후기등록</Typography>
         </ReviewRegisterButton>
       </Wrapper>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import styled from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
@@ -7,12 +8,13 @@ import {
   Genre,
   TicketMainInfo,
   ReservationCalendar,
-  TabContainer,
 } from "@/components/domains/detail";
+import Tab from "@/components/domains/detail/tab";
 import { useTicketDetail } from "@/queries";
 
-export default function DetailPage({ params }: { params: { id: number } }) {
-  const { data, rowInfos } = useTicketDetail(params.id);
+export default function DetailPage({ params }: { params: { id: string } }) {
+  const artId = useMemo(() => Number(params.id), [params]);
+  const { data, rowInfos } = useTicketDetail(Number(artId));
 
   if (!data || !rowInfos) {
     return <div>Error Page</div>;
@@ -27,7 +29,12 @@ export default function DetailPage({ params }: { params: { id: number } }) {
       <DetailContent>
         <DetailInfoWrapper>
           <TicketMainInfo image={data.image} infoData={rowInfos} />
-          <TabContainer />
+          <Tab>
+            <Tab.Review reviews={data.comments ?? []} artId={artId} />
+            <Tab.Location />
+            <Tab.Info />
+            <Tab.CancelInfo />
+          </Tab>
         </DetailInfoWrapper>
         <ReservationCalendar schedules={data.schedules} disabled={false} />
       </DetailContent>

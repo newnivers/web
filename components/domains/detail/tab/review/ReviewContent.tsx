@@ -1,28 +1,24 @@
 import styled from "styled-components";
+import type { CommentInfo } from "@/api/detail";
 import Rating from "@/components/common/rating";
 import Typography from "@/components/common/text/Typography";
 
-interface ReviewContentProps {
-  id: string;
-  nickname: string;
-  content: string;
-  rating: number;
-}
+type ReviewContentProps = Omit<CommentInfo, "art">;
 
 export default function ReviewContent({
-  nickname,
-  content,
-  rating,
+  author,
+  description,
+  score,
 }: ReviewContentProps) {
   return (
     <Wrapper>
       <ReviewInfo typo="body02">
-        {nickname}
+        {author}
         <Divider />
-        {`${rating}점`}
-        <Rating rating={rating} />
+        {`${score}점`}
+        <Rating rating={score} />
       </ReviewInfo>
-      <Content typo="body02">{content}</Content>
+      <Content typo="body02">{description}</Content>
     </Wrapper>
   );
 }
