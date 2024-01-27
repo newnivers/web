@@ -27,12 +27,12 @@ export function DetailInfo({ classifications }: FormContentProps) {
       >
         <ImageRegister control={control} name="image" />
       </InputColumn>
-      {editorData.map(({ id, name }) => (
+      {editorData.map(({ id, name, gap }) => (
         <InputColumn
           key={id}
           id={id}
           name={name}
-          spacer={{ align: "start", gap: 30 }}
+          spacer={{ align: "start", gap }}
         >
           <Controller
             control={control}

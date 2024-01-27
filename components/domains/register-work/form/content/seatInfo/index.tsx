@@ -3,13 +3,19 @@ import { TitleColumn, InputColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
+import { workPlaces } from "@/components/domains/register-work/shared";
 import { WorkForm } from "../../context";
 import type { FormContentProps } from "../type";
 
 export function SeatInfo({ classifications }: FormContentProps) {
   const {
-    workForm: { register, control },
+    workForm: { register, control, getValues },
   } = WorkForm.onlyHook();
+
+  const placeId: string = getValues("place");
+
+  const placeName =
+    workPlaces.find((place) => place.value === placeId)?.label || "입력 불가능";
 
   return classifications.map(({ key, name, desc }) => (
     <SpacerSkleton key={key} type="vertical" gap={24}>
@@ -17,7 +23,7 @@ export function SeatInfo({ classifications }: FormContentProps) {
       <SpacerSkleton gap={30}>
         <InputColumn
           id="reserved_seat"
-          name="좌석종류"
+          name="좌석선택"
           spacer={{ style: { width: "100%" } }}
         >
           <SpacerSkleton align="center" gap={10}>
@@ -26,6 +32,7 @@ export function SeatInfo({ classifications }: FormContentProps) {
               name="reserved_seat"
               labelName="비지정석"
               status="disabled"
+              isForceChcked={true}
             />
             <ReadyToCostTypography typo="body03">
               {`(지정석은 준비중입니다!)`}
@@ -34,13 +41,13 @@ export function SeatInfo({ classifications }: FormContentProps) {
         </InputColumn>
         <InputColumn
           id="seat_sort"
-          name="좌석종류"
+          name="공연 장소"
           spacer={{ style: { width: "100%" } }}
         >
           <Field disabled={true}>
             <Field.DefaultText
               className="reset"
-              defaultValue="입력 불가능"
+              defaultValue={placeName}
               disabled={true}
             />
           </Field>

@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import type { FieldValues } from "react-hook-form";
 import styled, { css } from "styled-components";
 import httpClient from "@/api/core";
+import DefaultButton from "@/components/common/button";
+import { DefaultModal } from "@/components/common/modal";
 import { SpacerSkleton } from "@/components/common/spacer";
+import Typography from "@/components/common/text/Typography";
 import { StepNavigator } from "@/components/domains/register-work/stepNavigator";
+import { useFileUpload } from "@/hooks";
 import { WorkForm } from "./context";
 import { combineDateTime } from "./helper";
 
@@ -15,14 +21,67 @@ interface Props {
 }
 
 export function RegisterWorkFormTemplate({ children }: Props) {
+  const router = useRouter();
   const { isFirstStep, isLastStep, movePrev, moveNext } =
     StepNavigator.onlyHook();
   const {
     workForm: { handleSubmit },
     editorManager,
   } = WorkForm.onlyHook();
+  const { fileUpload } = useFileUpload();
+
+  const [modal, setModal] = useState<{
+    isShow: boolean;
+    content: ReactElement | null;
+    handler: (() => void) | null;
+  }>({
+    isShow: false,
+    content: null,
+    handler: null,
+  });
+
+  const onMoveEnrollmentPage = useCallback(() => {
+    router.replace("/enrollment-check");
+  }, [router]);
+
+  const onClickModalReset = useCallback(() => {
+    setModal({ isShow: false, content: null, handler: null });
+  }, []);
 
   const onSubmitWorkForm = async (data: FieldValues) => {
+    const isCompleteFill = Object.entries(data).every(([key, value]) => {
+      if (key === "is_free") {
+        return true;
+      }
+      if (key === "reserved_seat") {
+        return true;
+      }
+      if (key === "price") {
+        return true;
+      }
+
+      return !!value;
+    });
+
+    if (!isCompleteFill) {
+      setModal({
+        isShow: true,
+        content: (
+          <Typography
+            typo="body02"
+            style={{
+              color: "#505050",
+            }}
+          >
+            작성하지 않은 항목이 있습니다.
+          </Typography>
+        ),
+        handler: onClickModalReset,
+      });
+
+      return;
+    }
+
     const body = {
       category: data.category,
       title: data.title,
@@ -31,12 +90,11 @@ export function RegisterWorkFormTemplate({ children }: Props) {
       age_limit: data.age_limit,
       running_time: data.running_time,
       inter_mission: data.inter_mission,
-      image:
-        "https://daejeonmobile.com/web/product/big/202204/4b689cbd5304052df787d36b68c9deee.jpg",
-      is_free: data.is_free,
+      image: "",
+      is_free: true,
       purchase_limit_count: data.purchase_limit_count,
       price: data.price,
-      reserved_seat: data.reserved_seat,
+      reserved_seat: false,
       seat_max_count: data.seat_max_count,
       ticket_open_at: "",
       ticket_close_at: "",
@@ -55,8 +113,6 @@ export function RegisterWorkFormTemplate({ children }: Props) {
     body.ticket_open_at = ticket_open_at;
     body.ticket_close_at = ticket_close_at;
 
-    // await editorManager.processCachedImagesFromHtml()
-
     const schedules: string[] = [];
 
     data.schedules.forEach((schedule: { rounds: any[]; date: Date }) => {
@@ -70,48 +126,122 @@ export function RegisterWorkFormTemplate({ children }: Props) {
 
     body.schedules = schedules as never[];
 
-    const res = await httpClient.post("/arts", {
-      data: body,
-    });
-    console.log(res);
+    const [imageInfo, descriptionHtml, cautionDescriptionHtml] =
+      await Promise.all([
+        fileUpload(data.image),
+        editorManager.processCachedImagesFromHtml(data.description),
+        editorManager.processCachedImagesFromHtml(data.caution_description),
+      ]);
+
+    body.image = imageInfo?.Location || "";
+    body.description = descriptionHtml;
+    body.caution_description = cautionDescriptionHtml;
+
+    try {
+      await httpClient.post("/arts", {
+        data: body,
+      });
+      setModal({
+        isShow: true,
+        content: (
+          <SpacerSkleton type="vertical" gap={20}>
+            <SpacerSkleton type="vertical">
+              <Typography
+                typo="body02"
+                style={{
+                  color: "#505050",
+                }}
+              >
+                작품은 관리자 검수 후 등록됩니다.
+              </Typography>
+              <Typography
+                typo="body02"
+                style={{
+                  color: "#505050",
+                }}
+              >
+                {`검수 진행 사항은 '등록 확인'에서 확인 바랍니다.`}
+              </Typography>
+            </SpacerSkleton>
+            <Typography
+              typo="body02"
+              style={{
+                color: "#505050",
+              }}
+            >
+              {`(검수 소요 시간: 1 ~ 2일)`}
+            </Typography>
+          </SpacerSkleton>
+        ),
+        handler: onMoveEnrollmentPage,
+      });
+    } catch (error) {
+      setModal({
+        isShow: true,
+        content: <p>작품 등록에 실패하였습니다.</p>,
+        handler: onClickModalReset,
+      });
+    }
   };
 
   return (
-    <Form
-      onSubmit={handleSubmit(onSubmitWorkForm, (data) => {
-        console.log(data);
-      })}
-    >
-      <Content type="vertical" gap={52}>
-        {children}
-      </Content>
-      <StepController justify="flex-end" gap={10} align="center">
-        {!isFirstStep && (
-          <StepButton type="button" onClick={() => movePrev()}>
-            <Image
-              src="/icon/double-arrow-left.svg"
-              width={16}
-              height={16}
-              alt="double-arrow-left"
-            />
-            <p>이전 페이지</p>
-          </StepButton>
-        )}
+    <>
+      <DefaultModal isShow={modal.isShow} onClose={onClickModalReset}>
+        <SpacerSkleton
+          type="vertical"
+          gap={32}
+          style={{
+            padding: "24px 32px",
+          }}
+        >
+          <SpacerSkleton type="vertical" align="center" gap={12}>
+            <Typography typo="subhead01">작품 등록</Typography>
+            <Image src="/icon/error.svg" width={20} height={20} alt="error" />
+            {modal.content}
+          </SpacerSkleton>
+          <DefaultButton
+            onClick={modal.handler || onClickModalReset}
+            style={{
+              width: "384px",
+              height: "56px",
+            }}
+          >
+            확인
+          </DefaultButton>
+        </SpacerSkleton>
+      </DefaultModal>
+      <Form onSubmit={handleSubmit(onSubmitWorkForm)}>
+        <Content type="vertical" gap={52}>
+          {children}
+        </Content>
+        <StepController justify="flex-end" gap={10} align="center">
+          {!isFirstStep && (
+            <StepButton type="button" onClick={() => movePrev()}>
+              <Image
+                src="/icon/double-arrow-left.svg"
+                width={16}
+                height={16}
+                alt="double-arrow-left"
+              />
+              <p>이전 페이지</p>
+            </StepButton>
+          )}
 
-        {!isLastStep && (
-          <StepButton type="button" onClick={() => moveNext()}>
-            <p>다음 페이지</p>
-            <Image
-              src="/icon/double-arrow-right.svg"
-              width={16}
-              height={16}
-              alt="dobule-arrow-right"
-            />
-          </StepButton>
-        )}
-        {isLastStep && <StepButton type="submit">작품등록</StepButton>}
-      </StepController>
-    </Form>
+          {!isLastStep && (
+            <StepButton type="button" onClick={() => moveNext()}>
+              <p>다음 페이지</p>
+              <Image
+                src="/icon/double-arrow-right.svg"
+                width={16}
+                height={16}
+                alt="dobule-arrow-right"
+              />
+            </StepButton>
+          )}
+          {isLastStep && <StepButton type="submit">작품등록</StepButton>}
+        </StepController>
+      </Form>
+    </>
   );
 }
 

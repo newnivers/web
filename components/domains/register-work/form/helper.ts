@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const combineDateTime = (dateObject: Date, timeString: string) => {
   const [hours, minutes] = timeString.split(":").map(Number);
 
@@ -6,4 +8,19 @@ export const combineDateTime = (dateObject: Date, timeString: string) => {
   return dateObject;
 };
 
-// "schedules": ["2023-11-18T11:30:00.000+03:00", "2023-11-18T12:30:00.000+03:00", "2023-11-19T11:30:00.000+03:00"]
+export const getTimeIntervals = () => {
+  let currentTime = dayjs().startOf("day");
+  const endOfDay = dayjs().endOf("day");
+
+  const timeIntervals = [];
+
+  while (currentTime.isBefore(endOfDay)) {
+    timeIntervals.push({
+      value: currentTime.format("HH:mm"),
+      label: currentTime.format("HH:mm"),
+    });
+    currentTime = currentTime.add(30, "minute");
+  }
+
+  return timeIntervals;
+};

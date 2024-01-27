@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import dayjs from "dayjs";
 import { Controller } from "react-hook-form";
 import {
   CustomCalendar,
@@ -9,28 +8,13 @@ import {
 import { TitleColumn, InputColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
 import { SpacerSkleton } from "@/components/common/spacer";
+import { workPlaces } from "@/components/domains/register-work/shared";
 import { WorkPeriodRegister } from "./workPeriodRegister";
 import type { WorkPeriod } from "./workPeriodRegister/shared";
 import { WorkPeriodModalContent } from "./workPeriodRegister/workPeriodModalContent";
 import { WorkForm } from "../../context";
+import { getTimeIntervals } from "../../helper";
 import type { FormContentProps } from "../type";
-
-const getTimeIntervals = () => {
-  let currentTime = dayjs().startOf("day");
-  const endOfDay = dayjs().endOf("day");
-
-  const timeIntervals = [];
-
-  while (currentTime.isBefore(endOfDay)) {
-    timeIntervals.push({
-      value: currentTime.format("HH:mm"),
-      label: currentTime.format("HH:mm"),
-    });
-    currentTime = currentTime.add(30, "minute");
-  }
-
-  return timeIntervals;
-};
 
 export function DefaultInfo({ classifications }: FormContentProps) {
   const {
@@ -101,12 +85,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                           <Field.ControlledSelector
                             control={control}
                             name="place"
-                            selectOptions={[
-                              { value: "0", label: "남산" },
-                              { value: "1", label: "예장" },
-                              { value: "2", label: "빨간대문" },
-                              { value: "3", label: "장소정보 참고" },
-                            ]}
+                            selectOptions={workPlaces}
                             placeholder="장소를 골라주세요."
                           />
                         </Field>
@@ -194,64 +173,74 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                       name="티켓 오픈"
                       labelPos="top"
                     >
-                      <Controller
-                        control={control}
-                        name="ticket_open_date"
-                        render={({ field }) => (
-                          <CustomCalendar
-                            inline={false}
-                            selected={ticketOpenDate}
-                            onChangeDate={(date) => {
-                              field.onChange(date);
-                            }}
-                            customInput={
-                              <CustomInput style={{ width: "81px" }} />
-                            }
-                            calendarContainer={ModalCustomContainer}
-                            dateFormat="yyyy.MM.dd"
-                          />
-                        )}
-                      />
-                      <Field iconType="selector" style={{ width: "217px" }}>
-                        <Field.ControlledSelector
+                      <SpacerSkleton>
+                        <Controller
                           control={control}
-                          name="ticket_open_time"
-                          selectOptions={getTimeIntervals()}
-                          placeholder="오픈 시간을 선택해주세요."
+                          name="ticket_open_date"
+                          render={({ field }) => (
+                            <CustomCalendar
+                              inline={false}
+                              selected={ticketOpenDate}
+                              onChangeDate={(date) => {
+                                field.onChange(date);
+                              }}
+                              customInput={
+                                <CustomInput style={{ width: "81px" }} />
+                              }
+                              calendarContainer={ModalCustomContainer}
+                              dateFormat="yyyy.MM.dd"
+                            />
+                          )}
                         />
-                      </Field>
+                        <Field
+                          iconType="selector"
+                          style={{ width: "217px", marginLeft: "8px" }}
+                        >
+                          <Field.ControlledSelector
+                            control={control}
+                            name="ticket_open_time"
+                            selectOptions={getTimeIntervals()}
+                            placeholder="오픈 시간을 선택해주세요."
+                          />
+                        </Field>
+                      </SpacerSkleton>
                     </InputColumn>
                     <InputColumn
                       id="ticket_close"
                       name="티켓 마감"
                       labelPos="top"
                     >
-                      <Controller
-                        control={control}
-                        name="ticket_close_date"
-                        render={({ field }) => (
-                          <CustomCalendar
-                            inline={false}
-                            selected={ticketCloseDate}
-                            onChangeDate={(date) => {
-                              field.onChange(date);
-                            }}
-                            customInput={
-                              <CustomInput style={{ width: "81px" }} />
-                            }
-                            calendarContainer={ModalCustomContainer}
-                            dateFormat="yyyy.MM.dd"
-                          />
-                        )}
-                      />
-                      <Field iconType="selector" style={{ width: "217px" }}>
-                        <Field.ControlledSelector
+                      <SpacerSkleton>
+                        <Controller
                           control={control}
-                          name="ticket_close_time"
-                          selectOptions={getTimeIntervals()}
-                          placeholder="마감 시간을 선택해주세요."
+                          name="ticket_close_date"
+                          render={({ field }) => (
+                            <CustomCalendar
+                              inline={false}
+                              selected={ticketCloseDate}
+                              onChangeDate={(date) => {
+                                field.onChange(date);
+                              }}
+                              customInput={
+                                <CustomInput style={{ width: "81px" }} />
+                              }
+                              calendarContainer={ModalCustomContainer}
+                              dateFormat="yyyy.MM.dd"
+                            />
+                          )}
                         />
-                      </Field>
+                        <Field
+                          iconType="selector"
+                          style={{ width: "217px", marginLeft: "8px" }}
+                        >
+                          <Field.ControlledSelector
+                            control={control}
+                            name="ticket_close_time"
+                            selectOptions={getTimeIntervals()}
+                            placeholder="마감 시간을 선택해주세요."
+                          />
+                        </Field>
+                      </SpacerSkleton>
                     </InputColumn>
                   </SpacerSkleton>
                 );

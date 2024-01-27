@@ -140,6 +140,20 @@ export function WorkPeriodModalContent({
     onClickModalShow();
   };
 
+  const checkInvalidScheduleInfo = () => {
+    if (workPeriods.length === 0) {
+      return true;
+    }
+
+    const defaultRoundTime = workPeriods[0].rounds[0].time;
+
+    if (!defaultRoundTime) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <Container style={{ width: "1000px", height: "652px" }}>
       <CalendarWrapper>
@@ -190,7 +204,10 @@ export function WorkPeriodModalContent({
           align="center"
           style={{ flex: "0.17", padding: "16px 32px" }}
         >
-          <DefaultButton onClick={onConfirm}>
+          <DefaultButton
+            onClick={onConfirm}
+            disabled={checkInvalidScheduleInfo()}
+          >
             <RegisterButtonTypography typo="subhead03">
               등록하기
             </RegisterButtonTypography>
