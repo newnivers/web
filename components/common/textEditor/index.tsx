@@ -5,6 +5,7 @@ import type ReactQuill from "react-quill";
 import type { ReactQuillProps } from "react-quill";
 import type { RuleSet } from "styled-components";
 import styled, { css } from "styled-components";
+import "./textEditorStyle.scss";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -28,7 +29,33 @@ const SSRReactQuill = dynamic(
       return <RQ ref={forwardedRef} {...props} />;
     };
   },
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "500px",
+          borderWidth: "1px",
+          borderStyle: "solid",
+          borderRadius: "12px",
+          borderColor: "#d4d4d4",
+        }}
+      >
+        <p
+          style={{
+            fontWeight: "600",
+            color: "#A6A6A6",
+          }}
+        >
+          에디터 기본 정보를 가져오는 중..
+        </p>
+      </div>
+    ),
+  }
 );
 
 const defaultToolbarContainer = [
@@ -149,39 +176,6 @@ const Container = styled.div<{ $qlEditorStyle: RuleSet<object> }>`
 
     return css`
       position: relative;
-
-      & .ql-editor {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 1.5;
-        user-select: none;
-      }
-
-      & .ql-toolbar.ql-snow {
-        border: 1px solid ${colors.secondary[200]};
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-      }
-
-      & .ql-container.ql-snow {
-        border: 1px solid ${colors.secondary[200]};
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-      }
-
-      & .ql-editor::before {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 1.5;
-        font-style: normal;
-      }
-
-      & .ql-editor strong {
-        font-weight: bold;
-      }
-      & .ql-editor em {
-        font-style: italic;
-      }
 
       ${$qlEditorStyle}
     `;
