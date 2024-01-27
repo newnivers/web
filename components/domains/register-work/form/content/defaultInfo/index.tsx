@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import dayjs from "dayjs";
 import { Controller } from "react-hook-form";
 import {
   CustomCalendar,
@@ -13,24 +12,8 @@ import { WorkPeriodRegister } from "./workPeriodRegister";
 import type { WorkPeriod } from "./workPeriodRegister/shared";
 import { WorkPeriodModalContent } from "./workPeriodRegister/workPeriodModalContent";
 import { WorkForm } from "../../context";
+import { getTimeIntervals } from "../../helper";
 import type { FormContentProps } from "../type";
-
-const getTimeIntervals = () => {
-  let currentTime = dayjs().startOf("day");
-  const endOfDay = dayjs().endOf("day");
-
-  const timeIntervals = [];
-
-  while (currentTime.isBefore(endOfDay)) {
-    timeIntervals.push({
-      value: currentTime.format("HH:mm"),
-      label: currentTime.format("HH:mm"),
-    });
-    currentTime = currentTime.add(30, "minute");
-  }
-
-  return timeIntervals;
-};
 
 export function DefaultInfo({ classifications }: FormContentProps) {
   const {
