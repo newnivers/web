@@ -1,7 +1,7 @@
 import Info from "@/components/domains/detail/tab/InfoTab";
 import Location from "@/components/domains/detail/tab/LocationTab";
 import ReserveAndCancel from "@/components/domains/detail/tab/ReserveAndCancelTab";
-import Review from "@/components/domains/detail/tab/review/ReviewTab";
+import Review from "@/components/domains/detail/tab/review/ReviewTab"
 
 export enum DetailTabEnum {
   INFO = "Info",

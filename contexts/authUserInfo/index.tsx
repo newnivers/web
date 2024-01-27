@@ -3,8 +3,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import type { AuthUser, AuthError } from "@/types";
 import { useAuthUserStorage } from "@/hooks";
+import type { AuthUser, AuthError } from "@/types";
 
 export function useAuthUser() {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);

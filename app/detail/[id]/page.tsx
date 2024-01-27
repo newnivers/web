@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import styled from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
@@ -11,32 +12,33 @@ import {
 import Tab from "@/components/domains/detail/tab";
 import { useTicketDetail } from "@/queries";
 
-export default function DetailPage({ params }: { params: { id: number } }) {
-  const { data, rowInfos } = useTicketDetail(params.id);
+export default function DetailPage({ params }: { params: { id: string } }) {
+  const artId = useMemo(() => Number(params.id), [params]);
+  const { data, rowInfos } = useTicketDetail(Number(artId));
 
   if (!data || !rowInfos) {
     return <div>Error Page</div>;
   }
 
   return (
-      <SpacerSkleton id="main-content" type="vertical">
-        <DetailHeader>
-          <Genre genre={data.genre} />
-          <TicketTitle typo="headline">{data.title}</TicketTitle>
-        </DetailHeader>
-        <DetailContent>
-          <DetailInfoWrapper>
-            <TicketMainInfo image={data.image} infoData={rowInfos} />
-            <Tab>
-              <Tab.Review reviews={data.comments ?? []} />
-              <Tab.Location />
-              <Tab.Info />
-              <Tab.CancelInfo />
-            </Tab>
-          </DetailInfoWrapper>
-          <ReservationCalendar schedules={data.schedules} disabled={false} />
-        </DetailContent>
-      </SpacerSkleton>
+    <SpacerSkleton id="main-content" type="vertical">
+      <DetailHeader>
+        <Genre genre={data.genre} />
+        <TicketTitle typo="headline">{data.title}</TicketTitle>
+      </DetailHeader>
+      <DetailContent>
+        <DetailInfoWrapper>
+          <TicketMainInfo image={data.image} infoData={rowInfos} />
+          <Tab>
+            <Tab.Review reviews={data.comments ?? []} artId={artId} />
+            <Tab.Location />
+            <Tab.Info />
+            <Tab.CancelInfo />
+          </Tab>
+        </DetailInfoWrapper>
+        <ReservationCalendar schedules={data.schedules} disabled={false} />
+      </DetailContent>
+    </SpacerSkleton>
   );
 }
 

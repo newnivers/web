@@ -4,10 +4,16 @@ import Typography from "@/components/common/text/Typography";
 import ReviewContent from "./ReviewContent";
 import ReviewTextarea from "./ReviewTextarea";
 
-export default function ReviewTab({ reviews }: { reviews: CommentInfo[] }) {
+export default function ReviewTab({
+  reviews,
+  artId,
+}: {
+  reviews: CommentInfo[];
+  artId: number;
+}) {
   return (
     <>
-      <ReviewTextarea />
+      <ReviewTextarea artId={artId} />
       <ReviewCountTitle typo="subhead01">{`총 ${reviews.length}개`}</ReviewCountTitle>
       {reviews.map(({ author, score, description }, index) => {
         return (
