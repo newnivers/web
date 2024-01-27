@@ -8,6 +8,7 @@ import {
 import { TitleColumn, InputColumn } from "@/components/common/column";
 import { Field } from "@/components/common/field";
 import { SpacerSkleton } from "@/components/common/spacer";
+import { workPlaces } from "@/components/domains/register-work/shared";
 import { WorkPeriodRegister } from "./workPeriodRegister";
 import type { WorkPeriod } from "./workPeriodRegister/shared";
 import { WorkPeriodModalContent } from "./workPeriodRegister/workPeriodModalContent";
@@ -84,12 +85,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                           <Field.ControlledSelector
                             control={control}
                             name="place"
-                            selectOptions={[
-                              { value: "0", label: "남산" },
-                              { value: "1", label: "예장" },
-                              { value: "2", label: "빨간대문" },
-                              { value: "3", label: "장소정보 참고" },
-                            ]}
+                            selectOptions={workPlaces}
                             placeholder="장소를 골라주세요."
                           />
                         </Field>

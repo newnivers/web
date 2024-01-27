@@ -100,3 +100,10 @@ export const defaultCautionDescription = `
 </div>
 
 `;
+
+export const workPlaces = [
+  { value: "0", label: "남산" },
+  { value: "1", label: "예장" },
+  { value: "2", label: "빨간대문" },
+  { value: "3", label: "장소정보 참고" },
+];
