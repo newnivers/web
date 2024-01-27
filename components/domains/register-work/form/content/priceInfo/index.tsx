@@ -14,18 +14,28 @@ export function PriceInfo({ classifications }: FormContentProps) {
   return classifications.map(({ key, name, desc }) => (
     <SpacerSkleton key={key} type="vertical" gap={24}>
       <TitleColumn name={name} desc={desc} />
+
+      <InputColumn id="is_free" name="무료작품">
+        <SpacerSkleton align="center" gap={10}>
+          <Field.Checkbox control={control} name="is_free" status="disabled" />
+          <ReadyToCostTypography typo="body03">
+            {`(유료작품은 준비중입니다!)`}
+          </ReadyToCostTypography>
+        </SpacerSkleton>
+      </InputColumn>
       <SpacerSkleton gap={30}>
-        <InputColumn id="is_free" name="무료작품">
-          <SpacerSkleton align="center" gap={10}>
-            <Field.Checkbox
-              control={control}
-              name="is_free"
-              status="disabled"
+        <InputColumn id="price" name="작품가격" unit="원">
+          <Field style={{ width: "478px" }}>
+            <Field.UncontrolledText
+              path="price"
+              register={register}
+              registerOptions={{
+                required: true,
+              }}
+              type="number"
+              placeholder="좌석 기본 판매가격을 입력해주세요"
             />
-            <ReadyToCostTypography typo="body03">
-              {`(유료작품은 준비중입니다!)`}
-            </ReadyToCostTypography>
-          </SpacerSkleton>
+          </Field>
         </InputColumn>
         <InputColumn
           id="purchase_limit_count"
@@ -45,19 +55,6 @@ export function PriceInfo({ classifications }: FormContentProps) {
           </Field>
         </InputColumn>
       </SpacerSkleton>
-      <InputColumn id="price" name="작품가격" unit="원">
-        <Field style={{ width: "478px" }}>
-          <Field.UncontrolledText
-            path="price"
-            register={register}
-            registerOptions={{
-              required: true,
-            }}
-            type="number"
-            placeholder="좌석 기본 판매가격을 입력해주세요"
-          />
-        </Field>
-      </InputColumn>
     </SpacerSkleton>
   ));
 }
