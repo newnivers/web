@@ -32,6 +32,7 @@ export function SeatInfo({ classifications }: FormContentProps) {
               name="reserved_seat"
               labelName="비지정석"
               status="disabled"
+              isForceChcked={true}
             />
             <ReadyToCostTypography typo="body03">
               {`(지정석은 준비중입니다!)`}

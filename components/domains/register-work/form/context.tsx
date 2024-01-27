@@ -20,14 +20,14 @@ const initWorkForm = {
   ticket_close_time: "",
   schedules: [],
 
-  image: "",
+  image: null,
   description: defaultDescription,
   caution_description: defaultCautionDescription,
-  is_free: true,
+  is_free: null,
   purchase_limit_count: 1,
   price: 0,
 
-  reserved_seat: false,
+  reserved_seat: null,
   seat_max_count: 0,
 };
 

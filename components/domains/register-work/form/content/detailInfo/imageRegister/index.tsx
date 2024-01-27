@@ -5,11 +5,18 @@ import styled, { css } from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
 import { useFileUpload } from "@/hooks";
+import { WorkForm } from "../../../context";
 
 export function ImageRegister({ ...controllerProps }: UseControllerProps) {
   const { field } = useController(controllerProps);
 
-  const { fileInfo, onChangeFile, resetFile } = useFileUpload({
+  const {
+    workForm: { getValues },
+  } = WorkForm.onlyHook();
+
+  const cachedFileInfo = getValues("image");
+
+  const { onChangeFile, resetFile } = useFileUpload({
     onFileChangedSuccess(fileInfo) {
       field.onChange(fileInfo);
     },
@@ -22,7 +29,7 @@ export function ImageRegister({ ...controllerProps }: UseControllerProps) {
 
   return (
     <>
-      {fileInfo.data ? (
+      {cachedFileInfo?.data ? (
         <RegisteredImageInfo>
           <RowHeader justify="space-between" align="center">
             <FileTypography typo="subhead05">파일명</FileTypography>
@@ -39,7 +46,7 @@ export function ImageRegister({ ...controllerProps }: UseControllerProps) {
                 />
               </button>
               <ImageNameTypography typo="subhead05">
-                {fileInfo.name}
+                {cachedFileInfo.name}
               </ImageNameTypography>
             </SpacerSkleton>
           </ImageInfoContent>

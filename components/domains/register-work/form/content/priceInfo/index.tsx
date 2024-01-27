@@ -17,7 +17,12 @@ export function PriceInfo({ classifications }: FormContentProps) {
 
       <InputColumn id="is_free" name="무료작품">
         <SpacerSkleton align="center" gap={10}>
-          <Field.Checkbox control={control} name="is_free" status="disabled" />
+          <Field.Checkbox
+            control={control}
+            name="is_free"
+            status="disabled"
+            isForceChcked={true}
+          />
           <ReadyToCostTypography typo="body03">
             {`(유료작품은 준비중입니다!)`}
           </ReadyToCostTypography>
@@ -25,7 +30,7 @@ export function PriceInfo({ classifications }: FormContentProps) {
       </InputColumn>
       <SpacerSkleton gap={30}>
         <InputColumn id="price" name="작품가격" unit="원">
-          <Field style={{ width: "478px" }}>
+          <Field style={{ width: "478px" }} disabled={true}>
             <Field.UncontrolledText
               path="price"
               register={register}
@@ -34,6 +39,7 @@ export function PriceInfo({ classifications }: FormContentProps) {
               }}
               type="number"
               placeholder="좌석 기본 판매가격을 입력해주세요"
+              disabled={true}
             />
           </Field>
         </InputColumn>

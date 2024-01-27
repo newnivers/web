@@ -7,11 +7,13 @@ type CheckboxStatus = "default" | "disabled";
 
 interface Props extends UseControllerProps {
   status?: CheckboxStatus;
+  isForceChcked?: boolean;
   labelName?: string;
 }
 
 export function Checkbox({
   status = "default",
+  isForceChcked = false,
   labelName,
   ...controllerProps
 }: Props) {
@@ -29,7 +31,7 @@ export function Checkbox({
         type="checkbox"
         id={field.name}
         name={field.name}
-        defaultChecked={field.value}
+        defaultChecked={field.value || isForceChcked}
         disabled={status === "disabled"}
         onChange={onChangeChecked}
       />
