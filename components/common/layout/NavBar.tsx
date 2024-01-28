@@ -1,18 +1,29 @@
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
 import styled, { css } from "styled-components";
 import Typography from "@/components/common/text/Typography";
 import TicketSearchBar from "@/components/domains/search";
+import { AuthUserInfo } from "@/contexts";
 
 export default function NavBar() {
+  const router = useRouter();
+  const { authUser } = useContext(AuthUserInfo.Context);
+
   return (
     <Container>
       <NavMenu>
-        <Logo />
+        <Logo onClick={() => router.push("/")} />
         <MenuButton>ART</MenuButton>
         <MenuButton>Ticket</MenuButton>
       </NavMenu>
       <UserMenu>
-        <TicketSearchBar />
-        <MenuButton>LOGIN</MenuButton>
+        {/* <TicketSearchBar /> */}
+        {/* TODO: 로그아웃 기능 확인하기 */}
+        {authUser !== null && authUser.id ? (
+          <MenuButton onClick={() => router.push("/login")}>LOGIN</MenuButton>
+        ) : (
+          <MenuButton>LOGOUT</MenuButton>
+        )}
         <MenuButton>작품등록</MenuButton>
         <MenuButton>등록확인</MenuButton>
       </UserMenu>
@@ -21,6 +32,7 @@ export default function NavBar() {
 }
 
 const Container = styled.div`
+  min-width: 1400px;
   padding: 0.75rem 10rem;
   display: flex;
   justify-content: space-between;
@@ -31,6 +43,7 @@ const Container = styled.div`
 const NavMenu = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 const Logo = styled.div`
   width: 5.5rem;
@@ -44,6 +57,7 @@ const MenuButton = styled(Typography)`
 
     return css`
       ${typoToken.subhead03}
+      cursor: pointer;
       margin-left: 1.5rem;
     `;
   }}

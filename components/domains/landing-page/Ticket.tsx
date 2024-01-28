@@ -12,6 +12,7 @@ interface TicketProps {
   startDate: string;
   endDate: string;
   ranking?: number;
+  onClick: () => void;
 }
 
 export function Ticket({
@@ -21,6 +22,7 @@ export function Ticket({
   startDate,
   endDate,
   ranking,
+  onClick,
 }: TicketProps) {
   const period = useMemo(() => {
     const start = `${dayjs(startDate).format("YYYY-DD-MM")} (${dayjs(
@@ -35,7 +37,7 @@ export function Ticket({
   }, [startDate, endDate]);
 
   return (
-    <Wrapper>
+    <Wrapper onClick={onClick}>
       <Image src={thumbnail} alt="티켓 이미지" width={368} height={480} />
       {ranking ? <Ranking typo="subhead01">{ranking}</Ranking> : <></>}
       <Genre typo="subhead03">{`#${genre}`}</Genre>
@@ -50,6 +52,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100%;
   position: relative;
+  cursor: pointer;
 `;
 
 const Ranking = styled(Typography)`
