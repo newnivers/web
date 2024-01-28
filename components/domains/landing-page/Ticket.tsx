@@ -1,11 +1,12 @@
 import { useMemo } from "react";
+import type { StaticImageData } from "next/image";
 import Image from "next/image";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
 
 interface TicketProps {
-  thumbnail: string;
+  thumbnail: string | StaticImageData;
   genre: string;
   title: string;
   startDate: string;
