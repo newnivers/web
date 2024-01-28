@@ -1,44 +1,56 @@
 import type { Dispatch, SetStateAction } from "react";
+import { useMemo } from "react";
 import format from "date-fns/format";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
+import { colors } from "@/styles/theme/colors";
 import type { Schedule } from "./type";
 
 type DaySchedulesProps = {
-  schedules: Schedule[];
-  onClickSchedule: Dispatch<SetStateAction<number | null>>;
+  scheduleMap: Record<string, Schedule[]>;
+  onClickSchedule: Dispatch<SetStateAction<Schedule | null>>;
   selectedDate: Date | null;
-  clickedId: number | null;
+  clickedSchedule: Schedule | null;
 };
 
 export default function DaySchedules({
-  schedules,
   selectedDate,
+  scheduleMap,
   onClickSchedule,
-  clickedId,
+  clickedSchedule,
 }: DaySchedulesProps) {
+  const sessions = useMemo(() => {
+    const date = dayjs(selectedDate).format("YYYY-MM-DD");
+
+    return scheduleMap[date] ?? [];
+  }, [scheduleMap, selectedDate]);
+
   return (
     <GridContainer>
-      {schedules
-        .filter((schedule) => {
-          return (
-            dayjs(schedule.startAt).startOf("day").valueOf() ===
-            selectedDate?.valueOf()
-          );
-        })
-        .map((schedule, index) => {
-          return (
-            <AvailableSchedule key={schedule.id}>
-              <Typography typo="body02">
-                {`${index + 1}회 | ${format(
-                  new Date(schedule.startAt),
-                  "HH:mm"
-                )}`}
-              </Typography>
-            </AvailableSchedule>
-          );
-        })}
+      {sessions.map((session, index) => {
+        return (
+          <AvailableSchedule
+            key={session.id}
+            onClick={() => {
+              onClickSchedule(session);
+            }}
+            isSelected={clickedSchedule?.id === session.id}
+          >
+            <Typography
+              typo="body02"
+              style={{
+                color:
+                  clickedSchedule?.id === session.id
+                    ? colors.secondary.black
+                    : colors.secondary[500],
+              }}
+            >
+              {`${index + 1}회 | ${format(new Date(session.startAt), "HH:mm")}`}
+            </Typography>
+          </AvailableSchedule>
+        );
+      })}
     </GridContainer>
   );
 }
@@ -55,5 +67,9 @@ const GridContainer = styled.div`
 const AvailableSchedule = styled.button<{ isSelected?: boolean }>`
   color: ${(props) => (props.isSelected ? "red" : "#0A0A0A")};
   border-radius: 1.5rem;
-  border: 1px solid #0a0a0a;
+  border: 1px solid
+    ${({ theme, isSelected }) =>
+      isSelected
+        ? theme.colors.secondary.black
+        : theme.colors.secondary[400]}; ;
 `;

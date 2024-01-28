@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import dayjs from "dayjs";
 import styled from "styled-components";
 import Button from "@/components/common/button";
 import { CustomCalendar } from "@/components/common/calendar";
@@ -13,42 +14,54 @@ import type {
 } from "@/components/domains/detail/calendar/type";
 import { ReservationModal } from "@/components/domains/detail/reservation/ReservationModal";
 import ReservationNotice from "@/components/domains/detail/reservation/ReservationNotice";
+import { usePostReservation } from "@/queries";
 
 type ReserveModalCase = "NOTICE" | "COMPLETION" | "RESERVATION" | null;
-
-const convertScheduleData = (schedules: Schedule[]) => {
-  return schedules.map((schedule) => {
-    return new Date(schedule.startAt);
-  });
-};
 
 export default function ReservationCalendar({
   schedules = [],
 }: ReservationCalendarProps) {
+  const { mutate: postReservation } = usePostReservation();
+
   const [date, setDate] = useState<Date | null>(null);
-  const [clickedScheduleId, setClickedScheduleId] = useState<number | null>(
-    null
-  );
-  const [availableSeatCount, setAvailableSeatCount] = useState<null | number>(
-    null
-  );
-  const [modalStatus, setModalStatus] =
-    useState<ReserveModalCase>("RESERVATION");
+  const [clickedSchedule, setClickedSchedule] = useState<Schedule | null>(null);
+  const [modalStatus, setModalStatus] = useState<ReserveModalCase>(null);
 
   const onChangeDate = (date: Date | null) => {
     setDate(date);
+    setClickedSchedule(null);
   };
 
   const closeModal = () => {
     setModalStatus(null);
   };
 
+  const includeDateInfo = useMemo(() => {
+    const scheduleMap: Record<string, Schedule[]> = {};
+    const includeDates: Date[] = [];
+
+    schedules.forEach((schedule) => {
+      const formatDate = dayjs(schedule.startAt)
+        .startOf("d")
+        .format("YYYY-MM-DD");
+
+      if (!scheduleMap[formatDate]) {
+        scheduleMap[formatDate] = [];
+        includeDates.push(new Date(formatDate));
+      }
+
+      scheduleMap[formatDate].push(schedule);
+    });
+
+    return { scheduleMap, includeDates };
+  }, [schedules]);
+
   return (
     <Container>
       <Wrapper>
         <Header typo="subhead03">날짜/시간 선택</Header>
         <CustomCalendar
-          includeDates={convertScheduleData(schedules)}
+          includeDates={includeDateInfo.includeDates}
           renderCustomHeader={(headerProps) => (
             <CustomHeader headerProps={headerProps} />
           )}
@@ -57,11 +70,11 @@ export default function ReservationCalendar({
         />
         <DaySchedules
           selectedDate={date}
-          schedules={schedules}
-          onClickSchedule={setClickedScheduleId}
-          clickedId={clickedScheduleId}
+          scheduleMap={includeDateInfo.scheduleMap}
+          onClickSchedule={setClickedSchedule}
+          clickedSchedule={clickedSchedule}
         />
-        <ReservedSeat seatCount={100} />
+        <ReservedSeat seatCount={clickedSchedule?.leftSeatCount} />
       </Wrapper>
       <ReserveButton
         onClick={() => {
@@ -92,7 +105,11 @@ export default function ReservationCalendar({
       <ReservationModal
         isShow={modalStatus === "RESERVATION"}
         onReserve={() => {
-          setModalStatus("COMPLETION");
+          // TODO: 티켓 수량 입력 지금은 방법이 없기 때문에 추후 작업 진행 예정
+          if (clickedSchedule) {
+            postReservation(clickedSchedule?.id);
+            setModalStatus("COMPLETION");
+          }
         }}
         onClose={closeModal}
       />

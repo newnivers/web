@@ -19,7 +19,6 @@ export default function TicketMainInfo({
         <Image
           src={mockImage}
           alt="ticket-image"
-          objectFit="contain"
           style={{ width: "100%", height: "100%" }}
         />
       </ImageWrapper>
