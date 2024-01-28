@@ -1,8 +1,5 @@
 import httpClient from "@/api/core";
-
-export interface RequestData {
-  message: string;
-}
+import type { RequestData } from "@/api/core";
 
 export interface DetailResponseData extends RequestData {
   data: ArtInfo;

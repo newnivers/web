@@ -11,6 +11,10 @@ import { HTTP_METHOD } from "../shared";
 
 const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
 
+export interface RequestData {
+  message: string;
+}
+
 const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const localStorage = new LocalStorage();
   const token = localStorage.get(authUserKey) ?? "unauthorized";
