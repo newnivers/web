@@ -14,9 +14,9 @@ export function MainBanner({ title, date }: { title: string; date: string }) {
 }
 
 const Background = styled.div`
+  margin: 0 -10rem 120px -10rem;
   background-image: url("/img/landing-banner.png");
   height: 980px;
-  margin-bottom: 120px;
 `;
 
 const Overlay = styled.div`

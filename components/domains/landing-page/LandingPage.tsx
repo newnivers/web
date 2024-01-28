@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import styled, { css } from "styled-components";
 import { Ticket } from "@/components/domains/landing-page/Ticket";
 import mockImage from "@/fixture/ticket-poster.jpeg";
@@ -7,6 +8,12 @@ import { ListHeader } from "./ListHeader";
 // TODO: 진짜 이미지 테스트 필요!!
 export function LandingPage() {
   const { data } = useGetLandingArtList();
+
+  const router = useRouter();
+
+  const moveToDetailPage = (id: number) => {
+    router.push(`/detail/${id}`);
+  };
 
   return (
     <Container>
@@ -18,6 +25,7 @@ export function LandingPage() {
         {data?.hotRanking &&
           data.hotRanking.map((rank, index) => (
             <Ticket
+              onClick={() => moveToDetailPage(rank.id)}
               ranking={index + 1}
               key={rank.id}
               thumbnail={mockImage}
@@ -37,6 +45,7 @@ export function LandingPage() {
         {data?.ticketOpen &&
           data.ticketOpen.map((rank) => (
             <Ticket
+              onClick={() => moveToDetailPage(rank.id)}
               key={rank.id}
               thumbnail={mockImage}
               genre={rank.genre}
