@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { format } from "date-fns";
 import ko from "date-fns/locale/ko";
+import dayjs from "dayjs";
 import type { ReactDatePickerProps } from "react-datepicker";
 import DatePicker from "react-datepicker";
 import "./calendarStyle.scss";
@@ -14,16 +15,21 @@ type CustomCalendarProps = Omit<ReactDatePickerProps, "onChange"> & {
 export default function CustomCalendar({
   onChangeDate,
   notCompleteDates = [],
+  includeDates,
   ...rest
 }: CustomCalendarProps) {
   const [month, setMonth] = useState(new Date());
-
   const makeDayClassName = useCallback(
     (date: Date) => {
-      const isMonthSame = month.getMonth() !== date.getMonth();
+      if (includeDates) {
+        for (let i = 0; i < includeDates.length; i += 1) {
+          const diff1 = dayjs(includeDates[i]).format("YYYY-MM-DD");
+          const diff2 = dayjs(includeDates[i]).format("YYYY-MM-DD");
 
-      if (isMonthSame) {
-        return "react-datepicker__day--exclude";
+          if (diff1 !== diff2) {
+            return "react-datepicker__day--exclude";
+          }
+        }
       }
 
       const formattedDay = format(date, "yyyy-MM-dd");
@@ -46,6 +52,7 @@ export default function CustomCalendar({
       onMonthChange={setMonth}
       disabledKeyboardNavigation
       dayClassName={makeDayClassName}
+      includeDates={includeDates}
       {...rest}
     />
   );

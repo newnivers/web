@@ -1,8 +1,7 @@
 export interface Schedule {
   id: number;
   startAt: string;
-  endAt: string;
-  seatCount: number;
+  leftSeatCount: number;
 }
 
 export interface ReservationCalendarProps {

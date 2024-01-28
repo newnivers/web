@@ -1,11 +1,13 @@
 import styled, { css } from "styled-components";
 import Typography from "@/components/common/text/Typography";
 
-export default function ReservedSeat({ seatCount }: { seatCount: number }) {
+export default function ReservedSeat({ seatCount }: { seatCount?: number }) {
   return (
     <>
       <Header typo="subhead03">예약 가능 좌석</Header>
-      <Typography typo="body02">비지정석 | {seatCount}</Typography>
+      {seatCount !== undefined && (
+        <Typography typo="body02">{`비지정석 | ${seatCount} `}</Typography>
+      )}
     </>
   );
 }

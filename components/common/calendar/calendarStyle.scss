@@ -18,6 +18,10 @@ div:has(> .react-datepicker) {
   border-color: #1d1d1d;
 }
 
+.react-datepicker__day--exclude {
+  color: #d4d4d4 !important;
+}
+
 // datepicker day styling
 .react-datepicker__day-names .react-datepicker__day-name {
   &:first-child {
@@ -42,7 +46,7 @@ div:has(> .react-datepicker) {
   }
 }
 
-.react-datepicker__week div {
+.react-datepicker__week div:not(.react-datepicker__day--disabled) {
   &:first-child {
     color: #dd2424;
   }
@@ -68,9 +72,7 @@ div:has(> .react-datepicker) {
   color: #0a0a0a;
 }
 
-.react-datepicker__day--exclude {
-  color: #d4d4d4 !important;
-}
+
 
 .react-datepicker__day--not-complete {
   border: 1px solid #a6a6a6;
