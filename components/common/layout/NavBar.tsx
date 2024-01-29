@@ -14,7 +14,7 @@ export default function NavBar() {
       <NavMenu>
         <Logo onClick={() => router.push("/")} />
         <MenuButton>ART</MenuButton>
-        <MenuButton>Ticket</MenuButton>
+        <MenuButton onClick={() => router.push("/ticket")}>Ticket</MenuButton>
       </NavMenu>
       <UserMenu>
         {/* <TicketSearchBar /> */}

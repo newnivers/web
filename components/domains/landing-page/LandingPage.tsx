@@ -55,7 +55,9 @@ export function LandingPage() {
             />
           ))}
       </TicketsWrapper>
-      <SeeMoreButton>더보기</SeeMoreButton>
+      <SeeMoreButton onClick={() => router.push("/ticket")}>
+        더보기
+      </SeeMoreButton>
       <ListHeader
         title="ARCHIVING"
         description="서울예술대학교의 지난 작품을 확인해 보세요."
