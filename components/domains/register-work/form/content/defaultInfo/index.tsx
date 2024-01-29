@@ -165,7 +165,7 @@ export function DefaultInfo({ classifications }: FormContentProps) {
                     </SpacerSkleton>
                   </>
                 );
-              case "ticket-schedule":
+              case "ticket-page-schedule":
                 return (
                   <SpacerSkleton gap={32}>
                     <InputColumn

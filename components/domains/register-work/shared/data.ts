@@ -12,7 +12,7 @@ export const classificationInfo: {
 } = {
   default: [
     { key: "work-info", name: "작품정보" },
-    { key: "ticket-schedule", name: "티켓 일정" },
+    { key: "ticket-page-schedule", name: "티켓 일정" },
     {
       key: "show-period",
       name: "공연 기간",

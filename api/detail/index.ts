@@ -38,8 +38,7 @@ export interface ArtInfo {
 export interface Schedule {
   id: number;
   startAt: string;
-  endAt: string;
-  seatCount: number;
+  leftSeatCount: number;
 }
 
 export type ArtCategory = "EXHIBITION" | "SHOW";

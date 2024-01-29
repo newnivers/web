@@ -4,6 +4,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
+import { ProgressCircle } from "@/components/domains/ticket-page/ProgressCircle";
 
 interface TicketProps {
   thumbnail: string | StaticImageData;
@@ -11,19 +12,17 @@ interface TicketProps {
   title: string;
   startDate: string;
   endDate: string;
-  ranking?: number;
   onClick: () => void;
   ticketOpenDate?: Date;
   showOpenProgress?: boolean;
 }
 
-export function Ticket({
+export function ProgressTicket({
   thumbnail,
   genre,
   title,
   startDate,
   endDate,
-  ranking,
   onClick,
   showOpenProgress,
 }: TicketProps) {
@@ -42,9 +41,8 @@ export function Ticket({
   return (
     <Wrapper onClick={onClick}>
       <>
-        <Image src={thumbnail} alt="티켓 이미지" width={368} height={480} />
+        <Image src={thumbnail} alt="티켓 이미지" width={268} height={370} />
       </>
-      {ranking ? <Ranking typo="subhead01">{ranking}</Ranking> : <></>}
       <Genre typo="subhead03">{`#${genre}`}</Genre>
       <Title typo="subhead03">{title}</Title>
       <Period typo="body02">{period}</Period>
@@ -60,23 +58,10 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 
-const Ranking = styled(Typography)`
-  background-color: ${({ theme }) => theme.colors.primary.point};
-  color: white;
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
-  text-align: center;
-  position: absolute;
-  top: 459px;
-  left: 10px;
-  border-radius: 2px;
-`;
-
 const Genre = styled(Typography)`
   color: ${({ theme }) => theme.colors.secondary[500]};
   margin-bottom: 4px;
-  margin-top: 24px;
+  margin-top: 16px;
 `;
 
 const Title = styled(Typography)`
@@ -86,4 +71,7 @@ const Title = styled(Typography)`
 
 const Period = styled(Typography)`
   color: ${({ theme }) => theme.colors.secondary[500]};
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
