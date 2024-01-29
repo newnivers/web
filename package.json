@@ -40,7 +40,6 @@
     "@svgr/webpack": "^7.0.0",
     "@swc/core": "1.2.215",
     "@swc/plugin-styled-components": "^1.5.74",
-    "@tanstack/react-query-devtools": "^4.33.0",
     "@types/date-fns": "^2.6.0",
     "@types/node": "20.5.7",
     "@types/react": "^18.2.25",
