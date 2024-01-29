@@ -2,17 +2,19 @@
 
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { usePostAuthorizationCode } from "@/queries";
 import { useAuthUserStorage } from "@/hooks";
+import { usePostAuthorizationCode } from "@/queries";
 
 export default function LoginRedirectPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const [_, setAuthUserInfo] = useAuthUserStorage();
 
   const { mutate: postAuthorizationCode } = usePostAuthorizationCode({
     onSuccess: (data) => {
       const {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         results: { token, user_id },
       } = data;
       setAuthUserInfo({ token, id: user_id });
