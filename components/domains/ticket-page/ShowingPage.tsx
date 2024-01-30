@@ -166,10 +166,15 @@ export function ShowingPage() {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 const Header = styled(Typography)`
   display: block;
   margin-bottom: 16px;
+  align-self: start;
 `;
 const ShowingWrapper = styled.div`
   display: grid;
