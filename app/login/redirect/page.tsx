@@ -29,8 +29,14 @@ export default function LoginRedirectPage() {
       return;
     }
 
-    postAuthorizationCode({ code, state: "test" });
-  }, [code]);
+    const state = process.env.NEXT_PUBLIC_AUTH_CLIENT_STATE;
+
+    if (!state) {
+      return;
+    }
+
+    postAuthorizationCode({ code, state });
+  }, [code, postAuthorizationCode]);
 
   if (code) {
     return <div>redirectPage</div>;

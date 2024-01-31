@@ -5,7 +5,6 @@ import type {
   Method,
   AxiosResponse,
 } from "axios";
-import type { AuthUser } from "@/types";
 import { LocalStorage } from "@/utils/cache";
 import { HTTP_METHOD } from "../shared";
 
@@ -17,7 +16,11 @@ export interface RequestData {
 
 const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const localStorage = new LocalStorage();
-  const token = localStorage.get(authUserKey) ?? "unauthorized";
+  const token = localStorage.get(authUserKey);
+
+  if (!token) {
+    return config;
+  }
 
   return {
     ...config,
