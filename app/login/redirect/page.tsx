@@ -12,12 +12,12 @@ export default function LoginRedirectPage() {
   const [_, setAuthUserInfo] = useAuthUserStorage();
 
   const { mutate: postAuthorizationCode } = usePostAuthorizationCode({
-    onSuccess: (data) => {
+    onSuccess: (res) => {
       const {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        results: { token, user_id },
-      } = data;
-      setAuthUserInfo({ token, id: user_id });
+        data: { token, userId },
+      } = res;
+
+      setAuthUserInfo({ token, id: userId });
       router.replace("/");
     },
   });

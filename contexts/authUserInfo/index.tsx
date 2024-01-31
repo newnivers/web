@@ -14,7 +14,7 @@ export function useAuthUser() {
     message: "",
   });
 
-  const [cachedAuthUser, setAuthUserInfo] = useAuthUserStorage();
+  const [cachedAuthUser] = useAuthUserStorage();
 
   useEffect(() => {
     setLoading(false);
@@ -30,7 +30,7 @@ export function useAuthUser() {
     }
 
     setAuthUser(authUser);
-  }, []);
+  }, [authUser, cachedAuthUser]);
 
   return [authUser, isLoading, error] as const;
 }
@@ -53,7 +53,7 @@ function UserInfoProvider({ children }: Props) {
     if (error.isTrigger) {
       router.replace("/login");
     }
-  }, [error.isTrigger]);
+  }, [error.isTrigger, router]);
 
   return (
     <UserInfoContext.Provider

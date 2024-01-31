@@ -1,9 +1,12 @@
 import { useCallback, useState } from "react";
 import type { ErrorMessage } from "@/consts";
-import { LocalStorage } from "@/utils/cache";
 import { isServer } from "@/utils";
+import { LocalStorage } from "@/utils/cache";
 
-function useLocalStorage<T = any>(key: string, initialValue: T) {
+function useLocalStorage<T extends string | object>(
+  key: string,
+  initialValue: T
+) {
   const [cachedValue, setCachedValue] = useState<T>(() => {
     try {
       const localStorage = new LocalStorage();
@@ -26,11 +29,14 @@ function useLocalStorage<T = any>(key: string, initialValue: T) {
           typeof entry === "function" ? entry(cachedValue) : entry;
 
         setCachedValue(valueToCache);
+
+        const localStorage = new LocalStorage();
+        localStorage.set(key, entry);
       } catch (error: unknown) {
         console.error((error as { message: ErrorMessage }).message);
       }
     },
-    [cachedValue]
+    [cachedValue, key]
   );
 
   return [cachedValue, setValue] as const;

@@ -1,5 +1,5 @@
-import { useLocalStorage } from "@/hooks";
-import { AuthUser } from "@/types";
+import type { AuthUser } from "@/types";
+import useLocalStorage from "../localStorage";
 
 const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
 

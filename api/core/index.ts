@@ -5,6 +5,7 @@ import type {
   Method,
   AxiosResponse,
 } from "axios";
+import type { AuthUser } from "@/types";
 import { LocalStorage } from "@/utils/cache";
 import { HTTP_METHOD } from "../shared";
 
@@ -16,17 +17,19 @@ export interface RequestData {
 
 const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const localStorage = new LocalStorage();
-  const token = localStorage.get(authUserKey);
+  const authUser = localStorage.get(authUserKey);
 
-  if (!token) {
+  if (!authUser) {
     return config;
   }
+
+  const parsedAuthUser = JSON.parse(authUser) as AuthUser;
 
   return {
     ...config,
     headers: {
       ...config.headers,
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${parsedAuthUser.token}`,
     },
   };
 };
