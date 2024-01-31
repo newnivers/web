@@ -23,6 +23,7 @@ function DefaultLayout({ children }: Props) {
 }
 
 const Container = styled.section`
+  position: relative;
   min-width: 1400px;
   min-height: calc(100% - 407px);
   padding: 0 10rem;

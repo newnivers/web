@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useAuthUserStorage } from "@/hooks";
 import type { AuthUser, AuthError } from "@/types";
 
-const CHECK_SSO_PAGES = ["/", "/ticket"];
+const CHECK_SSO_PAGES = ["/", "/ticket", "/login", "/login/redirect"];
 
 export function useAuthUser() {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
