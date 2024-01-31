@@ -1,6 +1,3 @@
-import { ERROR_MESSAGE } from "@/consts";
-import { isServer } from "@/utils/server";
-
 export class LocalStorage {
   get(key: string) {
     return localStorage.getItem(key);

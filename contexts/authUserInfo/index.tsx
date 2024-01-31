@@ -16,6 +16,8 @@ export function useAuthUser() {
     message: "",
   });
 
+  const pathname = usePathname();
+
   const [cachedAuthUser] = useAuthUserStorage();
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export function useAuthUser() {
     }
 
     setAuthUser(authUser);
-  }, [authUser, cachedAuthUser]);
+  }, [authUser, cachedAuthUser, pathname]);
 
   return [authUser, isLoading, error] as const;
 }

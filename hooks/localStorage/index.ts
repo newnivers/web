@@ -39,7 +39,14 @@ function useLocalStorage<T extends string | object>(
     [cachedValue, key]
   );
 
-  return [cachedValue, setValue] as const;
+  const resetValue = useCallback(() => {
+    const localStorage = new LocalStorage();
+
+    localStorage.remove(key);
+    setCachedValue(initialValue);
+  }, [key, initialValue]);
+
+  return [cachedValue, setValue, resetValue] as const;
 }
 
 export default useLocalStorage;

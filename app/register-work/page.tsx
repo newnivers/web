@@ -12,31 +12,39 @@ import {
   WorkFormComponents,
   classificationInfo,
 } from "@/components/domains/register-work";
+import { AuthUserInfo } from "@/contexts";
 
 function RegisterWorkPage() {
   return (
-    <SpacerSkleton id="main-content" type="vertical" gap={52} align="center">
-      <StepNavigator.Provider steps={steps}>
-        {(currentStep) => (
-          <>
-            <Headline type="vertical" justify="center" align="center" gap={40}>
-              <p id="title">작품등록</p>
-              <BreadCrumbs />
-            </Headline>
+    <AuthUserInfo.Provider>
+      <SpacerSkleton id="main-content" type="vertical" gap={52} align="center">
+        <StepNavigator.Provider steps={steps}>
+          {(currentStep) => (
+            <>
+              <Headline
+                type="vertical"
+                justify="center"
+                align="center"
+                gap={40}
+              >
+                <p id="title">작품등록</p>
+                <BreadCrumbs />
+              </Headline>
 
-            <RegisterInfo type="vertical" gap={47} align="center">
-              <WorkForm.Provider>
-                <RegisterWorkFormTemplate>
-                  {createElement(WorkFormComponents[currentStep], {
-                    classifications: classificationInfo[currentStep],
-                  })}
-                </RegisterWorkFormTemplate>
-              </WorkForm.Provider>
-            </RegisterInfo>
-          </>
-        )}
-      </StepNavigator.Provider>
-    </SpacerSkleton>
+              <RegisterInfo type="vertical" gap={47} align="center">
+                <WorkForm.Provider>
+                  <RegisterWorkFormTemplate>
+                    {createElement(WorkFormComponents[currentStep], {
+                      classifications: classificationInfo[currentStep],
+                    })}
+                  </RegisterWorkFormTemplate>
+                </WorkForm.Provider>
+              </RegisterInfo>
+            </>
+          )}
+        </StepNavigator.Provider>
+      </SpacerSkleton>
+    </AuthUserInfo.Provider>
   );
 }
 
