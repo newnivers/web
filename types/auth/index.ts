@@ -5,7 +5,7 @@ export interface AuthRequest {
 
 export interface AuthResponse {
   token: string;
-  user_id: string;
+  userId: string;
   nickname: string;
 }
 

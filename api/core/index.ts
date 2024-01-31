@@ -17,13 +17,19 @@ export interface RequestData {
 
 const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const localStorage = new LocalStorage();
-  const token = localStorage.get(authUserKey) ?? "unauthorized";
+  const authUser = localStorage.get(authUserKey);
+
+  if (!authUser) {
+    return config;
+  }
+
+  const parsedAuthUser = JSON.parse(authUser) as AuthUser;
 
   return {
     ...config,
     headers: {
       ...config.headers,
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${parsedAuthUser.token}`,
     },
   };
 };

@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
+import { SpacerSkleton } from "@/components/common/spacer";
+import Typography from "@/components/common/text/Typography";
 import { useAuthUserStorage } from "@/hooks";
 import { usePostAuthorizationCode } from "@/queries";
 
@@ -12,12 +15,12 @@ export default function LoginRedirectPage() {
   const [_, setAuthUserInfo] = useAuthUserStorage();
 
   const { mutate: postAuthorizationCode } = usePostAuthorizationCode({
-    onSuccess: (data) => {
+    onSuccess: (res) => {
       const {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        results: { token, user_id },
-      } = data;
-      setAuthUserInfo({ token, id: user_id });
+        data: { token, userId },
+      } = res;
+
+      setAuthUserInfo({ token, id: userId });
       router.replace("/");
     },
   });
@@ -29,11 +32,40 @@ export default function LoginRedirectPage() {
       return;
     }
 
-    postAuthorizationCode({ code, state: "test" });
-  }, [code]);
+    const state = process.env.NEXT_PUBLIC_AUTH_CLIENT_STATE;
+
+    if (!state) {
+      return;
+    }
+
+    postAuthorizationCode({ code, state });
+  }, [code, postAuthorizationCode]);
 
   if (code) {
-    return <div>redirectPage</div>;
+    return (
+      <SpacerSkleton
+        id="main-content"
+        type="vertical"
+        justify="center"
+        align="center"
+        gap={40}
+      >
+        <Image
+          src="/img/Spin-1s-767px.gif"
+          width={80}
+          height={80}
+          alt="loading-spinner"
+        />
+        <Typography
+          typo="subhead01"
+          style={{
+            color: "#66666",
+          }}
+        >
+          사용자 인증을 진행 중입니다
+        </Typography>
+      </SpacerSkleton>
+    );
   }
 
   return null;

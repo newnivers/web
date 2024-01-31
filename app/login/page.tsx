@@ -14,7 +14,7 @@ export default function LoginPage() {
         clientId={clientId}
         redirectUri={redirectUri}
         state="test"
-        style={{ backgroundColor: "#03c75A" }}
+        style={{ backgroundColor: "#03c75A", width: "350px" }}
       >
         네이버 로그인
       </OAuthLogin.LoginButton>

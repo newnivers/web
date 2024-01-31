@@ -2,9 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuthUserStorage } from "@/hooks";
 import type { AuthUser, AuthError } from "@/types";
+
+const CHECK_SSO_PAGES = ["/", "/ticket", "/login", "/login/redirect"];
 
 export function useAuthUser() {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
@@ -14,12 +16,14 @@ export function useAuthUser() {
     message: "",
   });
 
-  const [cachedAuthUser, setAuthUserInfo] = useAuthUserStorage();
+  const pathname = usePathname();
+
+  const [cachedAuthUser] = useAuthUserStorage();
 
   useEffect(() => {
     setLoading(false);
 
-    if (!cachedAuthUser) {
+    if (!cachedAuthUser.id || !cachedAuthUser.token) {
       setError({
         isTrigger: true,
         message: "auth failure",
@@ -30,7 +34,7 @@ export function useAuthUser() {
     }
 
     setAuthUser(authUser);
-  }, []);
+  }, [authUser, cachedAuthUser, pathname]);
 
   return [authUser, isLoading, error] as const;
 }
@@ -47,13 +51,18 @@ interface Props {
 
 function UserInfoProvider({ children }: Props) {
   const router = useRouter();
+  const pathname = usePathname();
   const [authUser, isLoading, error] = useAuthUser();
 
   useEffect(() => {
+    if (CHECK_SSO_PAGES.includes(pathname)) {
+      return;
+    }
+
     if (error.isTrigger) {
       router.replace("/login");
     }
-  }, [error.isTrigger]);
+  }, [error.isTrigger, pathname, router]);
 
   return (
     <UserInfoContext.Provider

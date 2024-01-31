@@ -1,13 +1,21 @@
-import { useContext } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import styled, { css } from "styled-components";
 import Typography from "@/components/common/text/Typography";
-import TicketSearchBar from "@/components/domains/search";
-import { AuthUserInfo } from "@/contexts";
+import { useAuthUserStorage } from "@/hooks";
 
 export default function NavBar() {
   const router = useRouter();
-  const { authUser } = useContext(AuthUserInfo.Context);
+  const pathname = usePathname();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cachedValue, setValue, resetValue] = useAuthUserStorage();
+
+  const onClickLogout = () => {
+    resetValue();
+
+    if (pathname !== "/") {
+      router.replace("/");
+    }
+  };
 
   return (
     <Container>
@@ -17,15 +25,17 @@ export default function NavBar() {
         <MenuButton onClick={() => router.push("/ticket")}>Ticket</MenuButton>
       </NavMenu>
       <UserMenu>
-        {/* <TicketSearchBar /> */}
-        {/* TODO: 로그아웃 기능 확인하기 */}
-        {authUser !== null && authUser.id ? (
+        {!cachedValue?.id && !cachedValue?.token ? (
           <MenuButton onClick={() => router.push("/login")}>LOGIN</MenuButton>
         ) : (
-          <MenuButton>LOGOUT</MenuButton>
+          <MenuButton onClick={onClickLogout}>LOGOUT</MenuButton>
         )}
-        <MenuButton>작품등록</MenuButton>
-        <MenuButton>등록확인</MenuButton>
+        <MenuButton onClick={() => router.push("/register-work")}>
+          작품등록
+        </MenuButton>
+        <MenuButton onClick={() => router.push("/enrollment-check")}>
+          등록확인
+        </MenuButton>
       </UserMenu>
     </Container>
   );
