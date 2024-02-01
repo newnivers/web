@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
+import dayjs from "dayjs";
+import styled from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import { Table } from "@/components/common/table";
 import Typography from "@/components/common/text/Typography";
 import { DeleteAdmin } from "./deleteAdmin";
+import { mockRes, displayedStatus } from "../data";
 
 const column: ColumnDef<any>[] = [
   { id: "id", header: "번호", accessorFn: (row) => row.id, size: 28 },
@@ -10,27 +14,21 @@ const column: ColumnDef<any>[] = [
     id: "created_at",
     header: "등록일",
     accessorFn: (row) => row.created_at,
-    size: 77,
+    size: 84,
   },
-  { id: "genre", header: "장르", accessorFn: (row) => row.genre, size: 28 },
+  { id: "genre", header: "장르", accessorFn: (row) => row.genre, size: 70 },
   { id: "title", header: "작품명", accessorFn: (row) => row.title, size: 245 },
   {
-    id: "admin_name",
+    id: "createdBy",
     header: "관리자명",
-    accessorFn: (row) => row.admin_name,
-    size: 56,
+    accessorFn: (row) => row.createdBy,
+    size: 58,
   },
   {
     id: "status",
     header: "상태",
     accessorFn: (row) => row.status,
-    size: 50,
-  },
-  {
-    id: "is_approved",
-    header: "승인",
-    accessorFn: (row) => row.is_approved,
-    size: 40,
+    size: 60,
   },
   {
     id: "selling",
@@ -49,26 +47,50 @@ const column: ColumnDef<any>[] = [
   },
 ];
 
-const data: any[] = [
-  {
-    id: 1,
-    created_at: "2023.11.12",
-    genre: "공연",
-    title: "현대무용<시차적>",
-    admin_name: "최병현",
-    status: "검수중",
-    is_approved: "반려",
-    selling: "10/29",
-  },
-];
-
 export function EnrollmentCheckTable() {
+  const [list, setList] = useState<any[]>([]);
+
+  useEffect(() => {
+    const updated: any[] = [];
+
+    const { data } = mockRes;
+
+    data.forEach((work) => {
+      const { schedules, ...rest } = work;
+
+      schedules.forEach((schedule) => {
+        const { id, leftSeatCount, seatMaxCount } = schedule;
+
+        const row = {
+          id,
+          created_at: dayjs(rest.createdAt).format("YYYY.MM.DD"),
+          genre: rest.genre,
+          title: rest.title,
+          createdBy: rest.createdBy,
+          status: displayedStatus[rest.status],
+          selling: `${leftSeatCount}/${seatMaxCount}`,
+        };
+
+        updated.push(row);
+      });
+
+      setList(updated);
+    });
+  }, []);
+
   return (
-    <SpacerSkleton type="vertical" gap={44}>
+    <SpacerSkleton id="main-content" type="vertical" gap={44}>
       <div>
-        <Typography typo="subhead03">{`전체 ${data.length}건`}</Typography>
+        <Typography typo="subhead03">{`전체 ${list.length}건`}</Typography>
       </div>
-      <Table name="enrollment-check-table" columns={column} data={data} />
+      <TableContainer>
+        <Table name="enrollment-check-table" columns={column} data={list} />
+      </TableContainer>
     </SpacerSkleton>
   );
 }
+
+const TableContainer = styled.div`
+  height: 600px;
+  overflow: scroll;
+`;
