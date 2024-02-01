@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import styled from "styled-components";
+import { getCheckList } from "@/api";
 import { SpacerSkleton } from "@/components/common/spacer";
 import { Table } from "@/components/common/table";
 import Typography from "@/components/common/text/Typography";
 import { DeleteAdmin } from "./deleteAdmin";
-import { mockRes, displayedStatus } from "../data";
+import { displayedStatus } from "../data";
 
 const column: ColumnDef<any>[] = [
   { id: "id", header: "번호", accessorFn: (row) => row.id, size: 28 },
@@ -53,30 +54,36 @@ export function EnrollmentCheckTable() {
   useEffect(() => {
     const updated: any[] = [];
 
-    const { data } = mockRes;
+    (async () => {
+      const { data } = await getCheckList();
 
-    data.forEach((work) => {
-      const { schedules, ...rest } = work;
+      data.forEach((work) => {
+        const { schedules, ...rest } = work;
 
-      schedules.forEach((schedule) => {
-        const { id, leftSeatCount, seatMaxCount } = schedule;
+        schedules.forEach((schedule) => {
+          const { id, leftSeatCount, seatMaxCount } = schedule;
 
-        const row = {
-          id,
-          created_at: dayjs(rest.createdAt).format("YYYY.MM.DD"),
-          genre: rest.genre,
-          title: rest.title,
-          createdBy: rest.createdBy,
-          status: displayedStatus[rest.status],
-          selling: `${leftSeatCount}/${seatMaxCount}`,
-        };
+          const row = {
+            id,
+            created_at: dayjs(rest.createdAt).format("YYYY.MM.DD"),
+            genre: rest.genre,
+            title: rest.title,
+            createdBy: rest.createdBy,
+            status: displayedStatus[rest.status],
+            selling: `${leftSeatCount}/${seatMaxCount}`,
+          };
 
-        updated.push(row);
+          updated.push(row);
+        });
+
+        setList(updated);
       });
-
-      setList(updated);
-    });
+    })();
   }, []);
+
+  if (list.length === 0) {
+    return;
+  }
 
   return (
     <SpacerSkleton id="main-content" type="vertical" gap={44}>
