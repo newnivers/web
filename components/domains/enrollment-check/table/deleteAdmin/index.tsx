@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export function DeleteAdmin() {
-  return <DeleteButton>삭제하기</DeleteButton>;
+  return <DeleteButton disabled>삭제하기</DeleteButton>;
 }
 
 const DeleteButton = styled.button`
@@ -17,6 +17,10 @@ const DeleteButton = styled.button`
       border: 1px solid ${colors.secondary[400]};
       border-radius: 4px;
       color: ${colors.secondary[400]};
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     `;
   }}
 `;
