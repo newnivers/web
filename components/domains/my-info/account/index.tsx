@@ -1,12 +1,41 @@
+import { useState } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
+import httpClient from "@/api/core";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
-import { useAuthUserStorage } from "@/hooks";
+import { useAuthUserStorage, useFileUpload } from "@/hooks";
 
-export function Account() {
+interface Props {
+  id: number;
+  nickname: string;
+  profileImage: string;
+}
+
+export function Account({ id, nickname, profileImage }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { resetUserAuth } = useAuthUserStorage();
+
+  const [thumbnail, setThumbnail] = useState<string | ArrayBuffer | null>(
+    profileImage
+  );
+
+  const { onChangeFile, fileUpload } = useFileUpload({
+    onFileChangedSuccess(fileInfo) {
+      setThumbnail(fileInfo.data);
+
+      (async () => {
+        const res = await fileUpload(fileInfo);
+
+        await httpClient.patch(`/users/${id}`, {
+          data: {
+            nickname,
+            profileImage: res?.Location,
+          },
+        });
+      })();
+    },
+  });
 
   const onClickLogout = () => {
     resetUserAuth();
@@ -18,15 +47,19 @@ export function Account() {
         <SpacerSkleton align="center" gap={16}>
           <ThumbnailUploader>
             <Image
-              src="/img/default-thumbnail.png"
+              src={thumbnail ? `${thumbnail}` : "/img/default-thumbnail.png"}
               layout="fill"
               alt="default-thumbnail"
             />
-            <input type="file" style={{ visibility: "hidden" }} />
+            <input
+              type="file"
+              style={{ visibility: "hidden" }}
+              onChange={onChangeFile}
+            />
           </ThumbnailUploader>
           <SpacerSkleton align="baseline" type="vertical" gap={12}>
-            <Typography typo="subhead02">최병현님</Typography>
-            <SpacerSkleton type="vertical" gap={4}>
+            <Typography typo="subhead02">{`${nickname} 님`}</Typography>
+            {/* <SpacerSkleton type="vertical" gap={4}>
               <SpacerSkleton gap={16}>
                 <UserInfoTypo typo="subhead04">연동계정</UserInfoTypo>
                 <UserInfoTypo typo="subhead04">
@@ -37,7 +70,7 @@ export function Account() {
                 <UserInfoTypo typo="subhead04">전화번호</UserInfoTypo>
                 <UserInfoTypo typo="subhead04">010-4107-2689</UserInfoTypo>
               </SpacerSkleton>
-            </SpacerSkleton>
+            </SpacerSkleton> */}
           </SpacerSkleton>
         </SpacerSkleton>
       </UserInfo>
@@ -81,6 +114,8 @@ const ThumbnailUploader = styled.label`
   position: relative;
   width: 120px;
   height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
   cursor: pointer;
 `;
 

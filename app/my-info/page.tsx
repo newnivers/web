@@ -1,15 +1,51 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import styled, { css } from "styled-components";
+import httpClient from "@/api/core";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
 import { Account, Cardboard } from "@/components/domains/my-info";
 import { AuthUserInfo } from "@/contexts";
+import { useAuthUserStorage } from "@/hooks";
+
+interface MyInfo {
+  id: number;
+  nickname: string;
+  profileImage: string;
+  purchaseList: [];
+  reviewList: [];
+}
 
 function MyInfoPage() {
-  const router = useRouter();
+  const { userAuth } = useAuthUserStorage();
+  const [myInfo, setMyInfo] = useState<MyInfo | null>(null);
+
+  useEffect(() => {
+    if (!userAuth.id) {
+      return;
+    }
+
+    (async () => {
+      const res = await httpClient.get<{
+        message: string;
+        data: {
+          id: number;
+          nickname: string;
+          profileImage: string;
+          purchaseList: [];
+          reviewList: [];
+        };
+      }>(`/users/${userAuth.id}`);
+
+      setMyInfo(res.data);
+    })();
+  }, [userAuth]);
+
+  if (!myInfo) {
+    return;
+  }
 
   return (
     <AuthUserInfo.Provider>
@@ -37,7 +73,11 @@ function MyInfoPage() {
             </Link>
           </SpacerSkleton>
           <SpacerSkleton type="vertical" gap={24} style={{ flex: 2 }}>
-            <Account />
+            <Account
+              id={myInfo.id}
+              nickname={myInfo.nickname}
+              profileImage={myInfo.profileImage}
+            />
             <SpacerSkleton type="vertical" gap={24}>
               <div>
                 <h4>
