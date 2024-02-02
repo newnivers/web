@@ -7456,6 +7456,7 @@ __metadata:
     react-hook-form: ^7.46.2
     react-quill: ^2.0.0
     recoil: ^0.7.7
+    recoil-persist: ^5.1.0
     sass: ^1.69.5
     sort-package-json: ^2.5.1
     styled-components: ^6.0.7
@@ -8433,6 +8434,15 @@ __metadata:
   dependencies:
     picomatch: ^2.2.1
   checksum: 1ced032e6e45670b6d7352d71d21ce7edf7b9b928494dcaba6f11fba63180d9da6cd7061ebc34175ffda6ff529f481818c962952004d273178acd70f7059b320
+  languageName: node
+  linkType: hard
+
+"recoil-persist@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "recoil-persist@npm:5.1.0"
+  peerDependencies:
+    recoil: ^0.7.2
+  checksum: 03ee8417b9bfcb1e5d61af373a304437190da394bf42b0979cf54ec4edeb27e7577f76ae4f9348d131865b87b19dc8dedc158e2bacd3976d4b936be1ab005d18
   languageName: node
   linkType: hard
 

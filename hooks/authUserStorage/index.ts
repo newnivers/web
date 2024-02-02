@@ -1,18 +1,11 @@
-import type { AuthUser } from "@/types";
-import useLocalStorage from "../localStorage";
-
-const authUserKey = process.env.NEXT_PUBLIC_AUTH_USER_KEY as string;
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { userAuthAtom } from "@/store";
 
 function useAuthUserStorage() {
-  const [cachedValue, setValue, resetValue] = useLocalStorage<AuthUser>(
-    authUserKey,
-    {
-      token: "",
-      id: "",
-    }
-  );
+  const [userAuth, setUserAuth] = useRecoilState(userAuthAtom);
+  const resetUserAuth = useResetRecoilState(userAuthAtom);
 
-  return [cachedValue, setValue, resetValue] as const;
+  return { userAuth, setUserAuth, resetUserAuth } as const;
 }
 
 export default useAuthUserStorage;

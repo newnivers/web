@@ -18,12 +18,12 @@ export function useAuthUser() {
 
   const pathname = usePathname();
 
-  const [cachedAuthUser] = useAuthUserStorage();
+  const { userAuth } = useAuthUserStorage();
 
   useEffect(() => {
     setLoading(false);
 
-    if (!cachedAuthUser.id || !cachedAuthUser.token) {
+    if (!userAuth.id || !userAuth.token) {
       setError({
         isTrigger: true,
         message: "auth failure",
@@ -34,7 +34,7 @@ export function useAuthUser() {
     }
 
     setAuthUser(authUser);
-  }, [authUser, cachedAuthUser, pathname]);
+  }, [authUser, userAuth, pathname]);
 
   return [authUser, isLoading, error] as const;
 }

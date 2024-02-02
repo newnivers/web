@@ -25,6 +25,10 @@ const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 
   const parsedAuthUser = JSON.parse(authUser) as AuthUser;
 
+  if (!parsedAuthUser.token) {
+    return config;
+  }
+
   return {
     ...config,
     headers: {

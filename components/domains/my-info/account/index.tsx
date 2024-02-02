@@ -1,9 +1,17 @@
 import Image from "next/image";
 import styled, { css } from "styled-components";
-import Spacer, { SpacerSkleton } from "@/components/common/spacer";
+import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
+import { useAuthUserStorage } from "@/hooks";
 
 export function Account() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { resetUserAuth } = useAuthUserStorage();
+
+  const onClickLogout = () => {
+    resetUserAuth();
+  };
+
   return (
     <Container align="center">
       <UserInfo>
@@ -38,7 +46,7 @@ export function Account() {
         align="center"
         style={{ flex: "1", height: "100%", borderLeft: "1px solid #D4D4D4" }}
       >
-        <Spacer align="center" type="vertical" gap={12.44} as="button">
+        <LogoutButton onClick={onClickLogout}>
           <Image
             src="/icon/logout.svg"
             width={18}
@@ -46,7 +54,7 @@ export function Account() {
             alt="logout"
           />
           <LogoutTypo typo="subhead02">로그아웃</LogoutTypo>
-        </Spacer>
+        </LogoutButton>
       </SpacerSkleton>
     </Container>
   );
@@ -74,6 +82,13 @@ const ThumbnailUploader = styled.label`
   width: 120px;
   height: 120px;
   cursor: pointer;
+`;
+
+const LogoutButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12.44px;
 `;
 
 const LogoutTypo = styled(Typography)`
