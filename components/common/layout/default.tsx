@@ -11,11 +11,12 @@ interface Props {
 }
 
 const QR_PAGE = "/my-info/QR/";
+const TICKETS_PAGE = "/tickets/";
 
 function DefaultLayout({ children }: Props) {
   const pathname = usePathname();
 
-  if (pathname.includes(QR_PAGE)) {
+  if (pathname.includes(QR_PAGE) || pathname.includes(TICKETS_PAGE)) {
     return children;
   }
 
