@@ -10,20 +10,18 @@ interface Props {
   children: ReactNode;
 }
 
+const QR_PAGE = "/my-info/QR/";
+
 function DefaultLayout({ children }: Props) {
   const pathname = usePathname();
 
-  const renderNavBar = () => {
-    if (pathname === "/login/redirect") {
-      return null;
-    }
-
-    return <NavBar />;
-  };
+  if (pathname.includes(QR_PAGE)) {
+    return children;
+  }
 
   return (
     <>
-      {renderNavBar()}
+      <NavBar />
       <Container>{children}</Container>
       <Footer />
     </>
