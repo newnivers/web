@@ -12,7 +12,7 @@ export default function LoginRedirectPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const [_, setAuthUserInfo] = useAuthUserStorage();
+  const { setUserAuth } = useAuthUserStorage();
 
   const { mutate: postAuthorizationCode } = usePostAuthorizationCode({
     onSuccess: (res) => {
@@ -20,7 +20,7 @@ export default function LoginRedirectPage() {
         data: { token, userId },
       } = res;
 
-      setAuthUserInfo({ token, id: userId });
+      setUserAuth({ token, id: userId });
       router.replace("/");
     },
   });

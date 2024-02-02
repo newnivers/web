@@ -7,10 +7,10 @@ export default function NavBar() {
   const router = useRouter();
   const pathname = usePathname();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cachedValue, setValue, resetValue] = useAuthUserStorage();
+  const { userAuth, resetUserAuth } = useAuthUserStorage();
 
   const onClickLogout = () => {
-    resetValue();
+    resetUserAuth();
 
     if (pathname !== "/") {
       router.replace("/");
@@ -25,10 +25,13 @@ export default function NavBar() {
         <MenuButton onClick={() => router.push("/ticket")}>Ticket</MenuButton>
       </NavMenu>
       <UserMenu>
-        {!cachedValue?.id && !cachedValue?.token ? (
+        {!userAuth?.id && !userAuth?.token ? (
           <MenuButton onClick={() => router.push("/login")}>LOGIN</MenuButton>
         ) : (
           <MenuButton onClick={onClickLogout}>LOGOUT</MenuButton>
+        )}
+        {userAuth?.id && userAuth?.token && (
+          <MenuButton onClick={() => router.push("my-info")}>MYPAGE</MenuButton>
         )}
         <MenuButton onClick={() => router.push("/register-work")}>
           작품등록

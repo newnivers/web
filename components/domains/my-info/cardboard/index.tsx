@@ -23,7 +23,7 @@ const workInfos = {
   review: "후기",
 } as const;
 
-export type Entries<T> = {
+type Entries<T> = {
   [K in keyof T]: [K, T[K]];
 }[keyof T][];
 
