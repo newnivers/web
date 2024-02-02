@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
-import styled from "styled-components";
+import { useRouter } from "next/navigation";
+import styled, { css } from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
 
@@ -28,6 +29,12 @@ type Entries<T> = {
 }[keyof T][];
 
 export function Cardboard({ image, title, children, ...rest }: Props) {
+  const router = useRouter();
+
+  const onClickMoveQR = () => {
+    router.replace("/my-info/QR/1");
+  };
+
   const Contents = () => {
     return (Object.entries(workInfos) as Entries<typeof workInfos>).map(
       ([key, name]) => {
@@ -38,36 +45,50 @@ export function Cardboard({ image, title, children, ...rest }: Props) {
         }
 
         return (
-          <Content key={key}>
+          <SpacerSkleton key={key} gap={20}>
             <ContentTypography typo="subhead04">{name}</ContentTypography>
             <ContentTypography typo="subhead04">{value}</ContentTypography>
-          </Content>
+          </SpacerSkleton>
         );
       }
     );
   };
 
   return (
-    <SpacerSkleton gap={38} style={{ width: "100%" }}>
-      <Image src={image} width={150} height={212} alt="test-poster" />
-      <SpacerSkleton type="vertical" gap={15}>
-        <h5>
-          <Typography typo="subhead03">{title}</Typography>
-        </h5>
-        <SpacerSkleton type="vertical" gap={8}>
-          <Contents />
+    <SpacerSkleton justify="space-between" style={{ width: "100%" }}>
+      <SpacerSkleton gap={38}>
+        <Image src={image} width={150} height={212} alt="test-poster" />
+        <SpacerSkleton type="vertical" gap={15}>
+          <h5>
+            <Typography typo="subhead03">{title}</Typography>
+          </h5>
+          <SpacerSkleton type="vertical" gap={8}>
+            <Contents />
+          </SpacerSkleton>
         </SpacerSkleton>
+      </SpacerSkleton>
+      <SpacerSkleton type="vertical" justify="flex-end">
+        <QRButton onClick={onClickMoveQR}>QR인증</QRButton>
       </SpacerSkleton>
     </SpacerSkleton>
   );
 }
 
-const Content = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 8px;
-`;
-
 const ContentTypography = styled(Typography)`
   color: ${({ theme: { colors } }) => colors.secondary[500]};
+`;
+
+const QRButton = styled.button`
+  ${({ theme }) => {
+    const { colors } = theme;
+
+    return css`
+      width: 148px;
+      height: 56px;
+      padding: 20px 24px;
+      border: 1px solid ${colors.secondary[400]};
+      border-radius: 4px;
+      color: ${colors.secondary[400]};
+    `;
+  }}
 `;

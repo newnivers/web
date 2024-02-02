@@ -26,7 +26,7 @@ const handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
     userAuth: { id: string; token: string };
   };
 
-  if (!parsedAuthUser.userAuth.token) {
+  if (!parsedAuthUser?.userAuth?.token) {
     return config;
   }
 
