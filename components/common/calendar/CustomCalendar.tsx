@@ -16,6 +16,7 @@ export default function CustomCalendar({
   onChangeDate,
   notCompleteDates = [],
   includeDates,
+  disabled,
   ...rest
 }: CustomCalendarProps) {
   const [month, setMonth] = useState(new Date());
@@ -52,7 +53,7 @@ export default function CustomCalendar({
       onMonthChange={setMonth}
       disabledKeyboardNavigation
       dayClassName={makeDayClassName}
-      includeDates={includeDates}
+      includeDates={disabled ? [] : includeDates}
       {...rest}
     />
   );

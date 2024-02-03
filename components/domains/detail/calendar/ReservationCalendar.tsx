@@ -20,6 +20,7 @@ type ReserveModalCase = "NOTICE" | "COMPLETION" | "RESERVATION" | null;
 
 export default function ReservationCalendar({
   schedules = [],
+  disabled = true,
 }: ReservationCalendarProps) {
   const { mutate: postReservation } = usePostReservation();
 
@@ -67,6 +68,7 @@ export default function ReservationCalendar({
           )}
           selected={date}
           onChangeDate={onChangeDate}
+          disabled={disabled}
         />
         <DaySchedules
           selectedDate={date}
@@ -77,6 +79,7 @@ export default function ReservationCalendar({
         <ReservedSeat seatCount={clickedSchedule?.leftSeatCount} />
       </Wrapper>
       <ReserveButton
+        disabled={disabled}
         onClick={() => {
           setModalStatus("NOTICE");
         }}
@@ -104,10 +107,9 @@ export default function ReservationCalendar({
       </ConfirmModal>
       <ReservationModal
         isShow={modalStatus === "RESERVATION"}
-        onReserve={() => {
-          // TODO: 티켓 수량 입력 지금은 방법이 없기 때문에 추후 작업 진행 예정
+        onReserve={(quantity) => {
           if (clickedSchedule) {
-            postReservation(clickedSchedule?.id);
+            postReservation({ id: clickedSchedule?.id, quantity });
             setModalStatus("COMPLETION");
           }
         }}

@@ -9,10 +9,11 @@ import ReservationStep from "./ReservationStep";
 interface Props {
   isShow: boolean;
   onClose: () => void;
-  onReserve: () => void;
+  onReserve: (quantity: number) => void;
+  price?: number;
 }
 
-export function ReservationModal({ isShow, onClose, onReserve }: Props) {
+export function ReservationModal({ isShow, onClose, onReserve, price }: Props) {
   const [ticketCount, setTicketCount] = useState(1);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export function ReservationModal({ isShow, onClose, onReserve }: Props) {
             discount={0}
             reservationFee={0}
             ticketCount={ticketCount}
-            onClickReserveButton={onReserve}
+            onClickReserveButton={() => onReserve(ticketCount)}
           />
         </ContentSection>
       </Content>
