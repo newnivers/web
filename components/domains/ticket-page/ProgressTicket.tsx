@@ -1,13 +1,11 @@
 import { useMemo } from "react";
-import type { StaticImageData } from "next/image";
-import Image from "next/image";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
 import { ProgressCircle } from "@/components/domains/ticket-page/ProgressCircle";
 
 interface TicketProps {
-  thumbnail: string | StaticImageData;
+  thumbnail: string;
   genre: string;
   title: string;
   startDate: string;
@@ -48,7 +46,7 @@ export function ProgressTicket({
   return (
     <Wrapper onClick={onClick}>
       <ImageWrapper>
-        <Image src={thumbnail} alt="티켓 이미지" width={268} height={370} />
+        <img src={thumbnail} alt="티켓 이미지" width={268} height={370} />
         {ticketOpenAt && (
           <ProgressCircleWrapper>
             <ProgressCircle leftDay={leftDay} />
@@ -71,6 +69,7 @@ const Wrapper = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
+  height: 370px;
 `;
 
 const ProgressCircleWrapper = styled.div`
