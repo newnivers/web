@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
 import { ProgressTicket } from "@/components/domains/ticket-page/ProgressTicket";
 import mockImage from "@/fixture/ticket-poster.jpeg";
+import { useGetTicketHomeList, useGetTicketShowingList } from "@/queries";
 
 const mock = [
   {
@@ -140,6 +141,7 @@ const mock = [
 ];
 
 export function ShowingPage() {
+  const { data } = useGetTicketShowingList();
   const router = useRouter();
 
   const moveToDetailPage = (id: number) => {
@@ -150,17 +152,18 @@ export function ShowingPage() {
     <Container>
       <Header typo="headline">Showing</Header>
       <ShowingWrapper>
-        {[...mock, ...mock, ...mock, ...mock, ...mock].map((rank, index) => (
-          <ProgressTicket
-            onClick={() => moveToDetailPage(rank.id)}
-            key={index}
-            thumbnail={mockImage}
-            genre={rank.genre}
-            title={rank.title}
-            startDate={rank.startDate}
-            endDate={rank.endDate}
-          />
-        ))}
+        {data &&
+          data.showing.map((rank, index) => (
+            <ProgressTicket
+              onClick={() => moveToDetailPage(rank.id)}
+              key={index}
+              thumbnail={mockImage}
+              genre={rank.genre}
+              title={rank.title}
+              startDate={rank.startDate}
+              endDate={rank.endDate}
+            />
+          ))}
       </ShowingWrapper>
     </Container>
   );

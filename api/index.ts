@@ -2,5 +2,5 @@ export * from "./auth";
 export * from "./detail";
 export * from "./comment";
 export * from "./reserve";
-export * from "./landing";
+export * from "./ticketList";
 export * from "./arts";

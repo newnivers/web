@@ -7,6 +7,7 @@ import Typography from "@/components/common/text/Typography";
 import { Ticket } from "@/components/domains/landing-page";
 import { ProgressTicket } from "@/components/domains/ticket-page/ProgressTicket";
 import mockImage from "@/fixture/ticket-poster.jpeg";
+import { useGetTicketHomeList } from "@/queries";
 
 const mock = [
   {
@@ -148,6 +149,7 @@ export function TicketHomePage({
   hotRanking: ArtInfo[];
   openTickets: ArtInfo[];
 }) {
+  const { data } = useGetTicketHomeList();
   const router = useRouter();
 
   const moveToDetailPage = (id: number) => {
@@ -158,33 +160,35 @@ export function TicketHomePage({
     <Container>
       <Header typo="headline">Hot Ranking</Header>
       <HotRankingWrapper>
-        {mock.map((rank, index) => (
-          <Ticket
-            onClick={() => moveToDetailPage(rank.id)}
-            ranking={index + 1}
-            key={rank.id}
-            thumbnail={mockImage}
-            genre={rank.genre}
-            title={rank.title}
-            startDate={rank.startDate}
-            endDate={rank.endDate}
-          />
-        ))}
+        {data &&
+          data.hotRanking.map((rank, index) => (
+            <Ticket
+              onClick={() => moveToDetailPage(rank.id)}
+              ranking={index + 1}
+              key={rank.id}
+              thumbnail={mockImage}
+              genre={rank.genre}
+              title={rank.title}
+              startDate={rank.startDate}
+              endDate={rank.endDate}
+            />
+          ))}
       </HotRankingWrapper>
       <Header typo="headline">Ticket Open</Header>
       <TicketOpenWrapper>
-        {[...mock, ...mock, ...mock].map((rank, index) => (
-          <ProgressTicket
-            onClick={() => moveToDetailPage(rank.id)}
-            key={index}
-            thumbnail={mockImage}
-            genre={rank.genre}
-            title={rank.title}
-            startDate={rank.startDate}
-            endDate={rank.endDate}
-            ticketOpenAt={rank.ticketOpenAt}
-          />
-        ))}
+        {data &&
+          data.ticketOpen.map((rank, index) => (
+            <ProgressTicket
+              onClick={() => moveToDetailPage(rank.id)}
+              key={index}
+              thumbnail={mockImage}
+              genre={rank.genre}
+              title={rank.title}
+              startDate={rank.startDate}
+              endDate={rank.endDate}
+              ticketOpenAt={rank.ticketOpenAt}
+            />
+          ))}
       </TicketOpenWrapper>
     </Container>
   );
