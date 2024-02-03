@@ -32,6 +32,7 @@ interface MyInfoItem {
   nickname: string;
   place: string;
   visitorCount: number;
+  start_at: string;
 }
 
 function MyInfoPage() {
@@ -117,6 +118,7 @@ function MyInfoPage() {
                             title={value.artTitle}
                             visitor_count={value.visitorCount}
                             space={value.place}
+                            start_at={value.start_at}
                           >
                             test
                           </Cardboard>
@@ -130,6 +132,7 @@ function MyInfoPage() {
                             title={value.artTitle}
                             visitor_count={value.visitorCount}
                             space={value.place}
+                            start_at={value.start_at}
                           >
                             test
                           </ReviewCardboard>
