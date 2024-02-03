@@ -1,7 +1,10 @@
+import { useRouter } from "next/navigation";
 import styled, { css } from "styled-components";
 import Typography from "@/components/common/text/Typography";
 
 export default function Footer() {
+  const router = useRouter();
+
   return (
     <Container>
       <HorizontalWrapper>
@@ -20,9 +23,25 @@ export default function Footer() {
         </IntroWrapper>
         <MenuWrapper>
           <MenuHeader>CONTACT US</MenuHeader>
-          <MenuButton>플뉴소개</MenuButton>
-          <MenuButton>고객센터</MenuButton>
-          <MenuButton>Contact</MenuButton>
+          <MenuButton
+            onClick={() =>
+              router.push(
+                "https://www.notion.so/0395d589911f41439d0444bbb2e9f98f?pvs=4"
+              )
+            }
+          >
+            플뉴소개
+          </MenuButton>
+          <MenuButton
+            onClick={() => router.push("https://open.kakao.com/o/ssivmG6f")}
+          >
+            고객센터
+          </MenuButton>
+          <MenuButton
+            onClick={() => router.push("mailto:p.newniverse@gmail.com")}
+          >
+            Contact
+          </MenuButton>
           <MenuButton>작품검수</MenuButton>
         </MenuWrapper>
         <MenuWrapper>
@@ -138,6 +157,7 @@ const MenuButton = styled(Typography)`
     const { colors, typoToken } = theme;
 
     return css`
+      cursor: pointer;
       ${typoToken.body02}
       color: ${colors.secondary[200]};
       margin-bottom: 0.5rem;

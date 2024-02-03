@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import dayjs from "dayjs";
 import styled from "styled-components";
 import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
@@ -11,13 +12,20 @@ import {
 } from "@/components/domains/detail";
 import Tab from "@/components/domains/detail/tab";
 import { useTicketDetail } from "@/queries";
+import useAuthUserStorage from "../../../hooks/authUserStorage";
 
 export default function DetailPage({ params }: { params: { id: string } }) {
+  const { userAuth } = useAuthUserStorage();
   const artId = useMemo(() => Number(params.id), [params]);
   const { data, rowInfos } = useTicketDetail(Number(artId));
+  const isDisabled = useMemo(() => {
+    const ticketOpenDay = dayjs(data?.ticketOpenAt);
+
+    return !(ticketOpenDay.diff(dayjs(), "day") < 0 && userAuth.id);
+  }, [data]);
 
   if (!data || !rowInfos) {
-    return <div>Error Page</div>;
+    return <div></div>;
   }
 
   return (
@@ -31,12 +39,12 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           <TicketMainInfo image={data.image} infoData={rowInfos} />
           <Tab>
             <Tab.Review reviews={data.comments ?? []} artId={artId} />
-            <Tab.Location />
-            <Tab.Info />
-            <Tab.CancelInfo />
+            <Tab.Location>{data?.place}</Tab.Location>
+            <Tab.Info>{data?.description}</Tab.Info>
+            <Tab.CancelInfo>{data?.cautionDescription}</Tab.CancelInfo>
           </Tab>
         </DetailInfoWrapper>
-        <ReservationCalendar schedules={data.schedules} disabled={false} />
+        <ReservationCalendar schedules={data.schedules} disabled={isDisabled} />
       </DetailContent>
     </SpacerSkleton>
   );

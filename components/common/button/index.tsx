@@ -13,11 +13,14 @@ function DefaultButton({
   sort = "primary",
   children,
   onClick,
+  disabled,
   ...rest
 }: Props) {
   return (
-    <StyledButton sort={sort} onClick={onClick} {...rest}>
-      <ButtonText sort={sort}>{children}</ButtonText>
+    <StyledButton sort={sort} onClick={onClick} disabled={disabled} {...rest}>
+      <ButtonText disabled sort={sort}>
+        {children}
+      </ButtonText>
     </StyledButton>
   );
 }
@@ -44,19 +47,23 @@ const StyledButton = styled.button<{ sort: ButtonSort }>`
 
       &:disabled {
         cursor: not-allowed;
+        background-color: ${colors.secondary["400"]};
+        border: none;
       }
     `;
   }}
 `;
 
-const ButtonText = styled(Text)<{ sort: ButtonSort }>`
-  ${({ theme, sort }) => {
+const ButtonText = styled(Text)<{ sort: ButtonSort; disabled: boolean }>`
+  ${({ theme, sort, disabled }) => {
     const { colors } = theme;
 
     return css`
       ${theme.typoToken.subhead02}
       letter-spacing: 0.5px;
-      color: ${sort === "primary" ? colors.white : colors.primary_01};
+      color: ${sort === "primary" || disabled
+        ? colors.white
+        : colors.primary_01};
     `;
   }}
 `;

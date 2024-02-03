@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import styled, { css } from "styled-components";
+import Typography from "@/components/common/text/Typography";
 import { Ticket } from "@/components/domains/landing-page/Ticket";
 import mockImage from "@/fixture/ticket-poster.jpeg";
 import { useGetLandingArtList } from "@/queries";
@@ -42,8 +43,8 @@ export function LandingPage() {
         description="현재 티켓 예매가 가능한 작품입니다."
       />
       <TicketsWrapper>
-        {data?.ticketOpen &&
-          data.ticketOpen.map((rank) => (
+        {data?.ticket &&
+          data.ticket.map((rank) => (
             <Ticket
               onClick={() => moveToDetailPage(rank.id)}
               key={rank.id}
@@ -62,6 +63,9 @@ export function LandingPage() {
         title="ARCHIVING"
         description="서울예술대학교의 지난 작품을 확인해 보세요."
       />
+      <Preparing>
+        <Typography typo="subhead01">준비 중입니다.</Typography>{" "}
+      </Preparing>
     </Container>
   );
 }
@@ -100,4 +104,14 @@ const SeeMoreButton = styled.button`
       margin: 50px auto 160px auto;
     `;
   }}
+`;
+
+const Preparing = styled.div`
+  width: 1168px;
+  height: 370px;
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.colors.secondary[100]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
