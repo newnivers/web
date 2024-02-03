@@ -1,12 +1,10 @@
 import { useMemo } from "react";
-import type { StaticImageData } from "next/image";
-import Image from "next/image";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import Typography from "@/components/common/text/Typography";
 
 interface TicketProps {
-  thumbnail: string | StaticImageData;
+  thumbnail: string;
   genre: string;
   title: string;
   startDate: string;
@@ -14,7 +12,6 @@ interface TicketProps {
   ranking?: number;
   onClick: () => void;
   ticketOpenDate?: Date;
-  showOpenProgress?: boolean;
 }
 
 export function Ticket({
@@ -25,7 +22,6 @@ export function Ticket({
   endDate,
   ranking,
   onClick,
-  showOpenProgress,
 }: TicketProps) {
   const period = useMemo(() => {
     const start = `${dayjs(startDate).format("YYYY-DD-MM")} (${dayjs(
@@ -42,7 +38,7 @@ export function Ticket({
   return (
     <Wrapper onClick={onClick}>
       <>
-        <Image src={thumbnail} alt="티켓 이미지" width={368} height={480} />
+        <img src={thumbnail} alt="티켓 이미지" width={368} height={480} />
       </>
       {ranking ? <Ranking typo="subhead01">{ranking}</Ranking> : <></>}
       <Genre typo="subhead03">{`#${genre}`}</Genre>

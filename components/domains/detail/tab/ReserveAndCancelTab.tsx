@@ -1,9 +1,7 @@
-import type { ReactNode } from "react";
-
 export default function ReserveAndCancelTab({
   children,
 }: {
-  children?: ReactNode;
+  children: string;
 }) {
-  return <>{children}</>;
+  return <div dangerouslySetInnerHTML={{ __html: children }}></div>;
 }

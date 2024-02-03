@@ -2,7 +2,6 @@ import { useRouter } from "next/navigation";
 import styled, { css } from "styled-components";
 import Typography from "@/components/common/text/Typography";
 import { Ticket } from "@/components/domains/landing-page/Ticket";
-import mockImage from "@/fixture/ticket-poster.jpeg";
 import { useGetLandingArtList } from "@/queries";
 import { ListHeader } from "./ListHeader";
 
@@ -29,7 +28,7 @@ export function LandingPage() {
               onClick={() => moveToDetailPage(rank.id)}
               ranking={index + 1}
               key={rank.id}
-              thumbnail={mockImage}
+              thumbnail={rank.image}
               genre={rank.genre}
               title={rank.title}
               startDate={rank.startDate}
@@ -48,7 +47,7 @@ export function LandingPage() {
             <Ticket
               onClick={() => moveToDetailPage(rank.id)}
               key={rank.id}
-              thumbnail={mockImage}
+              thumbnail={rank.image}
               genre={rank.genre}
               title={rank.title}
               startDate={rank.startDate}

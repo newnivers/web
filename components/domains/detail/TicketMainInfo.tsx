@@ -2,7 +2,6 @@ import Image from "next/image";
 import styled from "styled-components";
 import type { RowInfoData } from "@/components/domains/detail/RowInfo";
 import RowList from "@/components/domains/detail/RowInfo";
-import mockImage from "@/fixture/ticket-poster.jpeg";
 
 export interface TicketMainInfoProps {
   image: string;
@@ -16,11 +15,7 @@ export default function TicketMainInfo({
   return (
     <MainInfoContainer>
       <ImageWrapper>
-        <Image
-          src={mockImage}
-          alt="ticket-image"
-          style={{ width: "100%", height: "100%" }}
-        />
+        <Image width={368} height={480} src={image} alt="ticket-image" />
       </ImageWrapper>
       <RowList infoData={infoData} />
     </MainInfoContainer>

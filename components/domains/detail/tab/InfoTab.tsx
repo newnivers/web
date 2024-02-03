@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
-export default function InfoTab({ children }: { children?: ReactNode }) {
-  return <>{children}</>;
+export default function InfoTab({ children }: { children: string }) {
+  return <div dangerouslySetInnerHTML={{ __html: children }}></div>;
 }
