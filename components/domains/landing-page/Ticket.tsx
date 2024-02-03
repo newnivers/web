@@ -24,11 +24,11 @@ export function Ticket({
   onClick,
 }: TicketProps) {
   const period = useMemo(() => {
-    const start = `${dayjs(startDate).format("YYYY-DD-MM")} (${dayjs(
+    const start = `${dayjs(startDate).format("YYYY-MM-DD")} (${dayjs(
       startDate
     ).format("ddd")})`;
 
-    const end = `${dayjs(endDate).format("YYYY-DD-MM")} (${dayjs(
+    const end = `${dayjs(endDate).format("YYYY-MM-DD")} (${dayjs(
       endDate
     ).format("ddd")})`;
 
