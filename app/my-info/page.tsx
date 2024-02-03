@@ -21,8 +21,18 @@ interface MyInfo {
   id: number;
   nickname: string;
   profileImage: string;
-  purchaseList: [];
-  reviewList: [];
+  purchaseList: MyInfoItem[];
+  reviewList: MyInfoItem[];
+}
+
+interface MyInfoItem {
+  artThumbnail: string;
+  artTitle: string;
+  id: number;
+  nickname: string;
+  place: string;
+  visitorCount: number;
+  start_at: string;
 }
 
 function MyInfoPage() {
@@ -100,29 +110,29 @@ function MyInfoPage() {
               <History>
                 <ul>
                   {content === "work"
-                    ? purchaseList.map((value, idx) => (
-                        <CardboardList key={`${value.title}-${idx}`}>
+                    ? myInfo.purchaseList.map((value, idx) => (
+                        <CardboardList key={`${value.artTitle}-${idx}`}>
                           <Cardboard
-                            image={value.image}
-                            title={value.title}
+                            price={"0"}
+                            image={value.artThumbnail}
+                            title={value.artTitle}
+                            visitor_count={value.visitorCount}
+                            space={value.place}
                             start_at={value.start_at}
-                            price={value.price}
-                            visitor_count={value.vistor_cnt}
-                            space={value.space}
                           >
                             test
                           </Cardboard>
                         </CardboardList>
                       ))
-                    : reviewList.map((value) => (
-                        <CardboardList key={value.title}>
+                    : myInfo.reviewList.map((value) => (
+                        <CardboardList key={value.artTitle}>
                           <ReviewCardboard
-                            image={value.image}
-                            title={value.title}
+                            price={"0"}
+                            image={value.artThumbnail}
+                            title={value.artTitle}
+                            visitor_count={value.visitorCount}
+                            space={value.place}
                             start_at={value.start_at}
-                            price={value.price}
-                            visitor_count={value.vistor_cnt}
-                            space={value.space}
                           >
                             test
                           </ReviewCardboard>
@@ -143,10 +153,7 @@ const Headline = styled.div`
   margin: 0 auto;
 `;
 
-const History = styled.div`
-  max-height: 600px;
-  overflow: scroll;
-`;
+const History = styled.div``;
 
 const CardboardList = styled.li`
   ${({ theme }) => {

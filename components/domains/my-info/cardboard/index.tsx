@@ -8,8 +8,8 @@ import Typography from "@/components/common/text/Typography";
 interface Props {
   image: string;
   title: string;
-  start_at: string;
-  price: string;
+  start_at?: string;
+  price?: string;
   visitor_count: number;
   space: string;
   review?: string;
@@ -57,7 +57,7 @@ export function Cardboard({ image, title, children, ...rest }: Props) {
   return (
     <SpacerSkleton justify="space-between" style={{ width: "100%" }}>
       <SpacerSkleton gap={38}>
-        <Image src={image} width={150} height={212} alt="test-poster" />
+        <img src={image} width={150} height={212} alt="test-poster" />
         <SpacerSkleton type="vertical" gap={15}>
           <h5>
             <Typography typo="subhead03">{title}</Typography>
