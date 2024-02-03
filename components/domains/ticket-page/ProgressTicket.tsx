@@ -15,6 +15,7 @@ interface TicketProps {
   onClick: () => void;
   ticketOpenDate?: Date;
   showOpenProgress?: boolean;
+  ticketOpenAt?: string;
 }
 
 export function ProgressTicket({
@@ -24,25 +25,36 @@ export function ProgressTicket({
   startDate,
   endDate,
   onClick,
-  showOpenProgress,
+  ticketOpenAt,
 }: TicketProps) {
   const period = useMemo(() => {
-    const start = `${dayjs(startDate).format("YYYY-DD-MM")} (${dayjs(
+    const start = `${dayjs(startDate).format("YYYY-MM-DD")} (${dayjs(
       startDate
     ).format("ddd")})`;
 
-    const end = `${dayjs(endDate).format("YYYY-DD-MM")} (${dayjs(
+    const end = `${dayjs(endDate).format("YYYY-MM-DD")} (${dayjs(
       endDate
     ).format("ddd")})`;
 
     return `${start} ~ ${end}`;
   }, [startDate, endDate]);
 
+  const leftDay = useMemo(() => {
+    const ticketOpenDay = dayjs(ticketOpenAt);
+
+    return ticketOpenDay.diff(dayjs(), "day");
+  }, []);
+
   return (
     <Wrapper onClick={onClick}>
-      <>
+      <ImageWrapper>
         <Image src={thumbnail} alt="티켓 이미지" width={268} height={370} />
-      </>
+        {ticketOpenAt && (
+          <ProgressCircleWrapper>
+            <ProgressCircle leftDay={leftDay} />
+          </ProgressCircleWrapper>
+        )}
+      </ImageWrapper>
       <Genre typo="subhead03">{`#${genre}`}</Genre>
       <Title typo="subhead03">{title}</Title>
       <Period typo="body02">{period}</Period>
@@ -54,8 +66,18 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  position: relative;
   cursor: pointer;
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+`;
+
+const ProgressCircleWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const Genre = styled(Typography)`

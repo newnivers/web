@@ -182,6 +182,7 @@ export function TicketHomePage({
             title={rank.title}
             startDate={rank.startDate}
             endDate={rank.endDate}
+            ticketOpenAt={rank.ticketOpenAt}
           />
         ))}
       </TicketOpenWrapper>
