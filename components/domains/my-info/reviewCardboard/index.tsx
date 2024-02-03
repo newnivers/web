@@ -9,7 +9,7 @@ import Typography from "@/components/common/text/Typography";
 interface Props {
   image: string;
   title: string;
-  start_at: string;
+  start_at?: string;
   price: string;
   visitor_count: number;
   space: string;
@@ -29,7 +29,7 @@ type Entries<T> = {
   [K in keyof T]: [K, T[K]];
 }[keyof T][];
 
-export function ReviewCardboard({ image, title, children, ...rest }: Props) {
+export function ReviewCardboard({ image, title, ...rest }: Props) {
   const reviewTextRef = useRef<HTMLDivElement | null>(null);
   const [isShow, setShow] = useState(false);
 
@@ -100,7 +100,7 @@ export function ReviewCardboard({ image, title, children, ...rest }: Props) {
         </SpacerSkleton>
       </DefaultModal>
       <SpacerSkleton gap={38} style={{ width: "100%" }}>
-        <Image src={image} width={150} height={212} alt="test-poster" />
+        <img src={image} width={150} height={212} alt="test-poster" />
         <SpacerSkleton
           type="vertical"
           gap={15}
