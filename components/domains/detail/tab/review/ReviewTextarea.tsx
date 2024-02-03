@@ -1,13 +1,13 @@
 import type { ChangeEvent } from "react";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import styled, { css } from "styled-components";
 import Rating from "@/components/common/rating";
 import Typography from "@/components/common/text/Typography";
-import { AuthUserInfo } from "@/contexts";
+import useAuthUserStorage from "@/hooks/authUserStorage";
 import { usePostComment } from "@/queries";
 
 export default function ReviewTextarea({ artId }: { artId: number }) {
-  const { authUser } = useContext(AuthUserInfo.Context);
+  const { userAuth } = useAuthUserStorage();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const postComment = usePostComment(artId);
@@ -17,12 +17,12 @@ export default function ReviewTextarea({ artId }: { artId: number }) {
   };
 
   const postReview = () => {
-    if (authUser?.id) {
+    if (userAuth.id) {
       postComment({
         score: rating,
         description: review,
         art: artId,
-        author: Number(authUser.id),
+        author: Number(userAuth.id),
       });
     }
   };
