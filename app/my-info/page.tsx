@@ -11,8 +11,8 @@ import {
   Account,
   Cardboard,
   ReviewCardboard,
-  reviewList,
   purchaseList,
+  reviewList,
 } from "@/components/domains/my-info";
 import { AuthUserInfo } from "@/contexts";
 import { useAuthUserStorage } from "@/hooks";
@@ -26,13 +26,13 @@ interface MyInfo {
 }
 
 interface MyInfoItem {
-  artThumbnail: string;
-  artTitle: string;
   id: number;
   nickname: string;
+  artTitle: string;
+  artThumbnail: string;
   place: string;
   visitorCount: number;
-  start_at: string;
+  description?: string;
 }
 
 function MyInfoPage() {
@@ -113,29 +113,25 @@ function MyInfoPage() {
                     ? myInfo.purchaseList.map((value, idx) => (
                         <CardboardList key={`${value.artTitle}-${idx}`}>
                           <Cardboard
-                            price={"0"}
+                            id={value.id}
+                            price="무료"
                             image={value.artThumbnail}
                             title={value.artTitle}
                             visitor_count={value.visitorCount}
                             space={value.place}
-                            start_at={value.start_at}
-                          >
-                            test
-                          </Cardboard>
+                          />
                         </CardboardList>
                       ))
                     : myInfo.reviewList.map((value) => (
                         <CardboardList key={value.artTitle}>
                           <ReviewCardboard
-                            price={"0"}
+                            price="무료"
                             image={value.artThumbnail}
                             title={value.artTitle}
                             visitor_count={value.visitorCount}
                             space={value.place}
-                            start_at={value.start_at}
-                          >
-                            test
-                          </ReviewCardboard>
+                            review={value.description || ""}
+                          />
                         </CardboardList>
                       ))}
                 </ul>
