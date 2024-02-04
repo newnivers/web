@@ -1,4 +1,4 @@
-import { useState, useRef, type ReactNode } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import DefaultButton from "@/components/common/button";
@@ -13,23 +13,20 @@ interface Props {
   price: string;
   visitor_count: number;
   space: string;
-  review?: string;
-  children: ReactNode;
+  review: string;
 }
 
 const workInfos = {
-  start_at: "관람일시",
   price: "관람가격",
   visitor_count: "관람인원",
   space: "관람장소",
-  review: "후기",
 } as const;
 
 type Entries<T> = {
   [K in keyof T]: [K, T[K]];
 }[keyof T][];
 
-export function ReviewCardboard({ image, title, ...rest }: Props) {
+export function ReviewCardboard({ image, title, review, ...rest }: Props) {
   const reviewTextRef = useRef<HTMLDivElement | null>(null);
   const [isShow, setShow] = useState(false);
 
@@ -100,7 +97,7 @@ export function ReviewCardboard({ image, title, ...rest }: Props) {
         </SpacerSkleton>
       </DefaultModal>
       <SpacerSkleton gap={38} style={{ width: "100%" }}>
-        <img src={image} width={150} height={212} alt="test-poster" />
+        <Image src={image || ""} width={150} height={212} alt="test-poster" />
         <SpacerSkleton
           type="vertical"
           gap={15}
@@ -126,14 +123,14 @@ export function ReviewCardboard({ image, title, ...rest }: Props) {
                 alt="review-edit"
               />
             </button> */}
-              <button onClick={() => setShow(true)}>
+              {/* <button onClick={() => setShow(true)}>
                 <Image
                   src="icon/review-close.svg"
                   width={24}
                   height={24}
                   alt="review-close"
                 />
-              </button>
+              </button> */}
             </SpacerSkleton>
           </SpacerSkleton>
           <SpacerSkleton
@@ -146,12 +143,7 @@ export function ReviewCardboard({ image, title, ...rest }: Props) {
             <Contents />
             <SpacerSkleton gap={20}>
               <ContentTypography typo="subhead04">관람후기</ContentTypography>
-              <ReviewText ref={reviewTextRef}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perferendis amet ipsum vero! Deserunt, ipsam! Non dolor modi
-                ipsum ratione quo eligendi tempora obcaecati repellat magni et,
-                velit iste! Animi, laborum?
-              </ReviewText>
+              <ReviewText ref={reviewTextRef}>{review}</ReviewText>
             </SpacerSkleton>
             <SpacerSkleton
               justify="flex-end"

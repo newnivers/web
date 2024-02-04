@@ -26,12 +26,15 @@ function QRPage() {
   const [ticketInfo, setTicketInfo] = useState<TicketInfo | null>(null);
 
   useEffect(() => {
+    if (ticketInfo) {
+      return;
+    }
     (async () => {
       const res = await httpClient.get(`/arts/tickets/${params.id}`);
 
       setTicketInfo(res.data);
     })();
-  }, [params]);
+  }, [params, ticketInfo]);
 
   if (!ticketInfo) {
     return (
