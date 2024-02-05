@@ -7,6 +7,7 @@ import { SpacerSkleton } from "@/components/common/spacer";
 import Typography from "@/components/common/text/Typography";
 
 interface Props {
+  reviewId: number;
   image: string;
   title: string;
   start_at?: string;
@@ -26,7 +27,13 @@ type Entries<T> = {
   [K in keyof T]: [K, T[K]];
 }[keyof T][];
 
-export function ReviewCardboard({ image, title, review, ...rest }: Props) {
+export function ReviewCardboard({
+  reviewId,
+  image,
+  title,
+  review,
+  ...rest
+}: Props) {
   const reviewTextRef = useRef<HTMLDivElement | null>(null);
   const [isShow, setShow] = useState(false);
 
