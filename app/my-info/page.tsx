@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import dayjs from "dayjs";
 import styled, { css } from "styled-components";
 import httpClient from "@/api/core";
 import { SpacerSkleton } from "@/components/common/spacer";
@@ -11,8 +12,6 @@ import {
   Account,
   Cardboard,
   ReviewCardboard,
-  purchaseList,
-  reviewList,
 } from "@/components/domains/my-info";
 import { AuthUserInfo } from "@/contexts";
 import { useAuthUserStorage } from "@/hooks";
@@ -33,6 +32,7 @@ interface MyInfoItem {
   place: string;
   visitorCount: number;
   description?: string;
+  startAt?: string;
 }
 
 function MyInfoPage() {
@@ -65,6 +65,7 @@ function MyInfoPage() {
   if (!myInfo) {
     return;
   }
+  console.log(myInfo);
 
   return (
     <AuthUserInfo.Provider>
@@ -118,6 +119,7 @@ function MyInfoPage() {
                             image={value.artThumbnail}
                             title={value.artTitle}
                             visitor_count={value.visitorCount}
+                            start_at={dayjs(value.startAt).format("YYYY.MM.DD")}
                             space={value.place}
                           />
                         </CardboardList>
@@ -125,6 +127,7 @@ function MyInfoPage() {
                     : myInfo.reviewList.map((value) => (
                         <CardboardList key={value.artTitle}>
                           <ReviewCardboard
+                            reviewId={value.id}
                             price="무료"
                             image={value.artThumbnail}
                             title={value.artTitle}

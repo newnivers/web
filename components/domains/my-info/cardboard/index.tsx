@@ -11,12 +11,14 @@ interface Props {
   price?: string;
   visitor_count: number;
   space: string;
+  start_at: string;
 }
 
 const workInfos = {
   price: "관람가격",
   visitor_count: "관람인원",
   space: "관람장소",
+  start_at: "관람일시",
 } as const;
 
 type Entries<T> = {
