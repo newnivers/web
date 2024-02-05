@@ -80,7 +80,23 @@ function QRPage() {
       <Typography typo="subhead01">티켓 인증</Typography>
 
       <SpacerSkleton type="vertical" align="center" gap={30}>
-        <Image src={ticketInfo.qrCode} width={200} height={200} alt="qr-code" />
+        {ticketInfo?.qrCode ? (
+          <Image
+            src={ticketInfo.qrCode}
+            width={200}
+            height={200}
+            alt="qr-code"
+          />
+        ) : (
+          <SpacerSkleton type="vertical">
+            <Typography typo="subhead02">
+              QR은 작품 2시간 전 생성됩니다.
+            </Typography>
+            <Typography typo="subhead03">
+              QR로 관객확인 및 입장이 가능합니다.
+            </Typography>
+          </SpacerSkleton>
+        )}
         <SpacerSkleton gap={10}>
           <SpacerSkleton
             type="vertical"
