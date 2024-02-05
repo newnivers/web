@@ -60,7 +60,7 @@ export function RegisterWorkFormTemplate({ children }: Props) {
         return true;
       }
 
-      return !!value;
+      return !!String(value);
     });
 
     if (!isCompleteFill) {
