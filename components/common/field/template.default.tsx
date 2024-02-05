@@ -10,6 +10,7 @@ interface Props {
   disabled: boolean;
   error: boolean;
   iconType: IconType;
+  hasMinWidth?: boolean;
   children: ReactNode;
 }
 
@@ -18,6 +19,7 @@ export function DefaultFieldTemplate({
   disabled = false,
   error = false,
   iconType = "default",
+  hasMinWidth = true,
   children,
 }: Partial<Props>) {
   const isShowCalendar = iconType === "calendar";
@@ -30,6 +32,7 @@ export function DefaultFieldTemplate({
       style={style}
       disabled={disabled}
       error={error}
+      hasMinWidth={hasMinWidth}
       iconType={iconType}
     >
       {isShowCalendar && (
@@ -58,7 +61,7 @@ export function DefaultFieldTemplate({
 }
 
 const Container = styled.div<Omit<Props, "children">>`
-  ${({ style: { width, height }, disabled, error, theme }) => {
+  ${({ style: { width, height }, disabled, error, hasMinWidth, theme }) => {
     const { colors } = theme;
     const borderColor = getBorderColor(colors, disabled, error);
     const backgroundColor = getBackgroundColor(colors, disabled);
@@ -68,7 +71,7 @@ const Container = styled.div<Omit<Props, "children">>`
       display: flex;
       align-items: center;
       gap: 8px;
-      min-width: 138px;
+      ${hasMinWidth && "min-width: 138px"};
       min-height: 40px;
       width: ${typeof width === "string" ? width : `${width}px`};
       height: ${typeof height === "string" ? width : `${width}px`};
