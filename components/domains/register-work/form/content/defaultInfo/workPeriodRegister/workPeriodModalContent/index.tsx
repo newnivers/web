@@ -216,6 +216,7 @@ export function WorkPeriodModalContent({
           style={{ flex: "0.17", padding: "16px 32px" }}
         >
           <DefaultButton
+            type="button"
             onClick={onConfirm}
             disabled={checkInvalidScheduleInfo()}
           >

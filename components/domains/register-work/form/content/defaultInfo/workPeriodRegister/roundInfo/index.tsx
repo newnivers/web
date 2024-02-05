@@ -54,7 +54,11 @@ export function RoundInfo({
         style={{ padding: "0 8px" }}
       >
         <DateTypography typo="body02">{dateName}</DateTypography>
-        <button data-date={workPeriod.date} onClick={onClickRemoveDate}>
+        <button
+          type="button"
+          data-date={workPeriod.date}
+          onClick={onClickRemoveDate}
+        >
           <Image
             src="/icon/default-close.svg"
             width={24}
@@ -83,7 +87,11 @@ export function RoundInfo({
               />
             </Field>
             <SpacerSkleton align="center" gap={12}>
-              <button data-date={workPeriod.date} onClick={onClickAddRound}>
+              <button
+                type="button"
+                data-date={workPeriod.date}
+                onClick={onClickAddRound}
+              >
                 <Image
                   src="/icon/work-period-add.svg"
                   width={24}
@@ -93,6 +101,7 @@ export function RoundInfo({
               </button>
               {idx !== 0 && (
                 <button
+                  type="button"
                   data-date={workPeriod.date}
                   data-round={round.id}
                   onClick={onClickRemoveRound}
