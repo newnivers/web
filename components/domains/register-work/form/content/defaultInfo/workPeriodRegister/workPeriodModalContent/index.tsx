@@ -145,6 +145,17 @@ export function WorkPeriodModalContent({
       return true;
     }
 
+    let invalidField = false;
+    workPeriods.forEach((workPeriod) => {
+      workPeriod.rounds.forEach((round) => {
+        if (!round.time) {
+          invalidField = true;
+        }
+      });
+    });
+
+    return invalidField;
+
     const defaultRoundTime = workPeriods[0].rounds[0].time;
 
     if (!defaultRoundTime) {
@@ -205,6 +216,7 @@ export function WorkPeriodModalContent({
           style={{ flex: "0.17", padding: "16px 32px" }}
         >
           <DefaultButton
+            type="button"
             onClick={onConfirm}
             disabled={checkInvalidScheduleInfo()}
           >

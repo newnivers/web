@@ -32,10 +32,12 @@ export function RegisterWorkFormTemplate({ children }: Props) {
 
   const [modal, setModal] = useState<{
     isShow: boolean;
+    successForm: boolean;
     content: ReactElement | null;
     handler: (() => void) | null;
   }>({
     isShow: false,
+    successForm: false,
     content: null,
     handler: null,
   });
@@ -45,7 +47,12 @@ export function RegisterWorkFormTemplate({ children }: Props) {
   }, [router]);
 
   const onClickModalReset = useCallback(() => {
-    setModal({ isShow: false, content: null, handler: null });
+    setModal({
+      isShow: false,
+      successForm: false,
+      content: null,
+      handler: null,
+    });
   }, []);
 
   const onSubmitWorkForm = async (data: FieldValues) => {
@@ -60,12 +67,13 @@ export function RegisterWorkFormTemplate({ children }: Props) {
         return true;
       }
 
-      return !!value;
+      return !!String(value);
     });
 
     if (!isCompleteFill) {
       setModal({
         isShow: true,
+        successForm: false,
         content: (
           <Typography
             typo="body02"
@@ -143,6 +151,7 @@ export function RegisterWorkFormTemplate({ children }: Props) {
       });
       setModal({
         isShow: true,
+        successForm: true,
         content: (
           <SpacerSkleton type="vertical" gap={20}>
             <SpacerSkleton type="vertical">
@@ -178,6 +187,7 @@ export function RegisterWorkFormTemplate({ children }: Props) {
     } catch (error) {
       setModal({
         isShow: true,
+        successForm: false,
         content: <p>작품 등록에 실패하였습니다.</p>,
         handler: onClickModalReset,
       });
@@ -186,7 +196,10 @@ export function RegisterWorkFormTemplate({ children }: Props) {
 
   return (
     <>
-      <DefaultModal isShow={modal.isShow} onClose={onClickModalReset}>
+      <DefaultModal
+        isShow={modal.isShow}
+        onClose={modal.successForm ? onMoveEnrollmentPage : onClickModalReset}
+      >
         <SpacerSkleton
           type="vertical"
           gap={32}

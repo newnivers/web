@@ -1,9 +1,14 @@
 import type { ReactNode } from "react";
 import { useCallback, useState } from "react";
 import Image from "next/image";
+import dayjs from "dayjs";
 import styled, { css } from "styled-components";
+import CalendarText from "@/components/common/calendar/CustomInput";
+import { Field } from "@/components/common/field";
 import { DefaultModal } from "@/components/common/modal";
 import { SpacerSkleton } from "@/components/common/spacer";
+import Typography from "@/components/common/text/Typography";
+import type { WorkPeriod } from "./shared";
 import { WorkForm } from "../../../context";
 
 interface Props {
@@ -17,8 +22,7 @@ export function WorkPeriodRegister({ children }: Props) {
 
   const [isShow, setShow] = useState(false);
 
-  const schedules = watch("schedules");
-  const isRegisterSchedules = schedules.length > 0;
+  const schedules = watch("schedules") as WorkPeriod[];
 
   const onClickModalShow = useCallback(() => {
     setShow((prev) => !prev);
@@ -29,27 +33,68 @@ export function WorkPeriodRegister({ children }: Props) {
       <DefaultModal isShow={isShow} onClose={onClickModalShow}>
         {children(onClickModalShow)}
       </DefaultModal>
-      <RegisterButton
-        type="button"
-        onClick={onClickModalShow}
-        disabled={isRegisterSchedules}
-      >
-        <SpacerSkleton align="center" gap={6}>
-          {!isRegisterSchedules && (
+      {schedules.length > 0 ? (
+        <SpacerSkleton type="vertical" gap={20}>
+          {schedules.map((schedule) => {
+            return (
+              <SpacerSkleton key={`${schedule.date}`} gap={80}>
+                <div
+                  style={{
+                    width: "81px",
+                  }}
+                >
+                  <CalendarText
+                    defaultValue={dayjs(schedule.date).format("YYYY.MM.DD")}
+                    disabled={true}
+                    style={{
+                      width: "81px",
+                    }}
+                  />
+                </div>
+                <SpacerSkleton>
+                  <SpacerSkleton gap={20}>
+                    {schedule.rounds.map((round, idx) => {
+                      return (
+                        <SpacerSkleton key={round.id} align="center" gap={10}>
+                          <Typography typo="subhead03">{`${
+                            idx + 1
+                          }회차`}</Typography>
+                          <Field
+                            disabled={true}
+                            hasMinWidth={false}
+                            style={{
+                              width: "70px",
+                            }}
+                          >
+                            <Field.DefaultText
+                              className="reset"
+                              defaultValue={`${round.time}`}
+                              disabled={true}
+                            />
+                          </Field>
+                        </SpacerSkleton>
+                      );
+                    })}
+                  </SpacerSkleton>
+                </SpacerSkleton>
+              </SpacerSkleton>
+            );
+          })}
+        </SpacerSkleton>
+      ) : (
+        <RegisterButton type="button" onClick={onClickModalShow}>
+          <SpacerSkleton align="center" gap={6}>
             <Image
               src="/icon/register-plus.svg"
               width={24}
               height={24}
               alt="register-plus"
             />
-          )}
-          <RegisterText>
-            {isRegisterSchedules
-              ? "작품 기간이 등록되었습니다"
-              : "클릭하여 작품 기간을 등록해주세요."}
-          </RegisterText>
-        </SpacerSkleton>
-      </RegisterButton>
+
+            <RegisterText>클릭하여 작품 기간을 등록해주세요</RegisterText>
+          </SpacerSkleton>
+        </RegisterButton>
+      )}
     </>
   );
 }
